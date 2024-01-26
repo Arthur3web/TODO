@@ -9,7 +9,11 @@ function TempInp({changeTemp}) {
     return (<div className="kok">
         <div className="Task">
             <div className="podTask">
-                <img className="group" src={Group} alt="Group"/>
+            <label class="checkbox style-f">
+                <input type="checkbox"/>
+                <div class="checkbox__checkmark"></div>
+            </label>
+                {/* <img className="group" src={Group} alt="Group"/> */}
                 <p id='temp'>Task 1</p>
             </div>
             <div className="Time">
@@ -21,7 +25,6 @@ function TempInp({changeTemp}) {
         <label class="checkbox style-f">
             <input type="checkbox"/>
             <div class="checkbox__checkmark"></div>
-            <div class="checkbox__body">Style F</div>
         </label>
         </div>
     
