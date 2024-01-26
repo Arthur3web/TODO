@@ -1,0 +1,16 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#root{
+  display: flex;
+  background: linear-gradient(300deg, #B9D5FF 0%, #F6D1FC 98.93%);
+  width: 100vw;
+  height: 100vh;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
