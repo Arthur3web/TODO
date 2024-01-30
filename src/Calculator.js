@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Verdict from "./Verdict";
 import TempInp from "./TempInp";
-import Avatar from "./bi_person-circle.svg";
+import Avatar from "./img/bi_person-circle.svg";
 // import Chekbox from "../public/Group.svg"
 
-function Calculator() {
+function Calculator({task,setClick}) {
     const [temp, setTemp] = useState(0);
 
     // function changeTemp(event) {
@@ -16,12 +16,15 @@ function Calculator() {
             <p id='To-Do'>To-Do</p>
             <p id='Username'>UserName</p>
             <img id="Avatar" src={Avatar} alt="avatar"/>
-            {/* <img id="Chekbox" src={Chekbox} alt="Chekbox"/> */}
 
          </div>
         <div className='kek2'>
             <Verdict temp={temp} />
-            <TempInp temp={temp} changeTemp={setTemp} />
+            {task.map(el => {
+                return (
+                    <TempInp temp={temp} changeTemp={setTemp} task={el} setClick={setClick}/>
+                )
+            })}
         </div>
     </>;
 }

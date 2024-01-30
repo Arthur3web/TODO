@@ -1,22 +1,22 @@
 import React, { useState } from "react";
-import Vector from "./Vector.svg";
-import Done_circle from "./done circle.svg";
-import arrows from "./arrows 1.svg";
-import vector_2 from "./Vector_2.svg";
-import { getValue } from "@testing-library/user-event/dist/utils";
+import Vector from "./img/Vector.svg";
+import Done_circle from "./img/done circle.svg";
+import arrows from "./img/arrows 1.svg";
+import vector_2 from "./img/Vector_2.svg";
+// import { getValue } from "@testing-library/user-event/dist/utils";
+import Modal from "./components/Modal";
+
+
 
 function Verdict({ temp }) {
   const [isOpen, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState("All");
   const arr = ["All", "Done", "Undone"];
+  const [openModal, setOpenModal] = useState(false);
+
+
 
   function handleChange(el) {
-    // const result = arr.map((elem) => {
-    //   if (elem === index) return { elem };
-    //   return elem;
-    // });
-    // setSelectedData(result);
-    // console.log(result);
     setSelectedData(el);
     setOpen(false);
 
@@ -45,18 +45,6 @@ function Verdict({ temp }) {
                   <p id="option">{el}</p>
                 </div>
               ))}
-              {/* <div className="option" onClick={handleChange}>
-              <img id="done_circle" src={Done_circle} alt="Done_circle"/>
-                <p id="option_1">All</p>
-              </div>
-              <div className="option" onClick={()=>setSelectedData("Done")}>
-              <img id="done_circle" src={Done_circle} alt="Done_circle"/>
-                <p id="option_2">Done</p>
-              </div>
-              <div className="option" onClick={()=>setSelectedData("Undone")}>
-              <img id="done_circle" src={Done_circle} alt="Done_circle"/>
-                <p id="option_3">Undone</p>
-              </div> */}
             </div>
           )}
         </div>
@@ -67,10 +55,12 @@ function Verdict({ temp }) {
         </div>
         {/* <img src={Avatar} alt="avatar"/> */}
       </div>
-      <div className="AddTask">
-        <img src={vector_2} alt="vector_2" />
-        <p id="AddTask">AddTask</p>
-      </div>
+      <button className="AddTask" onClick={()=>{setOpenModal(true)}}>
+        <img src={vector_2} alt="vector_2"  />
+        <p id="AddTask" >AddTask</p>
+      </button>
+        {openModal && <Modal closeModal={setOpenModal}/>}
+      
     </div>
   );
 }

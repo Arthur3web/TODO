@@ -1,0 +1,107 @@
+.modalBackground {
+    width: 100vw;
+    height: 100vh;
+    top:0;
+    left: 0;
+    background: rgba(0,0,0,0.77);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+.modalContainer {
+    width: 466px;
+    height: 181px;
+    border-radius: 10px;
+    padding: 0 16px 17px 16px;
+    gap: 26px;
+    background: rgba(255, 255, 255, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.title {
+    width:465px;
+    height: 48px;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(#F5EDFD,#FEEFF5);
+    padding: 0 0 0 16px;
+}
+#titleModal {
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23.44px;
+    color:#9333EA;
+}
+.body {
+    width: 407px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.inputBody {
+    width: 388px;
+    height: 27px;
+    border: 1px solid #6B7280;
+    background: #F3F3F3;
+    border-radius: 10px;
+    padding: 0 0 0 27px;
+}
+::placeholder{
+    color: #6B7280;
+}
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 422px;
+    height:40px;
+    gap:21px;
+}
+.saveButton {
+    width: 185px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0;
+    padding: 8px;
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.closeButton {
+    width: 185px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0;
+    padding: 8px;
+    gap: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+#saveTask {
+    width: 35px;
+    height: 19px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.75px;
+    color: #67B8CB;
+}
+#closeTask {
+    width: 41px;
+    height: 19px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.75px;
+    color: #6B7280;
+}

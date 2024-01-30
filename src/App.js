@@ -1100,16 +1100,36 @@ import React, { useEffect, useState } from "react";
 
 import Calculator from "./Calculator";
 import './App.css';
+// import Modal from "./components/Modal";
+
 
 function App() {
-   return <div className="Wrapper">
-    <div className="Page1">To-Do <span id='text'>UI</span></div>
+    const [task, setTask] = useState([
+        {
+        title: 'Task_1',
+        time: 'Today at 18.30',
+        isChecked: false
+        },
+    ]);
+    
+    const [newTask, setNewTask] = useState();
 
-   <div className="Gaga">
-   
-    <Calculator />
-   </div>
-   
+    function setClick() {
+        const Task_1 = [...task, setNewTask];
+        setNewTask(Task_1);
+    }
+
+
+    // function setTask {
+
+    // }
+
+   return <div className="Wrapper">
+   <div className="Page1">To-Do <span id='text'>UI</span></div>
+        <div className="Gaga">
+            <Calculator task={task}/>
+        </div>
+
    </div> 
 }
 
