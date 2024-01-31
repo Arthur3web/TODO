@@ -1,4 +1,4 @@
-.modalBackground {
+.ModalBackground {
     width: 100vw;
     height: 100vh;
     top:0;
@@ -9,8 +9,9 @@
     align-items: center;
     justify-content: center;
     z-index: 10;
+    
 }
-.modalContainer {
+.ModalTodoWrapper {
     width: 466px;
     height: 181px;
     border-radius: 10px;
@@ -21,7 +22,7 @@
     flex-direction: column;
     align-items: center;
 }
-.title {
+.Title {
     width:465px;
     height: 48px;
     border-radius: 10px 10px 0 0;
@@ -30,21 +31,21 @@
     background: linear-gradient(#F5EDFD,#FEEFF5);
     padding: 0 0 0 16px;
 }
-#titleModal {
+.TitleModal {
     font-family: Roboto;
     font-size: 20px;
     font-weight: 700;
     line-height: 23.44px;
     color:#9333EA;
 }
-.body {
+.Body {
     width: 407px;
     height: 35px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.inputBody {
+.InputBody {
     width: 388px;
     height: 27px;
     border: 1px solid #6B7280;
@@ -55,7 +56,7 @@
 ::placeholder{
     color: #6B7280;
 }
-.footer{
+.Footer{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -63,7 +64,7 @@
     height:40px;
     gap:21px;
 }
-.saveButton {
+.SaveButton {
     width: 185px;
     height: 40px;
     border-radius: 5px;
@@ -75,7 +76,7 @@
     justify-content: center;
     cursor: pointer;
 }
-.closeButton {
+.CloseButton {
     width: 185px;
     height: 40px;
     border-radius: 5px;

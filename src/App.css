@@ -5,10 +5,31 @@
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; 
 }
 
-.kek {
+.TitleWrapper {
+  color: #404040;
+  font-size: 96px;
+  font-family: Roboto;
+  font-weight: 700;
+  margin: 0 0 0 65px;
+  cursor: pointer;
+  
+  #text {
+    color: #9333EA;
+  }
+}
+
+.TodoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 0 90px 0 0;
+  
+}
+
+.CapTodoContainer {
   width: 672px;
   height: 47px;
   background-color: rgba(244, 244, 244, 1);
@@ -16,11 +37,55 @@
   display: flex;
   padding: 16px 20px 16px 20px;
   justify-content: space-between;
-  align-items: center;
-
+  align-items: center; 
 } 
 
-.finish {
+.To-Do-Cap {
+  width: 55px;
+  height: 23px;
+  color: rgba(147, 51, 234, 1);
+  font-family: Roboto;
+  font-size: 20px;
+  line-height: 23.44px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.Username-Cap {
+  width: 76px;
+  height: 19px;
+  color: rgba(147, 51, 234, 1);
+  font-family: Roboto;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18.75px;
+}
+
+.Avatar-Cap {
+  cursor: pointer;
+}
+
+.BodyTodoContainer {
+  width: 672px;
+  height: 343px;
+  padding: 31px 0 0 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.SideBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.BodySidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+}
+
+.CalendarButton {
   background: rgba(147, 51, 234, 0.06);
   width: 185px;
   height: 40px;
@@ -29,113 +94,40 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
-
 }
 
-
-
-.Task {
-  border: 0;
-  background: rgba(147, 51, 234, 0.06);
-  width: 428px;
-  height: 33px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 10px 0 10px;
-  cursor: pointer;
-}
-
-#DateTask {
-  /* width: 97px;
-  height: 15px; */
-  font-family: Roboto;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 16.41px;
-  color: rgba(107, 114, 128, 1);
-}
-
-#temp {
-  width: 104px;
-  height: 19px;
-  font-family: Roboto;
-  font-size: 19px;
-  font-weight: 400;
-  line-height: 18.75px;
-  color: rgba(0,0,0,1);
-}
-
-.podTask {
-  display: flex;
-  gap:10px;
-}
-
-.Time {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.clickButton-class {
-  width: 193.2px;
-  height: 58.2px;
-  border: 0;
-  border-radius: 20px;
-  background: #9333EA 6%;
-  
-}
-
-.class {
-  display: flex;
-  flex-direction: column;
-  gap: 21px;
-}
-
-#vector{
+.CalendarIcon{
   margin: 0 0 0 14px;
 }
 
-.kek2 {
-  width: 672px;
-  height: 343px;
-  padding: 31px 0 0 0;
-  display: flex;
-  justify-content: space-between;
-}
+.CalendarDate {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.75px;
+    color: rgba(147, 51, 234, 1);
+    width: 52px;
+    height: 20px;
+  }
 
-.Gaga {
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-  margin: 0 90px 0 0;
-}
 
-.Page1 {
-  color: #404040;
-  font-size: 96px;
-  font-family: Roboto;
-  font-weight: 700;
-  margin: 0 0 0 65px;
-  cursor: pointer;
-}
-#text {
-  color: #9333EA;
-}
-
-.kok {
+.WrapperFilterTaskList {
   display: flex;
   flex-direction: column;
-  width: 466px;
-  height: 312px;
+  gap: 21px;
+  position: relative;  
+}
+
+.MenuButtonFilterTaskList {
+  width: 185px;
+  height: 40px;
+  color: #6B7280;
+  background: rgba(147, 51, 234, 0.006);
   border-radius: 10px;
-  background: rgba(244, 244, 244, 1);
-  padding: 31px 17px 0 21px;
-  gap: 10px;
+  border:0;
 }
 
-.All {
+.MarkAll {
   width: 53px;
   height: 24px;
   color: #6B7280;
@@ -143,20 +135,51 @@
   display: flex;
   margin: 0 0 0 13px;
   cursor: pointer;
-  align-items: center;
+  align-items: center;  
 }
 
-#All{
+.ValueMark {
   width: 19px;
   height: 19px;
   font-family: Roboto;
   font-size: 16px;;
   font-weight: 400;
   line-height: 18.75px;
-
 }
 
-.Date {
+.MenuListFilterTaskList {
+  width: 185px;
+  height: 140px;
+  border-radius: 10px;
+  background-color: rgba(217, 202, 253);
+  position: absolute;
+  margin: 51px 0 0 0;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: column;
+}
+
+.AvailablesMarks {
+  width: 185px;
+  height: 40px;
+  border-radius: 10px;
+  border:0;
+  display: flex;
+  align-items: center;
+  padding: 0 0 0 13px;
+  gap:10px;
+  font-family: Roboto;
+  font-size: 16px;;
+  font-weight: 400;
+  line-height: 18.75px;
+  color: #6B7280;
+  cursor: pointer;
+}
+.AvailablesMarks:hover {
+  background:rgba(147, 51, 234, 0.06);
+}
+
+.DateFilterTaskButton {
   width: 70px;
   height: 19px;
   padding: 0 0 0 6px;
@@ -166,7 +189,7 @@
   cursor: pointer;
 }
 
-#date {
+.DateFilterTaskButtonContent {
   width: 33px;
   height: 19px;
   color: #6B7280;
@@ -176,13 +199,7 @@
   line-height: 18.75px;
 }
 
-.Kolonna {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.AddTask {
+.AddTaskButton {
   width: 185px;
   height: 40px;
   background: rgba(147, 51, 234, 0.06);
@@ -196,7 +213,7 @@
   border: 0;
 }
 
-#AddTask {
+.AddTaskButtonContent {
   width: 63px;
   height: 19px;
   font-family: Roboto;
@@ -206,42 +223,18 @@
   color: rgba(147, 51, 234, 1);
 }
 
-#To-Do {
-  width: 55px;
-  height: 23px;
-  color: rgba(147, 51, 234, 1);
-  font-family: Roboto;
-  font-size: 20px;
-  line-height: 23.44px;
-  font-weight: 700;
-  cursor: pointer;
+.TaskList {
+  display: flex;
+  flex-direction: column;
+  width: 466px;
+  height: 312px;
+  border-radius: 10px;
+  background: rgba(244, 244, 244, 1);
+  padding: 31px 17px 0 21px;
+  gap: 10px;
 }
 
-#Username {
-  width: 76px;
-  height: 19px;
-  color: rgba(147, 51, 234, 1);
-  font-family: Roboto;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 18.75px;
-}
-
-#Avatar {
-  cursor: pointer;
-}
-
-#Today {
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 18.75px;
-  color: rgba(147, 51, 234, 1);
-  width: 52px;
-  height: 20px;
-}
-
-.Chery {
+.Task {
   border: 0;
   background: rgba(147, 51, 234, 0.06);
   width: 428px;
@@ -251,12 +244,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 10px 0 10px;
-  cursor: pointer;
+  cursor: pointer;  
 }
 
-
-
-
+.Content {
+  display: flex;
+  gap:10px;
+}
 
 .checkbox.style-f {
   display: inline-block;
@@ -280,7 +274,7 @@
   left: 0;
   height: 18px;
   width: 18px;
-  background-image: url(./img/Group_1.svg);
+  background-image: url(/public/assets/Group_1.svg);
 }
 .checkbox.style-f .checkbox__checkmark:after {
   content: "";
@@ -288,65 +282,49 @@
   width: 18px;
   height: 18px;
   display: block;
-  background-image: url(./img/Group.svg);
+  background-image: url(/public/assets/Group.svg);
   transform: scale(0);
 }
 
-
-.header {
-  display: flex;
-  flex-direction: column;
-  gap: 21px;
-  position: relative;
-}
-.menu-button {
-  width: 185px;
-  height: 40px;
-  color: #6B7280;
-  background: rgba(147, 51, 234, 0.006);
-  border-radius: 10px;
-  border:0;
-}
-.menu-list {
-  width: 185px;
-  height: 140px;
-  border-radius: 10px;
-  background-color: rgba(217, 202, 253);
-  position: absolute;
-  margin: 51px 0 0 0;
-  display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-}
-.option {
-  width: 185px;
-  height: 40px;
-  border-radius: 10px;
-  border:0;
-  display: flex;
-  align-items: center;
-  padding: 0 0 0 13px;
-  gap:10px;
+.TaskContent {
+  width: 104px;
+  height: 19px;
   font-family: Roboto;
-  font-size: 16px;;
+  font-size: 19px;
   font-weight: 400;
   line-height: 18.75px;
-  color: #6B7280;
-  cursor: pointer;
-}
-.option:hover {
-  background:rgba(147, 51, 234, 0.06);
+  color: rgba(0,0,0,1);
 }
 
+.TimeTask {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
+.DateTask {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16.41px;
+  color: rgba(107, 114, 128, 1);
+}
 
-.tutorial {
+.ParameterTask {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   position: relative;
 }
-.menu-operation-task {
+
+.ParameterTaskButton {
+  width: 15px;
+  border: 0;
+  cursor: pointer;
+  background: rgba(147, 51, 234, 0.006);
+}
+
+.MenuOperationTask {
   width: 53px;
   height: 24px;
   border: 1px solid #7D40FF;
@@ -357,9 +335,4 @@
   position: absolute;
   margin: 27px 0;
 }
-.vector {
-  width: 15px;
-  border: 0;
-  cursor: pointer;
-  background: rgba(147, 51, 234, 0.006);
-}
+
