@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Sidebar from "./Sidebar";
-import TasksList from "./TasksList";
+import Sidebar from "../components/Sidebar";
+import TasksList from "../components/TasksList";
 
 
 function TodoWrapper({task,addTask}) {

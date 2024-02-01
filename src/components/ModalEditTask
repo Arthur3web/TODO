@@ -12,23 +12,6 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
     // }
 
 
-    const handleKeyDown = event => {
-        // console.log(event.key);
-    
-        if (event.key === 'Enter') {
-        //   console.log('✅ Enter key pressed');
-            if (task !== "") {
-                addTask(value);
-                event.preventDefault();
-                closeModal(false);   
-            }
-            
-        }
-        
-        if (event.key === 'Escape') {
-            closeModal(false);
-        }
-    }
 
     return (
         <div className='ModalBackground'>
@@ -36,15 +19,13 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
                 <div className='Title'>
                     <h1 className="TitleModal">Create task</h1>
                 </div>
-                <div className='Body'>
-                    <input className="InputBody" placeholder="Enter text..." 
-                    onChange={handleInputChange} value={task} autoFocus={true}
-                    onKeyDown={handleKeyDown} required/>
+                <div className='BodyModalEditTask'>
+                    <p className="BodyModalEditTaskContent">Are you sure about deleting this task?</p>
                 </div>
                 <div className='Footer'>
-                    <button className='SaveButton' onClick={() => addTask(value)}>
-                        <img src="/assets/Check_ring.svg" alt="Check_ring"/>
-                        <p className='SaveButtonContent'>Save</p>
+                    <button className='DeleteButton' onClick={() => addTask(value)}>
+                        <img src="/assets/trash.svg" alt="trash"/>
+                        <p className='DeleteButtonContent'>Delete</p>
                     </button>
                     <button className='CloseButton' onClick={()=>closeModal(false)}>
                         <img src="/assets/Vector_s.svg" alt="Vector_s"/>

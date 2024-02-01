@@ -3,7 +3,7 @@ import Modal from "./Modal";
 
 
 
-function WorkingTaskList() {
+function Sidebar({addTask, handleInputChange, task}) {
   const [isOpen, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState("All");
   const arr = ["All", "Done", "Undone"];
@@ -53,10 +53,11 @@ function WorkingTaskList() {
         <img src="/assets/Vector_2.svg" alt="vector_2"  />
         <p className="AddTaskButtonContent" >AddTask</p>
       </button>
-        {openModal && <Modal closeModal={setOpenModal}/>}
+        {openModal && <Modal closeModal={setOpenModal}  addTask={addTask} 
+        handleInputChange={handleInputChange} task={task}/>}
       
     </div>
   );
 }
 
-export default WorkingTaskList;
+export default Sidebar;

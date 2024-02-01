@@ -1,26 +1,37 @@
 import React, { useEffect, useState } from "react";
-import TodoWrapper from "./components/TodoWrapper";
 import "./App.css";
-import TasksList from "./components/TasksList";
+import TasksList from "./components/TasksList.js";
+import Sidebar from "./components/Sidebar.js"
 
 
 
 function App() {
-  const [task, setTask]=("");
+  const [task, setTask]=useState("");
   const [taskList, setTaskList] = useState([]);
+
+  const handleInputChange = (p) => {
+    setTask(p.target.value)
+  }
+ 
 
 
   const addTask = () => {
-    if (task !== "") {
+   if (task !== "") {
       const newTask = {
-        id: 1,
-        value: task,
-        date: Date.now()
+        id: Math.floor(Math.random()*1000),
+        title: task,
+        time: new Date().toLocaleDateString(),
+        isComplited: false,
       }
-      setTaskList([...taskList, newTask]);
-    };
-  }
-
+        setTaskList([...taskList, newTask]);
+        setTask("")
+    }
+      
+  };
+    
+    console.log(taskList)
+  
+  
 
   return (
     <div className="Wrapper">
@@ -28,8 +39,15 @@ function App() {
         To-Do <span id="text">UI</span>
       </div>
       <div className="TodoContainer">
-        <TodoWrapper task={taskList} />
-        <TasksList addTask={addTask} taskList={taskList} />
+      <div className ='CapTodoContainer'>
+          <p className='To-Do-Cap'>To-Do</p>
+          <p className='Username-Cap'>UserName</p>
+          <img className="Avatar-Cap" src="/assets/bi_person-circle.svg" alt="avatar"/>
+        </div>
+        <div className='BodyTodoContainer'>
+          <Sidebar addTask={addTask} handleInputChange={handleInputChange} task={task} />
+          <TasksList task={taskList} addTask={addTask} />
+        </div>
       </div>
     </div>
   );
