@@ -1,17 +1,16 @@
-.ModalBackground {
+.ModalBackgroundEditTask {
     width: 100vw;
     height: 100vh;
     top:0;
     left: 0;
     background: rgba(0,0,0,0.77);
-    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
     
 }
-.ModalTodoWrapper {
+.ModalTodoWrapperEditTask {
     width: 466px;
     height: 181px;
     border-radius: 10px;
@@ -119,4 +118,42 @@ input:valid {
     font-weight: 400;
     line-height: 18.75px;
     color: #6B7280;
+}
+
+
+.BodyModalEditTask {
+    width: 407px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.BodyModalEditTaskContent {
+  font-family: Roboto;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 23.44px;
+    color: #9333EA;  
+}
+
+.DeleteButton {
+    width: 185px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0;
+    padding: 8px;
+    gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.DeleteButtonContent {
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 18.75px;
+    color: #F56497;
 }

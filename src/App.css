@@ -230,7 +230,7 @@
   height: 312px;
   border-radius: 10px;
   background: rgba(244, 244, 244, 1);
-  padding: 31px 17px 0 21px;
+  padding: 31px 17px 21px 21px;
   gap: 10px;
   overflow-y: scroll;
 }
@@ -248,7 +248,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 10px 0 10px;
-  cursor: pointer;  
+  /* cursor: pointer;   */
   margin: 0 0 10px 0;
 }
 
@@ -259,7 +259,9 @@
   height: auto;
   overflow: hidden;
 }
-
+.Check {
+  border: 0;
+}
 .checkbox.style-f {
   display: inline-block;
   position: relative;
@@ -344,5 +346,23 @@
   align-items: center;
   position: absolute;
   margin: 27px 0;
+  background: white;
+}
+.editButton {
+  border: 0;
+  background: white;
+  cursor: pointer;
+}
+.deleteButton {
+  border: 0;
+  background: white;
+  cursor: pointer;
+}
+.crossText {
+  color: #ffffff;
+  background: red;
+}
+.listItem {
+  color: black;
 }
 

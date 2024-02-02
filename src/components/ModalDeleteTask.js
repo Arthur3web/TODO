@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
-import "./Modal.css"
+import "./ModalDeleteTask.css"
 
 
 
-function Modal ({closeModal,addTask,handleInputChange,task}) {
-    const [value, setValue]=useState("");
-    // const [closeModal, setCloseModal]=useState(false);
+function ModalDeleteTask ({closeModal,deleteTask,task}) {
+   
 
-    // const handleInputChange = (val) => {
-    //     setValue(val.target.value)
-    // }
-
+    function deleteTaskButton (id) { 
+        deleteTask(id);
+        closeModal(false);
+    
+    }
 
 
     return (
-        <div className='ModalBackground'>
-            <div className='ModalTodoWrapper'>
+        <div className='ModalBackgroundDeleteTask'>
+            <div className='ModalTodoWrapperDeleteTask'>
                 <div className='Title'>
-                    <h1 className="TitleModal">Create task</h1>
+                    <h1 className="TitleModal">Delete task</h1>
                 </div>
                 <div className='BodyModalEditTask'>
                     <p className="BodyModalEditTaskContent">Are you sure about deleting this task?</p>
                 </div>
                 <div className='Footer'>
-                    <button className='DeleteButton' onClick={() => addTask(value)}>
+                    <button className='DeleteButton' onClick={() => deleteTaskButton(task.id)}>
                         <img src="/assets/trash.svg" alt="trash"/>
                         <p className='DeleteButtonContent'>Delete</p>
                     </button>
@@ -37,4 +37,4 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
     );
 }
 
-export default Modal
+export default ModalDeleteTask

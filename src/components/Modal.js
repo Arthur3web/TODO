@@ -5,11 +5,6 @@ import "./Modal.css"
 
 function Modal ({closeModal,addTask,handleInputChange,task}) {
     const [value, setValue]=useState("");
-    // const [closeModal, setCloseModal]=useState(false);
-
-    // const handleInputChange = (val) => {
-    //     setValue(val.target.value)
-    // }
 
 
     const handleKeyDown = event => {
@@ -20,15 +15,21 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
             if (task !== "") {
                 addTask(value);
                 event.preventDefault();
-                closeModal(false);   
-            }
-            
+                closeModal(false);                   
+            } 
         }
         
         if (event.key === 'Escape') {
             closeModal(false);
         }
     }
+
+   function saveTask () {
+    if (task !== "") {
+      addTask(value)
+      closeModal(false);
+    }
+   }
 
     return (
         <div className='ModalBackground'>
@@ -42,7 +43,7 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
                     onKeyDown={handleKeyDown} required/>
                 </div>
                 <div className='Footer'>
-                    <button className='SaveButton' onClick={() => addTask(value)}>
+                    <button className='SaveButton' onClick={saveTask}>
                         <img src="/assets/Check_ring.svg" alt="Check_ring"/>
                         <p className='SaveButtonContent'>Save</p>
                     </button>

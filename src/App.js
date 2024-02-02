@@ -16,21 +16,24 @@ function App() {
 
 
   const addTask = () => {
-   if (task !== "") {
       const newTask = {
         id: Math.floor(Math.random()*1000),
         title: task,
         time: new Date().toLocaleDateString(),
-        isComplited: false,
+        isCompleted: false,
       }
         setTaskList([...taskList, newTask]);
         setTask("")
-    }
       
   };
+
+
+  const deleteTask = (id) => {
+    console.log(id)
+    setTaskList(taskList.filter(item => item.id !== id))    
+
+  };
     
-    console.log(taskList)
-  
   
 
   return (
@@ -46,7 +49,7 @@ function App() {
         </div>
         <div className='BodyTodoContainer'>
           <Sidebar addTask={addTask} handleInputChange={handleInputChange} task={task} />
-          <TasksList task={taskList} addTask={addTask} />
+          <TasksList task={taskList} setTaskList={setTaskList} addTask={addTask} deleteTask={deleteTask}/>
         </div>
       </div>
     </div>
