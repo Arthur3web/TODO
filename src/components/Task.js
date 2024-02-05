@@ -2,20 +2,26 @@ import { useState } from "react";
 import ModalDeleteTask from "./ModalDeleteTask";
 import ModalEditTask from "./ModalEditTask";
 
-const Task = ({ task, deleteTask, taskCompleted }) => { //Десруктуризация
+const Task = ({ task, deleteTask, taskCompleted, setTaskList }) => { //Деструктуризация
     const [isOpen, setOpen] = useState(false);
     const [openModalDeleteTask, setOpenModalDeleteTask] = useState(false);
-    const [openModalEditTask, setOpenModalEditTask] = useState(false)
+    const [openModalEditTask, setOpenModalEditTask] = useState(false);
+
+    function clickEditButton () { //непонятно как нормально закрыть
+        setOpenModalEditTask(true);
+        
+    }
+
+    
 
     return (
         <div className="Task">
                         <div className="Content">
-                            <button onClick={() => taskCompleted(task.id)}>btn</button>
-                            {/* <label class="checkbox style-f">
-                                <input type="checkbox"/>
+                            <label class="checkbox style-f">
+                                <input type="checkbox" onChange={() => taskCompleted(task.id)} />
                                 <div class="checkbox__checkmark" ></div>
-                            </label> */}
-                        <div className={task.isCompleted ? "crossText" : "listItem"}>{task.title}</div>
+                            </label>
+                            <div className={task.isCompleted ? "crossText" : "listItem"}>{task.title}</div>
                         </div>
                         <div className="TimeTask">
                             <p className='DateTask'>{task.time}</p>
@@ -25,10 +31,11 @@ const Task = ({ task, deleteTask, taskCompleted }) => { //Десруктуриз
                                 </button>
                                 {isOpen && (
                                     <div className="MenuOperationTask">
-                                        <button className="editButton" onClick={() => setOpenModalEditTask(true)}>
+                                        <button className="editButton" onClick={() => clickEditButton()}>
                                             <img src="/assets/Group_2.svg" alt='group_2' />
                                         </button>
-                                        {openModalEditTask && <ModalEditTask closeModal={setOpenModalEditTask} deleteTask={deleteTask} task={task}/>}
+                                        {openModalEditTask && <ModalEditTask closeModal={setOpenModalEditTask} task={task} 
+                                        setTaskList={setTaskList} />}
                                         <button className="deleteButton" onClick={() => setOpenModalDeleteTask(true)}>
                                             <img src="/assets/delete-button.svg" alt="delete" />
                                         </button>

@@ -9,9 +9,11 @@ function App() {
   const [task, setTask]=useState("");
   const [taskList, setTaskList] = useState([]);
 
+
   const handleInputChange = (p) => {
     setTask(p.target.value)
   }
+
  
 
 
@@ -31,7 +33,6 @@ function App() {
   const deleteTask = (id) => {
     console.log(id)
     setTaskList(taskList.filter(item => item.id !== id))    
-
   };
     
   
@@ -49,7 +50,7 @@ function App() {
         </div>
         <div className='BodyTodoContainer'>
           <Sidebar addTask={addTask} handleInputChange={handleInputChange} task={task} />
-          <TasksList task={taskList} setTaskList={setTaskList} addTask={addTask} deleteTask={deleteTask}/>
+          <TasksList task={taskList} setTaskList={setTaskList} addTask={addTask} deleteTask={deleteTask}  />
         </div>
       </div>
     </div>

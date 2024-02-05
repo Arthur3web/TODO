@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Task from "./Task";
 
 
-function TasksList({task, deleteTask, setTaskList}) {
+function TasksList({ task, deleteTask, setTaskList }) {
+    const [checked, setChecked] = useState(false)
     
     const taskCompleted = (id) => {
         console.log(id)
@@ -14,6 +15,7 @@ function TasksList({task, deleteTask, setTaskList}) {
             isCompleted: !newTaskList[element].isCompleted,
         }
         setTaskList(newTaskList);
+        setChecked(!checked)
         console.log(newTaskList)
     }
 
@@ -22,7 +24,8 @@ function TasksList({task, deleteTask, setTaskList}) {
         <div className="TaskList">
             <div>
                 {task.map((elem) => (
-                    <Task task={elem} deleteTask={deleteTask} taskCompleted={taskCompleted}/>
+                    <Task task={elem} deleteTask={deleteTask} taskCompleted={taskCompleted} checked={checked} 
+                    setTaskList={setTaskList} />
                 ))} 
             </div>
         </div>

@@ -1,14 +1,14 @@
 .ModalBackgroundEditTask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #00000085;
     width: 100vw;
     height: 100vh;
-    top:0;
-    left: 0;
-    background: rgba(0,0,0,0.77);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
-    
 }
 .ModalTodoWrapperEditTask {
     width: 466px;
@@ -20,140 +20,4 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.Title {
-    width:465px;
-    height: 48px;
-    border-radius: 10px 10px 0 0;
-    display: flex;
-    align-items: center;
-    background: linear-gradient(#F5EDFD,#FEEFF5);
-    padding: 0 0 0 16px;
-}
-.TitleModal {
-    font-family: Roboto;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 23.44px;
-    color:#9333EA;
-}
-.Body {
-    width: 407px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.InputBody {
-    width: 388px;
-    height: 27px;
-    border: 1px solid #6B7280;
-    background: #F3F3F3;
-    border-radius: 10px;
-    padding: 0 0 0 27px;
-}
-::placeholder{
-    color: #6B7280;
-}
-input:invalid {
-	border-color: red;
-}
-input,
-input:valid {
-	border-color: #ccc;
-}
-.Footer{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    width: 422px;
-    height:40px;
-    gap:21px;
-}
-.SaveButton {
-    width: 185px;
-    height: 40px;
-    border-radius: 5px;
-    border: 0;
-    padding: 8px;
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-.SaveButtonContent{
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 18.75px;
-    color: #67B8CB;
-}
-.CloseButton {
-    width: 185px;
-    height: 40px;
-    border-radius: 5px;
-    border: 0;
-    padding: 8px;
-    gap: 7px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-#saveTask {
-    width: 35px;
-    height: 19px;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 18.75px;
-    color: #67B8CB;
-}
-#closeTask {
-    width: 41px;
-    height: 19px;
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 18.75px;
-    color: #6B7280;
-}
-
-
-.BodyModalEditTask {
-    width: 407px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.BodyModalEditTaskContent {
-  font-family: Roboto;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 23.44px;
-    color: #9333EA;  
-}
-
-.DeleteButton {
-    width: 185px;
-    height: 40px;
-    border-radius: 5px;
-    border: 0;
-    padding: 8px;
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-.DeleteButtonContent {
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 18.75px;
-    color: #F56497;
 }
