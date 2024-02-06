@@ -8,8 +8,14 @@ import Sidebar from "./components/Sidebar.js"
 function App() {
   const [task, setTask]=useState("");
   const [taskList, setTaskList] = useState([]);
+  const [filtered, setFiltered] = useState(taskList);
+
+  useEffect( () => {
+    setFiltered(taskList)
+  }, [taskList])
 
 
+  
   const handleInputChange = (p) => {
     setTask(p.target.value)
   }
@@ -31,7 +37,7 @@ function App() {
 
 
   const deleteTask = (id) => {
-    console.log(id)
+    // console.log(id)
     setTaskList(taskList.filter(item => item.id !== id))    
   };
     
@@ -49,8 +55,8 @@ function App() {
           <img className="Avatar-Cap" src="/assets/bi_person-circle.svg" alt="avatar"/>
         </div>
         <div className='BodyTodoContainer'>
-          <Sidebar addTask={addTask} handleInputChange={handleInputChange} task={task} />
-          <TasksList task={taskList} setTaskList={setTaskList} addTask={addTask} deleteTask={deleteTask}  />
+          <Sidebar addTask={addTask} handleInputChange={handleInputChange} task={task} taskList={taskList} setTaskList={setTaskList} setFiltered={setFiltered} />
+          <TasksList tasklist={taskList} setTaskList={setTaskList} addTask={addTask} deleteTask={deleteTask} filtered={filtered} />
         </div>
       </div>
     </div>

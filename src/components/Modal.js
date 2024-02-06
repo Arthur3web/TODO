@@ -24,6 +24,8 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
         }
     }
 
+
+
    function saveTask () {
     if (task !== "") {
       addTask(value)

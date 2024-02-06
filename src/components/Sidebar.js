@@ -3,16 +3,37 @@ import Modal from "./Modal";
 
 
 
-function Sidebar({addTask, handleInputChange, task}) {
+function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFiltered}) {
   const [isOpen, setOpen] = useState(false);
   const [selectedData, setSelectedData] = useState("All");
   const arr = ["All", "Done", "Undone"];
   const [openModal, setOpenModal] = useState(false);
-
+  
 
 
   function handleChange(el) {
     setSelectedData(el);
+    switch (el) {
+      case "All":
+        setFiltered(taskList);
+        break;
+      case "Done":
+        const done = [...taskList].filter(function(hero) {
+          return hero.isCompleted == true
+        })
+        setFiltered(done);
+        console.log(done)
+        break;
+      case "Undone":
+        const undone = taskList.filter(function(hero) {
+          return hero.isCompleted == false
+        })
+        setFiltered(undone)
+        console.log(undone)
+        break;
+      default:
+        alert( "Нет таких значений" );
+    }
     setOpen(false);
 
   }
