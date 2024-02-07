@@ -1,10 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import "./Modal.css"
+
 
 
 
 function Modal ({closeModal,addTask,handleInputChange,task}) {
     const [value, setValue]=useState("");
+
+    let menuRef = useRef(); //настройка закрытия модального окна
+    
+    useEffect(() => { 
+        let handler = (event) => {
+        if (!menuRef.current.contains(event.target)) {
+            closeModal(false);
+        }
+    };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler)
+        };
+    });
+
+    //////
 
 
     const handleKeyDown = event => {
@@ -34,8 +51,8 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
    }
 
     return (
-        <div className='ModalBackground'>
-            <div className='ModalTodoWrapper'>
+        <div className='ModalBackground' >
+            <div className='ModalTodoWrapper' ref={menuRef}>
                 <div className='Title'>
                     <h1 className="TitleModal">Create task</h1>
                 </div>
@@ -56,7 +73,9 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
                 </div>
             </div>
         </div>
+        
     );
+    
 }
 
 export default Modal

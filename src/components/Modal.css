@@ -82,7 +82,11 @@ input:valid {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background: rgba(103, 184, 203, 0.06);
 }
+.SaveButton:hover {
+    background: rgba(113, 245, 245, 0.35);
+  }
 .SaveButtonContent{
     font-family: Roboto;
     font-size: 16px;
@@ -101,6 +105,10 @@ input:valid {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background: rgba(107, 114, 128, 0.06);
+}
+.CloseButton:hover {
+    background: rgba(87, 92, 104, 0.35);
 }
 #saveTask {
     width: 35px;

@@ -71,18 +71,6 @@ input:valid {
     height:40px;
     gap:21px;
 }
-.SaveButton {
-    width: 185px;
-    height: 40px;
-    border-radius: 5px;
-    border: 0;
-    padding: 8px;
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
 .SaveButtonContent{
     font-family: Roboto;
     font-size: 16px;
@@ -101,6 +89,7 @@ input:valid {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background: rgba(107, 114, 128, 0.06);
 }
 #saveTask {
     width: 35px;
@@ -149,6 +138,10 @@ input:valid {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    background: rgba(245, 100, 151, 0.06);
+}
+.DeleteButton:hover {
+    background: rgba(245, 108, 156, 0.35);
 }
 
 .DeleteButtonContent {

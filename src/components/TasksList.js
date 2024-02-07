@@ -8,7 +8,6 @@ function TasksList({ tasklist, deleteTask, setTaskList, filtered }) {
     
     const taskCompleted = (id) => {
         // console.log(id)
-        // e.preventDefault();
         const element = tasklist.findIndex(elem => elem.id == id);
         const newTaskList = [...tasklist];
         newTaskList[element] = {
@@ -16,7 +15,7 @@ function TasksList({ tasklist, deleteTask, setTaskList, filtered }) {
             isCompleted: !newTaskList[element].isCompleted,
         }
         setTaskList(newTaskList);
-        setChecked(!checked)
+        // setChecked(!checked)
         // console.log(newTaskList)
     }
 
@@ -26,6 +25,7 @@ function TasksList({ tasklist, deleteTask, setTaskList, filtered }) {
                 return ({
                     ...item,
                     title: title,
+                    isCompleted: false,
                 })
             }
             return item

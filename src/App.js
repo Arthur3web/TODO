@@ -10,11 +10,14 @@ function App() {
   const [taskList, setTaskList] = useState([]);
   const [filtered, setFiltered] = useState(taskList);
 
+
+
   useEffect( () => {
     setFiltered(taskList)
   }, [taskList])
 
 
+  
   
   const handleInputChange = (p) => {
     setTask(p.target.value)

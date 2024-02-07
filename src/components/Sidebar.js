@@ -18,6 +18,7 @@ function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFi
         setFiltered(taskList);
         break;
       case "Done":
+        var myCheckbox = document.getElementById("checkbox");
         const done = [...taskList].filter(function(hero) {
           return hero.isCompleted == true
         })
@@ -37,6 +38,13 @@ function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFi
     setOpen(false);
 
   }
+
+
+
+
+
+
+
 
   return (
     <div className="SideBar">
@@ -65,7 +73,7 @@ function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFi
           )}
         </div>
 
-        <div className="DateFilterTaskButton">
+        <div className="DateFilterTaskButton" >
           <img src="/assets/arrows.svg" alt="arrows" />
           <p className="DateFilterTaskButtonContent">Date</p>
         </div>
@@ -75,7 +83,7 @@ function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFi
         <p className="AddTaskButtonContent" >AddTask</p>
       </button>
         {openModal && <Modal closeModal={setOpenModal}  addTask={addTask} 
-        handleInputChange={handleInputChange} task={task}/>}
+        handleInputChange={handleInputChange} task={task} />}
       
     </div>
   );
