@@ -3,7 +3,7 @@ import "./ModalDeleteTask.css"
 
 
 
-function ModalDeleteTask ({ closeModal, deleteTask, task, setOpen }) {
+function ModalDeleteTask ({ closeModal, deleteTask, task, setOpenParameters }) {
    
     let menuRef = useRef(); //настройка закрытия модального окна
     
@@ -11,6 +11,7 @@ function ModalDeleteTask ({ closeModal, deleteTask, task, setOpen }) {
         let handler = (event) => {
         if (!menuRef.current.contains(event.target)) {
             closeModal(false);
+            setOpenParameters(false);
         }
     };
         document.addEventListener("mousedown", handler);
@@ -19,13 +20,13 @@ function ModalDeleteTask ({ closeModal, deleteTask, task, setOpen }) {
         };
     });
 
-    //////
 
     // const handleKeyDown = event => {
         
     //     if (event.key === 'Escape') {
-    //         closeModal(false);
-    //         setOpen(false);
+    //         // closeModal(false);
+    //         // setOpen(false);
+    //         alert("вы нажали кнопку ESC")
     //     }
     // }
 
@@ -33,8 +34,9 @@ function ModalDeleteTask ({ closeModal, deleteTask, task, setOpen }) {
     function deleteTaskButton (id) { 
         deleteTask(id);
         closeModal(false);
-        setOpen(false);
+        setOpenParameters(false);
     }
+
 
 
     return (
@@ -51,7 +53,7 @@ function ModalDeleteTask ({ closeModal, deleteTask, task, setOpen }) {
                         <img src="/assets/trash.svg" alt="trash"/>
                         <p className='DeleteButtonContent'>Delete</p>
                     </button>
-                    <button className='CloseButton' onClick={()=>{closeModal(false); setOpen(false)}}>
+                    <button className='CloseButton' onClick={()=>{closeModal(false); setOpenParameters(false)}}>
                         <img src="/assets/Vector_s.svg" alt="Vector_s"/>
                         <p>Close</p>
                     </button>

@@ -1,48 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "./Modal";
 
 
 
-function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFiltered}) {
-  const [isOpen, setOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState("All");
-  const arr = ["All", "Done", "Undone"];
-  const [openModal, setOpenModal] = useState(false);
+function Sidebar({ addTask, handleInputChange, task, selectedData, handleChange, arr, setOpen, isOpen, openModal, setOpenModal, compare }) {
   
-
-
-  function handleChange(el) {
-    setSelectedData(el);
-    switch (el) {
-      case "All":
-        setFiltered(taskList);
-        break;
-      case "Done":
-        var myCheckbox = document.getElementById("checkbox");
-        const done = [...taskList].filter(function(hero) {
-          return hero.isCompleted == true
-        })
-        setFiltered(done);
-        console.log(done)
-        break;
-      case "Undone":
-        const undone = taskList.filter(function(hero) {
-          return hero.isCompleted == false
-        })
-        setFiltered(undone)
-        console.log(undone)
-        break;
-      default:
-        alert( "Нет таких значений" );
-    }
-    setOpen(false);
-
-  }
-
-
-
-
-
 
 
 
@@ -53,9 +15,8 @@ function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFi
           <img className="CalendarIcon" src="/assets/Vector.svg" alt="Vector" />
           <p className="CalendarDate">Today</p>
         </div>
-
         <div className="WrapperFilterTaskList">
-          <button className="MenuButtonFilterTaskList" onClick={() => setOpen(!isOpen)}>
+          <button className="MenuButtonFilterTaskList" onClick={() => setOpen(!isOpen)}  >
             <div className="MarkAll">
               <img src="/assets/done-circle.svg" alt="Done_circle" />
               <p className="ValueMark">{selectedData}</p>
@@ -72,19 +33,17 @@ function Sidebar({addTask, handleInputChange, task, taskList, setTaskList, setFi
             </div>
           )}
         </div>
-
-        <div className="DateFilterTaskButton" >
+        <button className="DateFilterTaskButton" onClick={()=>compare}>
           <img src="/assets/arrows.svg" alt="arrows" />
           <p className="DateFilterTaskButtonContent">Date</p>
-        </div>
+        </button>
       </div>
       <button className="AddTaskButton" onClick={()=>{setOpenModal(true)}}>
         <img src="/assets/Vector_2.svg" alt="vector_2"  />
         <p className="AddTaskButtonContent" >AddTask</p>
       </button>
-        {openModal && <Modal closeModal={setOpenModal}  addTask={addTask} 
+        {openModal && <Modal closeModal={setOpenModal} addTask={addTask} 
         handleInputChange={handleInputChange} task={task} />}
-      
     </div>
   );
 }

@@ -3,11 +3,9 @@ import "./ModalEditTask.css"
 
 
 
-function ModalEditTask ({ closeModal, task, saveEditTask, setOpen }) {
+function ModalEditTask ({ closeModal, task, saveEditTask, setOpenParameters }) {
     const [note, setNote] = useState(task.title);
-    const [newTaskList, setNewTaskList] = useState();
    
-    
     
     let menuRef = useRef(); //настройка закрытия модального окна при клике вне его поля
     
@@ -15,7 +13,7 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpen }) {
         let handler = (event) => {
         if (!menuRef.current.contains(event.target)) {
             closeModal(false);
-            setOpen(false);
+            setOpenParameters(false);
         }
     };
         document.addEventListener("mousedown", handler);
@@ -24,43 +22,38 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpen }) {
         };
     });
 
-    //////
 
-
-    const handleKeyDown = event => { //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
-        // console.log(event.key);
-    
+    const handleKeyDown = event => { //настройка закрытия модального окна при нажатии на клавиши Enter и Esc  
         if (event.key === 'Enter') {
-        //   console.log('✅ Enter key pressed');
-            
-            closeModal(false);  
-            setOpen(false);                 
+            if (note !== "") {
+                saveEditTask(task.id, note);
+                closeModal(false);  
+                setOpenParameters(false); 
+            }                
         }
-        
         if (event.key === 'Escape') {
             closeModal(false);
-            setOpen(false)
+            setOpenParameters(false)
         }
     }
-    //////
 
 
-    function handleInputChangeEditTask (p)  {
-        setNote(p.target.value);
-        // console.log(note) 
-        // console.log(task) 
+    function handleInputChangeEditTask (e)  {
+        setNote(e.target.value);
     }
     
    
     function editTask (id) { 
-        saveEditTask(task.id, note);
-        closeModal(false);
-        setOpen(false);
-        console.log(task)
-        
+        if (note !== "") {
+            saveEditTask(task.id, note);
+            closeModal(false);
+            setOpenParameters(false);
+            console.log(task) 
+        }
     }
     
     
+
 
     return (
         <div className='ModalBackgroundEditTask'>
@@ -69,14 +62,14 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpen }) {
                     <h1 className="TitleModal">Edit task</h1>
                 </div>
                 <div className='Body'>
-                    <input className="InputBody" value={note} onChange={handleInputChangeEditTask} autoFocus={true} onKeyDown={handleKeyDown}/>
+                    <input className="InputBody" value={note} onChange={handleInputChangeEditTask} autoFocus={true} onKeyDown={handleKeyDown} required/>
                 </div>
                     <div className='Footer'>
                     <button className='SaveButton' onClick={() => editTask(task.id, note)} >
                         <img src="/assets/Check_ring.svg" alt="Check_ring"/>
                         <p className='SaveButtonContent'>Save</p>
                     </button>
-                    <button className='CloseButton' onClick={() => {closeModal(false); setOpen(false)}}>
+                    <button className='CloseButton' onClick={() => {closeModal(false); setOpenParameters(false)}}>
                         <img src="/assets/Vector_s.svg" alt="Vector_s"/>
                         <p>Close</p>
                     </button>
@@ -84,8 +77,6 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpen }) {
             </div>
         </div>
     );
-
-
 }
 
 export default ModalEditTask

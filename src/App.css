@@ -125,9 +125,15 @@
   width: 185px;
   height: 40px;
   color: #6B7280;
-  background: rgba(147, 51, 234, 0.006);
+  background: inherit;
   border-radius: 10px;
   border:0;
+}
+.MenuButtonFilterTaskList:hover {
+  background: rgba(147, 51, 234, 0.25);
+}
+.MenuButtonFilterTaskList:active {
+  background: rgba(147, 51, 234, 0.25);
 }
 
 .MarkAll {
@@ -180,20 +186,26 @@
   cursor: pointer;
 }
 .AvailablesMarks:hover {
-  background:rgba(147, 51, 234, 0.06);
+  background:rgba(147, 51, 234, 0.25);
 }
 .AvailablesMarks:active {
   background: rgba(147, 51, 234, 0.25);
 }
 
 .DateFilterTaskButton {
-  width: 70px;
-  height: 19px;
-  padding: 0 0 0 6px;
+  height: 40px;
+  padding: 0 0 0 13px;
   gap: 10px;
   display: flex;
-  margin: 0 0 0 11px;
+  /* margin: 0 0 0 11px; */
   cursor: pointer;
+  align-items: center;
+  border-radius: 10px;
+  border: 0;
+  background:inherit;
+}
+.DateFilterTaskButton:hover {
+  background: rgba(147, 51, 234, 0.25);
 }
 
 .DateFilterTaskButtonContent {
@@ -261,6 +273,9 @@
   /* cursor: pointer;   */
   margin: 0 0 10px 0;
 }
+.Task:hover {
+  background: rgba(147, 51, 234, 0.25);
+}
 
 .Content {
   display: flex;
@@ -288,6 +303,7 @@
   width: 20px;
   height: 20px;
   position: relative;
+  cursor: pointer;
 }
 
 .custom-checkbox .checkbox::before {
@@ -323,10 +339,6 @@
 .custom-checkbox input:checked ~ .checkbox {
   border: 2px solid #9333EA;
 }
-
-
-
-
 
 .TaskContent {
   width: 290px;
@@ -365,7 +377,7 @@
   width: 15px;
   border: 0;
   cursor: pointer;
-  background: rgba(147, 51, 234, 0.006);
+  background: inherit;
 }
 
 .MenuOperationTask {
@@ -392,8 +404,9 @@
   cursor: pointer;
 }
 .crossText {
-  color: #ffffff;
-  background: red;
+  color: #9333EA;
+  text-decoration: line-through;
+  font-style: italic;
 }
 .listItem {
   color: black;

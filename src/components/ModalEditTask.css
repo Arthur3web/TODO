@@ -21,3 +21,10 @@
     flex-direction: column;
     align-items: center;
 }
+input:invalid {
+	border-color: red;
+}
+input,
+input:valid {
+	border-color: #ccc;
+}

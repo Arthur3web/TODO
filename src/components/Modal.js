@@ -4,8 +4,9 @@ import "./Modal.css"
 
 
 
-function Modal ({closeModal,addTask,handleInputChange,task}) {
+function Modal ({ closeModal, addTask, handleInputChange, task}) {
     const [value, setValue]=useState("");
+
 
     let menuRef = useRef(); //настройка закрытия модального окна
     
@@ -21,8 +22,6 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
         };
     });
 
-    //////
-
 
     const handleKeyDown = event => {
         // console.log(event.key);
@@ -35,12 +34,10 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
                 closeModal(false);                   
             } 
         }
-        
         if (event.key === 'Escape') {
             closeModal(false);
         }
     }
-
 
 
    function saveTask () {
@@ -49,6 +46,9 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
       closeModal(false);
     }
    }
+
+
+
 
     return (
         <div className='ModalBackground' >
@@ -72,10 +72,8 @@ function Modal ({closeModal,addTask,handleInputChange,task}) {
                     </button>
                 </div>
             </div>
-        </div>
-        
-    );
-    
+        </div>  
+    );  
 }
 
 export default Modal
