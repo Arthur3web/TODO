@@ -1,49 +1,93 @@
 import React from "react";
 import Modal from "./Modal";
 
+function Sidebar({
+  addTask,
+  handleInputChange,
+  task,
+  selectedData,
+  handleChange,
+  arr,
+  setOpen,
+  isOpen,
+  openModal,
+  setOpenModal,
+  handleTime,
+  taskTime,
+  setTaskNew,
+  arr1,
+  setFiltered,
+  taskList,
+  setSelectedData,
+}) {
 
 
-function Sidebar({ addTask, handleInputChange, task, selectedData, handleChange, arr, setOpen, isOpen, openModal, setOpenModal, compare }) {
-  
+  const handleOpenedFilter = (name) => {
+    // if(name !== selectedData) return
+    // setOpen(!isOpen)
+    if(name == "Today") {
+      setFiltered(taskList.filter(item => item.taskTime == new Date()))
+      setSelectedData("All")
+      console.log("AAAAAAAAAAAAAAAAA")
+    } else if (name == selectedData) {
+      setOpen(!isOpen)
+    }
 
-
+  }
 
   return (
     <div className="SideBar">
       <div className="BodySidebar">
-        <div className="CalendarButton">
-          <img className="CalendarIcon" src="/assets/Vector.svg" alt="Vector" />
-          <p className="CalendarDate">Today</p>
-        </div>
-        <div className="WrapperFilterTaskList">
-          <button className="MenuButtonFilterTaskList" onClick={() => setOpen(!isOpen)}  >
-            <div className="MarkAll">
-              <img src="/assets/done-circle.svg" alt="Done_circle" />
-              <p className="ValueMark">{selectedData}</p>
+      {
+        arr1.map(item => 
+          <div>
+            <div className="CalendarButton" onClick={() => handleOpenedFilter(item.name)}> 
+              <img src={item.path} alt="Vector" className="CalendarIcon"/>
+              <p className="CalendarDate">{item.name}</p>
             </div>
-          </button>
-          {isOpen && (
-            <div className="MenuListFilterTaskList">
-              {arr.map((el) => (
-                <div className="AvailablesMarks" onClick={() => handleChange(el)}>
-                  <img src="/assets/done-circle.svg" alt="Done_circle" />
-                  <p>{el}</p>
+            {
+              item.name === selectedData && (isOpen && 
+                <div className="MenuListFilterTaskList">
+                  {
+                    arr.map((el, ind) => 
+                    <div
+                    id={el + ind}
+                    className={`AvailablesMarks + ${
+                      el === selectedData && "Active"
+                    }`}
+                    onClick={() => handleChange(el)}
+                  >
+                    <img src="/assets/done-circle.svg" alt="Done_circle" />
+                    <p>{el}</p>
+                  </div>
+                    )}
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
-        <button className="DateFilterTaskButton" onClick={()=>compare}>
-          <img src="/assets/arrows.svg" alt="arrows" />
-          <p className="DateFilterTaskButtonContent">Date</p>
-        </button>
+                )
+            }
+          </div>
+          )    
+      }
       </div>
-      <button className="AddTaskButton" onClick={()=>{setOpenModal(true)}}>
-        <img src="/assets/Vector_2.svg" alt="vector_2"  />
-        <p className="AddTaskButtonContent" >AddTask</p>
+      <button
+        className="AddTaskButton"
+        onClick={() => {
+          setOpenModal(true);
+        }}
+      >
+        <img src="/assets/Vector_2.svg" alt="vector_2" />
+        <p className="AddTaskButtonContent">AddTask</p>
       </button>
-        {openModal && <Modal closeModal={setOpenModal} addTask={addTask} 
-        handleInputChange={handleInputChange} task={task} />}
+      {openModal && (
+        <Modal
+          closeModal={setOpenModal}
+          addTask={addTask}
+          taskTime={taskTime}
+          handleInputChange={handleInputChange}
+          task={task}
+          handleTime={handleTime}
+          setTaskNew={setTaskNew}
+        />
+      )}
     </div>
   );
 }

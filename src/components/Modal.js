@@ -4,7 +4,7 @@ import "./Modal.css"
 
 
 
-function Modal ({ closeModal, addTask, handleInputChange, task}) {
+function Modal ({ closeModal, addTask, handleInputChange, task, handleTime, taskTime, setTaskNew}) {
     const [value, setValue]=useState("");
 
 
@@ -14,6 +14,10 @@ function Modal ({ closeModal, addTask, handleInputChange, task}) {
         let handler = (event) => {
         if (!menuRef.current.contains(event.target)) {
             closeModal(false);
+            setTaskNew({
+                title: '',
+                // timeEnd: ''
+            })
         }
     };
         document.addEventListener("mousedown", handler);
@@ -24,8 +28,6 @@ function Modal ({ closeModal, addTask, handleInputChange, task}) {
 
 
     const handleKeyDown = event => {
-        // console.log(event.key);
-    
         if (event.key === 'Enter') {
         //   console.log('✅ Enter key pressed');
             if (task !== "") {
@@ -36,16 +38,21 @@ function Modal ({ closeModal, addTask, handleInputChange, task}) {
         }
         if (event.key === 'Escape') {
             closeModal(false);
+            setTaskNew({
+                title: '',
+                timeEnd: ''
+            })
         }
     }
 
 
    function saveTask () {
-    if (task !== "") {
+    if ((task !== "") ) {
       addTask(value)
       closeModal(false);
     }
    }
+
 
 
 
@@ -60,6 +67,7 @@ function Modal ({ closeModal, addTask, handleInputChange, task}) {
                     <input className="InputBody" placeholder="Enter text..." 
                     onChange={handleInputChange} value={task} autoFocus={true}
                     onKeyDown={handleKeyDown} required/>
+                    <input type="date" className='DateEnd' onChange={handleTime}/>
                 </div>
                 <div className='Footer'>
                     <button className='SaveButton' onClick={saveTask}>

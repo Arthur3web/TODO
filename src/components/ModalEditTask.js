@@ -5,6 +5,7 @@ import "./ModalEditTask.css"
 
 function ModalEditTask ({ closeModal, task, saveEditTask, setOpenParameters }) {
     const [note, setNote] = useState(task.title);
+    const [noteTime, setNoteTime] = useState(task.timeEnd);
    
     
     let menuRef = useRef(); //настройка закрытия модального окна при клике вне его поля
@@ -26,7 +27,7 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpenParameters }) {
     const handleKeyDown = event => { //настройка закрытия модального окна при нажатии на клавиши Enter и Esc  
         if (event.key === 'Enter') {
             if (note !== "") {
-                saveEditTask(task.id, note);
+                saveEditTask(task.id, note, noteTime);
                 closeModal(false);  
                 setOpenParameters(false); 
             }                
@@ -41,11 +42,13 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpenParameters }) {
     function handleInputChangeEditTask (e)  {
         setNote(e.target.value);
     }
-    
+    function handleInputChangeEditTaskTime (e) {
+        setNoteTime(e.target.value);
+    }
    
     function editTask (id) { 
         if (note !== "") {
-            saveEditTask(task.id, note);
+            saveEditTask(task.id, note, noteTime);
             closeModal(false);
             setOpenParameters(false);
             console.log(task) 
@@ -63,6 +66,7 @@ function ModalEditTask ({ closeModal, task, saveEditTask, setOpenParameters }) {
                 </div>
                 <div className='Body'>
                     <input className="InputBody" value={note} onChange={handleInputChangeEditTask} autoFocus={true} onKeyDown={handleKeyDown} required/>
+                    <input type="date" className='DateEnd' value={noteTime} onChange={handleInputChangeEditTaskTime}/>
                 </div>
                     <div className='Footer'>
                     <button className='SaveButton' onClick={() => editTask(task.id, note)} >

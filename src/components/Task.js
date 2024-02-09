@@ -4,10 +4,8 @@ import ModalEditTask from "./ModalEditTask";
 
 
 
-const Task = ({ task, deleteTask, taskCompleted, saveEditTask }) => { //Деструктуризация
+const Task = ({ task, deleteTask, taskCompleted, saveEditTask, openModalEditTask, setOpenModalEditTask, openModalDeleteTask, setOpenModalDeleteTask }) => { //Деструктуризация
     const [isOpenParameters, setOpenParameters] = useState(false);
-    const [openModalDeleteTask, setOpenModalDeleteTask] = useState(false);
-    const [openModalEditTask, setOpenModalEditTask] = useState(false);
 
     
     let menuRef = useRef();
@@ -39,7 +37,7 @@ const Task = ({ task, deleteTask, taskCompleted, saveEditTask }) => { //Дест
                 <div className={task.isCompleted ? "crossText" : "listItem"} >{task.title}</div>
             </div>
             <div className="TimeTask">
-                <p className='DateTask'>{task.time}</p>
+                <p className='DateTask'>{task.timeEnd}</p>
                 <div ref={menuRef} className="ParameterTask">                         
                     <button className="ParameterTaskButton" onClick={() => setOpenParameters(!isOpenParameters)}>
                         <img src="/assets/Vector_3.svg" alt="vector_3" />
