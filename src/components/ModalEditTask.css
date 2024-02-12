@@ -1,4 +1,4 @@
-.ModalBackgroundEditTask {
+.background-modal-edit-task {
     position: fixed;
     top: 0;
     left: 0;
@@ -10,7 +10,7 @@
     justify-content: center;
     z-index: 10;
 }
-.ModalTodoWrapperEditTask {
+.wrapper-modal-edit-task {
     width: 466px;
     height: 181px;
     border-radius: 10px;

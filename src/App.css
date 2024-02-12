@@ -1,4 +1,4 @@
-.Wrapper{
+.wrapper{
   max-width: 1366px;
   max-height: 1024px;
   width: 100%;
@@ -8,7 +8,7 @@
   justify-content: space-between; 
 }
 
-.TitleWrapper {
+.title-wrapper {
   color: #404040;
   font-size: 96px;
   font-family: Roboto;
@@ -21,15 +21,14 @@
   }
 }
 
-.TodoContainer {
+.todo-container {
   display: flex;
   flex-direction: column;
   align-items: baseline;
   margin: 0 90px 0 0;
-  
 }
 
-.CapTodoContainer {
+.todo-container-header {
   width: 672px;
   height: 47px;
   background-color: rgba(244, 244, 244, 1);
@@ -40,7 +39,7 @@
   align-items: center; 
 } 
 
-.To-Do-Cap {
+.title {
   width: 55px;
   height: 23px;
   color: rgba(147, 51, 234, 1);
@@ -51,7 +50,7 @@
   cursor: pointer;
 }
 
-.Username-Cap {
+.username {
   width: 76px;
   height: 19px;
   color: rgba(147, 51, 234, 1);
@@ -61,11 +60,11 @@
   line-height: 18.75px;
 }
 
-.Avatar-Cap {
+.user {
   cursor: pointer;
 }
 
-.BodyTodoContainer {
+.todo-container-content {
   width: 672px;
   height: 343px;
   padding: 31px 0 0 0;
@@ -73,19 +72,19 @@
   justify-content: space-between;
 }
 
-.SideBar {
+.side-bar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.BodySidebar {
+.side-bar-content {
   display: flex;
   flex-direction: column;
   gap: 21px;
 }
 
-.CalendarButton {
+.filter-button {
   width: 185px;
   height: 40px;
   border-radius: 10px;
@@ -94,68 +93,26 @@
   gap: 12px;
   cursor: pointer;
 }
-.CalendarButton:hover {
+
+.filter-button:hover {
   background: rgba(147, 51, 234, 0.25);
 }
 
-.CalendarIcon{
+.calendar-icon{
   margin: 0 0 0 14px;
 }
 
-.CalendarDate {
-    font-family: Roboto;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 18.75px;
-    color: rgba(147, 51, 234, 1);
-    width: 52px;
-    height: 20px;
-  }
-
-
-.WrapperFilterTaskList {
-  display: flex;
-  flex-direction: column;
-  gap: 21px;
-  position: relative;  
-}
-
-.MenuButtonFilterTaskList {
-  width: 185px;
-  height: 40px;
-  color: #6B7280;
-  background: inherit;
-  border-radius: 10px;
-  border:0;
-}
-.MenuButtonFilterTaskList:hover {
-  background: rgba(147, 51, 234, 0.25);
-}
-.MenuButtonFilterTaskList:active {
-  background: rgba(147, 51, 234, 0.25);
-}
-
-.MarkAll {
-  width: 53px;
-  height: 24px;
-  color: #6B7280;
-  gap: 10px;
-  display: flex;
-  margin: 0 0 0 13px;
-  cursor: pointer;
-  align-items: center;  
-}
-
-.ValueMark {
-  width: 19px;
-  height: 19px;
+.calendar-date {
   font-family: Roboto;
-  font-size: 16px;;
+  font-size: 16px;
   font-weight: 400;
   line-height: 18.75px;
+  color: #404040;
+  width: 52px;
+  height: 20px;
 }
 
-.MenuListFilterTaskList {
+.menu-filter-task-list {
   width: 185px;
   height: 140px;
   border-radius: 10px;
@@ -167,8 +124,7 @@
   flex-direction: column;
 }
 
-
-.AvailablesMarks {
+.availables-marks {
   width: 185px;
   height: 40px;
   border-radius: 10px;
@@ -184,43 +140,17 @@
   color: #6B7280;
   cursor: pointer;
 }
-.AvailablesMarks:hover {
+
+.availables-marks:hover {
   background:rgba(147, 51, 234, 0.25);
 }
-.Active {
+
+.active {
   background: rgba(147, 51, 234, 0.25);;
-}
-/* .AvailablesMarks:active {
-  background: rgba(147, 51, 234, 0.25);
-} */
-
-.DateFilterTaskButton {
-  height: 40px;
-  padding: 0 0 0 13px;
-  gap: 10px;
-  display: flex;
-  /* margin: 0 0 0 11px; */
-  cursor: pointer;
-  align-items: center;
-  border-radius: 10px;
-  border: 0;
-  background:inherit;
-}
-.DateFilterTaskButton:hover {
-  background: rgba(147, 51, 234, 0.25);
+  color: rgba(147, 51, 234, 1);
 }
 
-.DateFilterTaskButtonContent {
-  width: 33px;
-  height: 19px;
-  color: #6B7280;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 18.75px;
-}
-
-.AddTaskButton {
+.add-task-button {
   width: 185px;
   height: 40px;
   background: rgba(147, 51, 234, 0.06);
@@ -233,11 +163,12 @@
   position: relative;
   border: 0;
 }
-.AddTaskButton:hover {
+
+.add-task-button:hover {
   background: rgba(147, 51, 234, 0.25);
 }
 
-.AddTaskButtonContent {
+.add-task-button-content {
   width: 63px;
   height: 19px;
   font-family: Roboto;
@@ -247,7 +178,7 @@
   color: rgba(147, 51, 234, 1);
 }
 
-.TaskList {
+.task-list {
   display: flex;
   flex-direction: column;
   width: 466px;
@@ -258,11 +189,12 @@
   gap: 10px;
   overflow-y: scroll;
 }
-.TaskList::-webkit-scrollbar {
-  display: none;
- }
 
-.Task {
+.task-list::-webkit-scrollbar {
+  display: none;
+}
+
+.task {
   border: 0;
   background: rgba(147, 51, 234, 0.06);
   width: 428px;
@@ -276,24 +208,23 @@
   margin: 0 0 10px 0;
   gap: 10px;
 }
-.Task:hover {
+
+.task:hover {
   background: rgba(147, 51, 234, 0.25);
 }
-
-.Content {
+.task-content {
   display: flex;
   gap:10px;
   width: auto;
   height: auto;
   overflow: hidden;
 }
-.Check {
-  border: 0;
-}
+
 .custom-checkbox {
   display: flex;
   align-items: center;
 }
+
 .hidden-checkbox {
   -webkit-appearance: none;
   position: absolute;
@@ -342,25 +273,23 @@
   border: 2px solid #9333EA;
 }
 
-.TaskContent {
+.task-content {
   width: 290px;
-  height: 19px;
   font-family: Roboto;
   font-size: 19px;
   font-weight: 400;
   line-height: 18.75px;
   color: rgba(0,0,0,1);
   overflow: hidden;
-  
 }
 
-.TimeTask {
+.task-content-date {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.DateTask {
+.task-content-date-end {
   font-family: Roboto;
   font-size: 14px;
   font-weight: 400;
@@ -369,21 +298,21 @@
   width: 66px;
 }
 
-.ParameterTask {
+.task-contetnt-parameter-task {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   position: relative;
 }
 
-.ParameterTaskButton {
+.parameter-task-button {
   width: 15px;
   border: 0;
   cursor: pointer;
   background: inherit;
 }
 
-.MenuOperationTask {
+.menu-operation-task {
   width: 53px;
   height: 24px;
   border: 1px solid #7D40FF;
@@ -396,28 +325,25 @@
   background: white;
   z-index: 5;
 }
-.editButton {
+
+.menu-operation-task-edit-button {
   border: 0;
   background: white;
   cursor: pointer;
 }
-.editButton:hover {
-  background: rgba(87, 92, 104, 0.35);
-}
-.deleteButton {
+
+.menu-operation-task-delete-button {
   border: 0;
   background: white;
   cursor: pointer;
 }
-.deleteButton:hover {
-  background: rgba(245, 108, 156, 0.35);
-}
+
 .crossText {
   color: #9333EA;
   text-decoration: line-through;
   font-style: italic;
 }
+
 .listItem {
   color: black;
 }
-

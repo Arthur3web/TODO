@@ -5,57 +5,56 @@ function Sidebar({
   addTask,
   handleInputChange,
   task,
-  selectedData,
-  handleChange,
-  arr,
+  selectedStatus,
+  handleFilterChange,
+  statusList,
   setOpen,
   isOpen,
-  openModal,
-  setOpenModal,
-  handleTime,
+  isOpenModalAddTask,
+  setOpenModalAddTask,
+  handleTimeChange,
   taskTime,
   setTaskNew,
-  arr1,
-  setFiltered,
+  sideBarFilter,
+  setFilteredTaskList,
   taskList,
-  setSelectedData,
+  setSelectedStatus,
 }) {
 
 
   const handleOpenedFilter = (name) => {
-    // if(name !== selectedData) return
-    // setOpen(!isOpen)
     if(name == "Today") {
-      setFiltered(taskList.filter(item => item.taskTime == new Date()))
-      setSelectedData("All")
+      // setFilteredTaskList(taskList.filter(item => item.timeEnd == new Date().getDay()))
+      console.log(taskList.taskTime)
+      setSelectedStatus("All")
       console.log("AAAAAAAAAAAAAAAAA")
-    } else if (name == selectedData) {
+    } else if (name == selectedStatus) {
       setOpen(!isOpen)
     }
 
   }
 
   return (
-    <div className="SideBar">
-      <div className="BodySidebar">
+    <div className="side-bar">
+      <div className="side-bar-content">
       {
-        arr1.map(item => 
+        sideBarFilter.map(item => 
           <div>
-            <div className="CalendarButton" onClick={() => handleOpenedFilter(item.name)}> 
-              <img src={item.path} alt="Vector" className="CalendarIcon"/>
-              <p className="CalendarDate">{item.name}</p>
+            <div className="filter-button" onClick={() => handleOpenedFilter(item.name)}> 
+              <img src={item.path} alt="Vector" className="calendar-icon"/>
+              <p className="calendar-date">{item.name}</p>
             </div>
             {
-              item.name === selectedData && (isOpen && 
-                <div className="MenuListFilterTaskList">
+              item.name === selectedStatus && (isOpen && 
+                <div className="menu-filter-task-list">
                   {
-                    arr.map((el, ind) => 
+                    statusList.map((el, ind) => 
                     <div
                     id={el + ind}
-                    className={`AvailablesMarks + ${
-                      el === selectedData && "Active"
+                    className={`availables-marks + ${
+                      el === selectedStatus && "active"
                     }`}
-                    onClick={() => handleChange(el)}
+                    onClick={() => handleFilterChange(el)}
                   >
                     <img src="/assets/done-circle.svg" alt="Done_circle" />
                     <p>{el}</p>
@@ -69,22 +68,22 @@ function Sidebar({
       }
       </div>
       <button
-        className="AddTaskButton"
+        className="add-task-button"
         onClick={() => {
-          setOpenModal(true);
+          setOpenModalAddTask(true);
         }}
       >
         <img src="/assets/Vector_2.svg" alt="vector_2" />
-        <p className="AddTaskButtonContent">AddTask</p>
+        <p className="add-task-button-content">AddTask</p>
       </button>
-      {openModal && (
+      {isOpenModalAddTask && (
         <Modal
-          closeModal={setOpenModal}
+          closeModal={setOpenModalAddTask}
           addTask={addTask}
           taskTime={taskTime}
           handleInputChange={handleInputChange}
           task={task}
-          handleTime={handleTime}
+          handleTimeChange={handleTimeChange}
           setTaskNew={setTaskNew}
         />
       )}

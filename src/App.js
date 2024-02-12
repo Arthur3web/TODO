@@ -1,159 +1,162 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
-import Sidebar from "./components/Sidebar.js"
-
-
+import Sidebar from "./components/Sidebar.js";
 
 function App() {
-  const [task, setTask] = useState("");
   const [taskList, setTaskList] = useState([]);
-  const [filtered, setFiltered] = useState(taskList);
+  // const [filteredTaskList, setFilteredTaskList] = useState(taskList); // гэть
 
-  const [selectedData, setSelectedData] = useState("All"); //sidebar
-  const arr = ["All", "Done", "Undone"];
-  const arr1 = [
+  const [selectedStatus, setSelectedStatus] = useState("All"); //sidebar
+  const statusList = ["All", "Done", "Undone"]; //
+  const sideBarFilter = [
     {
-    name: "Today",
-    path: "/assets/Vector.svg",
-  },
-  {
-    name: /*"All"*/ selectedData,
-    path: "/assets/done-circle.svg",
-  },
-  {
-    name: "Date",
-    path: "/assets/arrows.svg",
-  },];
-  const [menuFiltered, setMenuFiltered] = useState("Today");
+      name: "Today",
+      path: "/assets/Vector_4.svg",
+    },
+    {
+      name: /*"All"*/ selectedStatus,
+      path: "/assets/done-circle.svg",
+    },
+    {
+      name: "Date",
+      path: "/assets/arrows.svg",
+    },
+  ]; //
 
   const [isOpen, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false); 
-  const [openModalEditTask, setOpenModalEditTask] = useState(false);
-  const [openModalDeleteTask, setOpenModalDeleteTask] = useState(false);
-  
+  const [isOpenModalAddTask, setOpenModalAddTask] = useState(false); 
+  const [isOpenModalEditTask, setOpenModalEditTask] = useState(false); 
+  const [isOpenModalDeleteTask, setOpenModalDeleteTask] = useState(false); 
 
-  function handleChange(el) { //фильтр
-    const menu = document.getElementById("MenuButtonFilterTaskList");
-    setSelectedData(el);
+  function handleFilterChange(el) { 
+    //фильтр
+    setSelectedStatus(el);
     switch (el) {
       case "Done":
-        setFiltered(taskList.filter(hero => hero.isCompleted))
-        // setSelectedData("Done")
+        const done = (taskList.filter((hero) => hero.isCompleted));
+        console.log(done)
         break;
       case "Undone":
-        setFiltered(taskList.filter(hero => !hero.isCompleted))
+        const undone = (taskList.filter((hero) => !hero.isCompleted));
+        console.log(undone)
         break;
       default:
-        setFiltered(taskList);
-        // menu.style.backgroundColor="rgba(147, 51, 234, 0.25)";
+        setTaskList(taskList);
+        console.log(taskList)
     }
     setOpen(false);
-
+    // console.log(taskList)
   }
 
   const [taskNew, setTaskNew] = useState({
-    title: '',
-    timeEnd: new Date().toLocaleDateString()
-  })
+    title: "",
+    timeEnd: new Date().getDay(),
+  });
 
-  useEffect( () => {
-    setFiltered(taskList);
-    handleChange(selectedData)
-  }, [taskList])
-
+  // useEffect(() => {
+  //   setTaskList(taskList);
+  //   setTaskList(selectedStatus);
+  // }, [taskList]); //
 
   const handleInputChange = (e) => {
-    setTaskNew(prev => prev, taskNew.title = e.target.value)
-    setTask(e.target.value)
-  }
+    setTaskNew({...taskNew, title: e.target.value}); 
 
-  const handleTime = (e) => {
-    setTaskNew(prev => prev, taskNew.timeEnd = e.target.value)
-  }
-  const addTask = () => {
-      const newTask = {
-        id: Date.now(),
-        ...taskNew,
-        // title: task,
-        time: new Date().toLocaleDateString(),
-        // timeEnd: Date(),
-        isCompleted: false,
-      }
-      setTaskNew({
-        title: '',
-        timeEnd: ''
-      })
-        setTaskList([...taskList, newTask]);
-        // setTask("");
   };
 
+  const handleTimeChange = (e) => { 
+    setTaskNew({...taskNew, timeEnd: e.target.value});
+  };
 
-  function saveEditTask (id,title,timeEnd) {   
-    const newTodo = taskList.map(item => {
-        if(item.id == id) {
-            return ({
-                ...item,
-                title: title,
-                timeEnd: timeEnd,
-                isCompleted: false,
-            })
-        }
-        return item
-    })
-    setTaskList(newTodo);  
+  const addTask = () => {
+    const newTask = {
+      id: Date.now(),
+      ...taskNew,
+      timeStart: new Date().toLocaleDateString(),
+      isCompleted: false,
+    };
+    setTaskNew({
+      title: "",
+      timeEnd: "",
+    });
+    setTaskList([...taskList, newTask]);
+  };
+
+  function saveEditTask(id, title, timeEnd) {
+    const newTodo = taskList.map((item) => {
+      if (item.id == id) {
+        return {
+          ...item,
+          title: title,
+          timeEnd: timeEnd,
+          isCompleted: false,
+        };
+      }
+      return item;
+    });
+    setTaskList(newTodo);
   }
-
 
   const deleteTask = (id) => {
-    setTaskList(taskList.filter(item => item.id !== id))    
+    setTaskList(taskList.filter((item) => item.id !== id));
   };
-  
-  
-  const taskCompleted = (id) => {
-    const element = taskList.findIndex(elem => elem.id == id);
+
+  const toggleTaskStatus = (id) => { 
+    const element = taskList.findIndex((elem) => elem.id == id);
     const newTaskList = [...taskList];
     newTaskList[element] = {
-        ...newTaskList[element],
-        isCompleted: !newTaskList[element].isCompleted,
-    }
+      ...newTaskList[element],
+      isCompleted: !newTaskList[element].isCompleted,
+    };
     setTaskList(newTaskList);
-  }
+  };
 
-  // function compare () {
- 
-  //   setFiltered(taskList.sort(function (a,b) {
-  //     if (a.time > b.time) {
-  //       return 1;
-  //     }
-  //     if (a.time < b.time) {
-  //       return -1;
-  //     }
-  //     return 0;
-  //   }))
-  //   console.log("1111111")
-  // }
-
-
-
-   return (
-    <div className="Wrapper">
-      <div className="TitleWrapper">
+  return (
+    <div className="wrapper">
+      <div className="title-wrapper"> 
         To-Do <span id="text">UI</span>
       </div>
-      <div className="TodoContainer">
-      <div className ='CapTodoContainer'>
-          <p className='To-Do-Cap'>To-Do</p>
-          <p className='Username-Cap'>UserName</p>
-          <img className="Avatar-Cap" src="/assets/bi_person-circle.svg" alt="avatar"/>
+      <div className="todo-container">
+        <div className="todo-container-header"> 
+          <p className="title">To-Do</p> 
+          <p className="username">UserName</p>
+          <img
+            className="user"
+            src="/assets/bi_person-circle.svg"
+            alt="avatar"
+          />
         </div>
-        <div className='BodyTodoContainer'>
-          <Sidebar addTask={addTask} handleInputChange={handleInputChange} task={taskNew.title} taskTime={taskNew.timeEnd} handleChange={handleChange} 
-          selectedData={selectedData} setOpen={setOpen} arr={arr} isOpen={isOpen} openModal={openModal} setOpenModal={setOpenModal} 
-          handleTime={handleTime} setTaskNew={setTaskNew} arr1={arr1} setFiltered={setFiltered} taskList={taskList} setSelectedData={setSelectedData} />
-          <TasksList deleteTask={deleteTask} filtered={filtered} saveEditTask={saveEditTask} taskCompleted={taskCompleted} 
-          openModalDeleteTask={openModalDeleteTask} setOpenModalDeleteTask={setOpenModalDeleteTask} openModalEditTask={openModalEditTask}
-          setOpenModalEditTask={setOpenModalEditTask} />
+        <div className="todo-container-content">
+          <Sidebar
+            addTask={addTask}
+            handleInputChange={handleInputChange}
+            task={taskNew.title}
+            taskTime={taskList.timeEnd}
+            handleFilterChange={handleFilterChange}
+            selectedStatus={selectedStatus}
+            setOpen={setOpen}
+            statusList={statusList}
+            isOpen={isOpen}
+            isOpenModalAddTask={isOpenModalAddTask}
+            setOpenModalAddTask={setOpenModalAddTask}
+            handleTimeChange={handleTimeChange}
+            setTaskNew={setTaskNew}
+            sideBarFilter={sideBarFilter}
+            // setFilteredTaskList={setFilteredTaskList}
+            taskList={taskList}
+            setSelectedStatus={setSelectedStatus}
+          />
+          <TasksList
+            deleteTask={deleteTask}
+            // filteredTaskList={filteredTaskList}
+            saveEditTask={saveEditTask}
+            toggleTaskStatus={toggleTaskStatus}
+            isOpenModalDeleteTask={isOpenModalDeleteTask}
+            setOpenModalDeleteTask={setOpenModalDeleteTask}
+            isOpenModalEditTask={isOpenModalEditTask}
+            setOpenModalEditTask={setOpenModalEditTask}
+            taskList={taskList}
+          />
         </div>
       </div>
     </div>
@@ -161,4 +164,3 @@ function App() {
 }
 
 export default App;
-
