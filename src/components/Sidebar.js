@@ -16,40 +16,35 @@ function Sidebar({
   taskTime,
   setTaskNew,
   sideBarFilter,
-  setFilteredTaskList,
   taskList,
   setSelectedStatus,
 }) {
-
-
   const handleOpenedFilter = (name) => {
-    if(name == "Today") {
-      // setFilteredTaskList(taskList.filter(item => item.timeEnd == new Date().getDay()))
-      console.log(taskList.taskTime)
-      setSelectedStatus("All")
-      console.log("AAAAAAAAAAAAAAAAA")
+    if (name == "Today") {
+      console.log(taskList.taskTime);
+      setSelectedStatus("All");
+      console.log("AAAAAAAAAAAAAAAAA");
     } else if (name == selectedStatus) {
-      setOpen(!isOpen)
+      setOpen(!isOpen);
     }
-
-  }
+  };
 
   return (
     <div className="side-bar">
       <div className="side-bar-content">
-      {
-        sideBarFilter.map(item => 
+        {sideBarFilter.map((item) => (
           <div>
-            <div className="filter-button" onClick={() => handleOpenedFilter(item.name)}> 
-              <img src={item.path} alt="Vector" className="calendar-icon"/>
+            <div
+              className="filter-button"
+              onClick={() => handleOpenedFilter(item.name)}
+            >
+              <img src={item.path} alt="Vector" className="calendar-icon" />
               <p className="calendar-date">{item.name}</p>
             </div>
-            {
-              item.name === selectedStatus && (isOpen && 
-                <div className="menu-filter-task-list">
-                  {
-                    statusList.map((el, ind) => 
-                    <div
+            {item.name === selectedStatus && isOpen && (
+              <div className="menu-filter-task-list">
+                {statusList.map((el, ind) => (
+                  <div
                     id={el + ind}
                     className={`availables-marks + ${
                       el === selectedStatus && "active"
@@ -59,13 +54,11 @@ function Sidebar({
                     <img src="/assets/done-circle.svg" alt="Done_circle" />
                     <p>{el}</p>
                   </div>
-                    )}
-                </div>
-                )
-            }
+                ))}
+              </div>
+            )}
           </div>
-          )    
-      }
+        ))}
       </div>
       <button
         className="add-task-button"

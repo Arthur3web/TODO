@@ -2,8 +2,8 @@ import React from "react";
 import Task from "./Task";
 
 function TasksList({
+  selectedStatus,
   deleteTask,
-  filteredTaskList,
   saveEditTask,
   toggleTaskStatus,
   isOpenModalDeleteTask,
@@ -11,24 +11,30 @@ function TasksList({
   setOpenModalDeleteTask,
   setOpenModalEditTask,
   taskList,
-})
- {
+}) {
+  const filteredTaskList = taskList.filter((el) => {
+    if (selectedStatus === 'Done') return el.isCompleted
+    if (selectedStatus === 'Undone') return !el.isCompleted
+    return true
+  })
+
   return (
-    <div className="task-list" >
+    <div className="task-list">
       <div className="tasks">
-        {taskList.filter(item => !item.isCompleted).map((elem) => (
-          <Task
-            key={elem.id}
-            task={elem}
-            deleteTask={deleteTask}
-            toggleTaskStatus={toggleTaskStatus}
-            saveEditTask={saveEditTask}
-            isOpenModalEditTask={isOpenModalEditTask}
-            setOpenModalEditTask={setOpenModalEditTask}
-            isOpenModalDeleteTask={isOpenModalDeleteTask}
-            setOpenModalDeleteTask={setOpenModalDeleteTask}
-          />
-        ))}
+        {filteredTaskList
+          .map((elem) => (
+            <Task
+              key={elem.id}
+              task={elem}
+              deleteTask={deleteTask}
+              toggleTaskStatus={toggleTaskStatus}
+              saveEditTask={saveEditTask}
+              isOpenModalEditTask={isOpenModalEditTask}
+              setOpenModalEditTask={setOpenModalEditTask}
+              isOpenModalDeleteTask={isOpenModalDeleteTask}
+              setOpenModalDeleteTask={setOpenModalDeleteTask}
+            />
+          ))}
       </div>
     </div>
   );

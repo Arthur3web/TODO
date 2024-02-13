@@ -3,7 +3,7 @@ import "./ModalEditTask.css";
 
 function ModalEditTask({ closeModal, task, saveEditTask, setOpenParameters }) {
   const [note, setNote] = useState(task.title);
-  const [noteTime, setNoteTime] = useState(task.timeEnd);
+  const [noteTime, setNoteTime] = useState(new Date(task.timeEnd));
 
   let menuRef = useRef(); //настройка закрытия модального окна при клике вне его поля
 
@@ -24,7 +24,7 @@ function ModalEditTask({ closeModal, task, saveEditTask, setOpenParameters }) {
     //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
     if (event.key === "Enter") {
       if (note !== "") {
-        saveEditTask(task.id, note, noteTime);
+        saveEditTask(task.id, note, new Date(noteTime));
         closeModal(false);
         setOpenParameters(false);
       }
@@ -44,7 +44,7 @@ function ModalEditTask({ closeModal, task, saveEditTask, setOpenParameters }) {
 
   function editTask(id) {
     if (note !== "") {
-      saveEditTask(task.id, note, noteTime);
+      saveEditTask(task.id, note, new Date(noteTime));
       closeModal(false);
       setOpenParameters(false);
       console.log(task);

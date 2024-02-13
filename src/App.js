@@ -2,23 +2,26 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
 import Sidebar from "./components/Sidebar.js";
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
   const [taskList, setTaskList] = useState([]);
-  // const [filteredTaskList, setFilteredTaskList] = useState(taskList); // гэть
 
   const [selectedStatus, setSelectedStatus] = useState("All"); //sidebar
   const statusList = ["All", "Done", "Undone"]; //
   const sideBarFilter = [
     {
+      id: "Today",
       name: "Today",
       path: "/assets/Vector_4.svg",
     },
     {
+      id: "All",
       name: /*"All"*/ selectedStatus,
       path: "/assets/done-circle.svg",
     },
     {
+      id: "Date",
       name: "Date",
       path: "/assets/arrows.svg",
     },
@@ -32,40 +35,21 @@ function App() {
   function handleFilterChange(el) { 
     //фильтр
     setSelectedStatus(el);
-    switch (el) {
-      case "Done":
-        const done = (taskList.filter((hero) => hero.isCompleted));
-        console.log(done)
-        break;
-      case "Undone":
-        const undone = (taskList.filter((hero) => !hero.isCompleted));
-        console.log(undone)
-        break;
-      default:
-        setTaskList(taskList);
-        console.log(taskList)
-    }
     setOpen(false);
-    // console.log(taskList)
+    console.log(taskList)
   }
 
   const [taskNew, setTaskNew] = useState({
     title: "",
-    timeEnd: new Date().getDay(),
+    timeEnd: new Date(),
   });
-
-  // useEffect(() => {
-  //   setTaskList(taskList);
-  //   setTaskList(selectedStatus);
-  // }, [taskList]); //
 
   const handleInputChange = (e) => {
     setTaskNew({...taskNew, title: e.target.value}); 
-
   };
 
   const handleTimeChange = (e) => { 
-    setTaskNew({...taskNew, timeEnd: e.target.value});
+    setTaskNew({...taskNew, timeEnd: new Date(e.target.value)});
   };
 
   const addTask = () => {
@@ -77,7 +61,7 @@ function App() {
     };
     setTaskNew({
       title: "",
-      timeEnd: "",
+      timeEnd: new Date(),
     });
     setTaskList([...taskList, newTask]);
   };
@@ -112,54 +96,55 @@ function App() {
   };
 
   return (
-    <div className="wrapper">
-      <div className="title-wrapper"> 
-        To-Do <span id="text">UI</span>
-      </div>
-      <div className="todo-container">
-        <div className="todo-container-header"> 
-          <p className="title">To-Do</p> 
-          <p className="username">UserName</p>
-          <img
-            className="user"
-            src="/assets/bi_person-circle.svg"
-            alt="avatar"
-          />
+    <ChakraProvider>
+      <div className="wrapper">
+        <div className="title-wrapper"> 
+          To-Do <span id="text">UI</span>
         </div>
-        <div className="todo-container-content">
-          <Sidebar
-            addTask={addTask}
-            handleInputChange={handleInputChange}
-            task={taskNew.title}
-            taskTime={taskList.timeEnd}
-            handleFilterChange={handleFilterChange}
-            selectedStatus={selectedStatus}
-            setOpen={setOpen}
-            statusList={statusList}
-            isOpen={isOpen}
-            isOpenModalAddTask={isOpenModalAddTask}
-            setOpenModalAddTask={setOpenModalAddTask}
-            handleTimeChange={handleTimeChange}
-            setTaskNew={setTaskNew}
-            sideBarFilter={sideBarFilter}
-            // setFilteredTaskList={setFilteredTaskList}
-            taskList={taskList}
-            setSelectedStatus={setSelectedStatus}
-          />
-          <TasksList
-            deleteTask={deleteTask}
-            // filteredTaskList={filteredTaskList}
-            saveEditTask={saveEditTask}
-            toggleTaskStatus={toggleTaskStatus}
-            isOpenModalDeleteTask={isOpenModalDeleteTask}
-            setOpenModalDeleteTask={setOpenModalDeleteTask}
-            isOpenModalEditTask={isOpenModalEditTask}
-            setOpenModalEditTask={setOpenModalEditTask}
-            taskList={taskList}
-          />
+        <div className="todo-container">
+          <div className="todo-container-header"> 
+            <p className="title">To-Do</p> 
+            <p className="username">UserName</p>
+            <img
+              className="user"
+              src="/assets/bi_person-circle.svg"
+              alt="avatar"
+            />
+          </div>
+          <div className="todo-container-content">
+            <Sidebar
+              addTask={addTask}
+              handleInputChange={handleInputChange}
+              task={taskNew.title}
+              taskTime={taskList.timeEnd}
+              handleFilterChange={handleFilterChange}
+              selectedStatus={selectedStatus}
+              setOpen={setOpen}
+              statusList={statusList}
+              isOpen={isOpen}
+              isOpenModalAddTask={isOpenModalAddTask}
+              setOpenModalAddTask={setOpenModalAddTask}
+              handleTimeChange={handleTimeChange}
+              setTaskNew={setTaskNew}
+              sideBarFilter={sideBarFilter}
+              taskList={taskList}
+              setSelectedStatus={setSelectedStatus}
+            />
+            <TasksList
+              selectedStatus={selectedStatus}
+              deleteTask={deleteTask}
+              saveEditTask={saveEditTask}
+              toggleTaskStatus={toggleTaskStatus}
+              isOpenModalDeleteTask={isOpenModalDeleteTask}
+              setOpenModalDeleteTask={setOpenModalDeleteTask}
+              isOpenModalEditTask={isOpenModalEditTask}
+              setOpenModalEditTask={setOpenModalEditTask}
+              taskList={taskList}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </ChakraProvider>
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Modal.css";
+import { Button, Box, DeleteIcon } from '@chakra-ui/react'
 
 function Modal({
   closeModal,
@@ -72,16 +73,63 @@ function Modal({
           />
           <input type="date" className="modal-content-date-end" onChange={handleTimeChange} />
         </div>
-        <div className="modal-footer">
-          <button className="save-button" onClick={saveTask}>
-            <img src="/assets/Check_ring.svg" alt="Check_ring" />
-            <p className="save-button-content">Save</p>
-          </button>
-          <button className="close-button" onClick={() => closeModal(false)}>
-            <img src="/assets/Vector_s.svg" alt="Vector_s" />
-            <p>Close</p>
-          </button>
-        </div>
+        <Box
+          display='flex'
+          alignItems='center'
+          justifyContent='space-evenly'
+          width='422px'
+          height='40px'
+        >
+            <Button
+              onClick={saveTask}
+              width='185px'
+              height='40px'
+              lineHeight='1.2'
+              transition='all 0.2s cubic-bezier(.08,.52,.52,1)'
+              borderRadius='10px'
+              fontSize='16px'
+              fontWeight='semibold'
+              bg='#ebedf0'
+              color='#67b8cb'
+              _hover={{ bg: '#E0FFFF' }}
+              _active={{
+                bg: '#E0FFFF',
+                transform: 'scale(0.9)',
+                color: '#4682B4', 
+              }}
+              _focus={{
+                boxShadow:
+                '0 0 1px 2px , 0 1px 1px rgba(0, 0, 0, .15)',
+              }}
+              >
+                {/* <DeleteIcon /> */}
+                {/* <img src="/assets/Check_ring.svg" alt="Check_ring" /> */}
+                Save Task
+              </Button>
+            <Button
+              onClick={()=>closeModal(false)}
+              colorScheme='blackAlpha'
+              width='185px'
+              height='40px'
+              lineHeight='1.2'
+              transition='all 0.2s cubic-bezier(.08,.52,.52,1)'
+              borderRadius='10px'
+              fontSize='16px'
+              fontWeight='semibold'
+              bg='#6B7280'
+              _active={{
+                bg: '#6B7280',
+                transform: 'scale(0.9)',
+                color: 'white', 
+              }}
+              _focus={{
+                boxShadow:
+                '0 0 1px 2px black, 0 1px 1px rgba(0, 0, 0, .15)',
+              }}
+            >
+            Close
+            </Button>
+          </Box>
       </div>
     </div>
   );
