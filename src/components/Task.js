@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ModalDeleteTask from "./ModalDeleteTask";
 import ModalEditTask from "./ModalEditTask";
 import { Container, Flex, IconButton, Heading, CheckIcon } from '@chakra-ui/react'
-import { color } from "framer-motion";
+
 
 const Task = ({
   task,
@@ -47,7 +47,7 @@ const Task = ({
           // icon={<CheckIcon />}
           size='xs'
           />
-          <Heading padding='2' maxW='290px' bg='inherit' color='black' fontSize='14px' fontWeight='400' fontFamily='Roboto' lineHeight='18.75px' isTruncated >
+          <Heading className={task.isCompleted ? "crossText" : "listItem"} padding='2' maxW='290px' bg='inherit' color='black' fontSize='14px' fontWeight='400' fontFamily='Roboto' lineHeight='18.75px' isTruncated >
           {task.title}
           </Heading>
         </Flex>

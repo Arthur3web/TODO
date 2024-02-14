@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "./Modal";
+import ModalAddTask from "./ModalAddTask";
 
 function Sidebar({
   addTask,
@@ -33,8 +33,8 @@ function Sidebar({
     <div className="side-bar">
       <div className="side-bar-content">
         {sideBarFilter.map((item) => (
-          <div>
-            <div
+          <div key={item.id}> 
+            <div 
               className="filter-button"
               onClick={() => handleOpenedFilter(item.name)}
             >
@@ -45,7 +45,7 @@ function Sidebar({
               <div className="menu-filter-task-list">
                 {statusList.map((el, ind) => (
                   <div
-                    id={el + ind}
+                    key={el + ind}
                     className={`availables-marks + ${
                       el === selectedStatus && "active"
                     }`}
@@ -70,7 +70,7 @@ function Sidebar({
         <p className="add-task-button-content">AddTask</p>
       </button>
       {isOpenModalAddTask && (
-        <Modal
+        <ModalAddTask
           closeModal={setOpenModalAddTask}
           addTask={addTask}
           taskTime={taskTime}
