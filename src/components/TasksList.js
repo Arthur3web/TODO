@@ -1,5 +1,6 @@
 import React from "react";
 import Task from "./Task";
+import { Flex,Box } from "@chakra-ui/react";
 
 function TasksList({
   selectedStatus,
@@ -19,8 +20,21 @@ function TasksList({
   })
 
   return (
-    <div className="task-list">
-      <div className="tasks">
+    
+    <Flex flexDirection='column'
+    w='466px'
+    h='312px'
+    borderRadius='10px'
+    bg='rgba(244, 244, 244, 1)'
+    p='31px 17px 21px 21px'
+    gap='10px'
+    overflowY='auto'
+    css={{
+      WebkitOverflowScrolling: "touch",
+      msOverflowStyle: "-ms-autohiding-scrollbar"
+    }}
+    >
+      <Box className="tasks">
         {filteredTaskList
           .map((elem) => (
             <Task
@@ -35,8 +49,8 @@ function TasksList({
               setOpenModalDeleteTask={setOpenModalDeleteTask}
             />
           ))}
-      </div>
-    </div>
+      </Box>
+    </Flex>
   );
 }
 

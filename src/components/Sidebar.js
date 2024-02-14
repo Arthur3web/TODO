@@ -30,11 +30,7 @@ function Sidebar({
   handleFilterChange,
   statusList,
   setOpen,
-  // isOpen,
-  isOpenModalAddTask,
-  setOpenModalAddTask,
   handleTimeChange,
-  taskTime,
   setTaskNew,
   sideBarFilter,
   taskList,
@@ -58,11 +54,10 @@ function Sidebar({
       onClose(true)
     }
   }
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { onOpen, onClose, isOpen, onToggle } = useDisclosure();
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      //   console.log('✅ Enter key pressed');
       if (task !== "") {
         addTask(value);
         event.preventDefault();
@@ -105,7 +100,7 @@ function Sidebar({
                 </Text>
               </Flex>
             </MenuButton>
-            {item.name === selectedStatus && isOpen && (
+            {item.name === selectedStatus && onToggle && (
               <MenuList
                 bg="linear-gradient(300deg, #B9D5FF 0, #F6D1FC 98.93%)"
                 border="0"
@@ -179,7 +174,6 @@ function Sidebar({
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <Flex>
           <ModalContent
             w="466px"
             h="181px"
@@ -190,6 +184,7 @@ function Sidebar({
             <ModalHeader
               borderRadius="10px 10px 0 0"
               bg="linear-gradient(#F5EDFD,#FEEFF5)"
+              h='48px'
             >
               <Heading
                 fontFamily="Roboto"
@@ -197,7 +192,7 @@ function Sidebar({
                 fontWeight="700"
                 lineHeight="23.44px"
                 color="#9333EA"
-              >
+                >
                 Create task
               </Heading>
             </ModalHeader>
@@ -224,10 +219,10 @@ function Sidebar({
                 />
               </Flex>
             </ModalBody>
-            <ModalFooter>
+            <ModalFooter py='17px'>
               <Flex
                 alignItems="center"
-                justifyContent="space-evenly"
+                justifyContent="space-between"
                 width="422px"
               >
                 <Button
@@ -263,7 +258,7 @@ function Sidebar({
                   borderRadius="10px"
                   fontSize="16px"
                   fontWeight="semibold"
-                  bg="gray.500"
+                  bg="#6B7280"
                   color="white"
                   _hover={{ bg: "gray.500" }}
                   _active={{
@@ -280,7 +275,6 @@ function Sidebar({
               </Flex>
             </ModalFooter>
           </ModalContent>
-        </Flex>
       </Modal>
     </Flex>
   );

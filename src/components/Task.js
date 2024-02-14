@@ -11,6 +11,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { CheckIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
@@ -40,6 +41,7 @@ const Task = ({
   //     document.removeEventListener("mousedown", handler);
   //   };
   // });
+  const { isActive } = useDisclosure();
 
   return (
     <Container
@@ -55,11 +57,12 @@ const Task = ({
             onClick={() => toggleTaskStatus(task.id)}
             isRound={true}
             variant="outline"
-            colorScheme="gray.900"
+            colorScheme={isActive ? "teal" : 'purple' }
             aria-label="Done"
             fontSize="10px"
             size='xs'
             icon={<CheckIcon />}
+            
           />
           <Text
             className={task.isCompleted ? "crossText" : "listItem"}
