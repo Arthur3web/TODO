@@ -1,8 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import ModalDeleteTask from "./ModalDeleteTask";
 import ModalEditTask from "./ModalEditTask";
-import { Container, Flex, IconButton, Heading, CheckIcon } from '@chakra-ui/react'
-
+import {
+  Container,
+  Flex,
+  IconButton,
+  Text,
+  Image,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
+import { CheckIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const Task = ({
   task,
@@ -32,30 +42,99 @@ const Task = ({
   // });
 
   return (
-    <Container maxW='428px' bg='purple.100' borderRadius='10px' mb='10px'  _hover={{ bg: 'purple.200' }}>
-      <Flex gap='10px' alignItems='center' justifyContent='space-between'>
-        <Flex gap='10px' alignItems='center' >
+    <Container
+      maxW="428px"
+      bg="purple.100"
+      borderRadius="10px"
+      mb="10px"
+      _hover={{ bg: "purple.200" }}
+    >
+      <Flex gap="10px" alignItems="center" justifyContent="space-between">
+        <Flex gap="10px" alignItems="center">
           <IconButton
-          type='checkbox'
-          checked={task.isCompleted}
-          onChange={() => toggleTaskStatus(task.id)}
-          isRound={true}
-          variant='outline'
-          colorScheme='teal'
-          aria-label='Done'
-          fontSize='13px'
-          // icon={<CheckIcon />}
-          size='xs'
+            onClick={() => toggleTaskStatus(task.id)}
+            isRound={true}
+            variant="outline"
+            colorScheme="gray.900"
+            aria-label="Done"
+            fontSize="10px"
+            size='xs'
+            icon={<CheckIcon />}
           />
-          <Heading className={task.isCompleted ? "crossText" : "listItem"} padding='2' maxW='290px' bg='inherit' color='black' fontSize='14px' fontWeight='400' fontFamily='Roboto' lineHeight='18.75px' isTruncated >
-          {task.title}
-          </Heading>
+          <Text
+            className={task.isCompleted ? "crossText" : "listItem"}
+            padding="2"
+            maxW="257px"
+            bg="inherit"
+            fontSize="14px"
+            fontWeight="400"
+            fontFamily="Roboto"
+            lineHeight="18.75px"
+            isTruncated
+          >
+            {task.title}
+          </Text>
         </Flex>
-        <Heading fontSize='14px' color='#6b7280' fontFamily='Roboto' fontWeight='400' lineHeight='16.41px' >
-        {task.timeEnd.toLocaleDateString()}
-        </Heading>
+        <Flex alignItems="center" gap="10px">
+          <Text
+            fontSize="14px"
+            color="#6b7280"
+            fontFamily="Roboto"
+            fontWeight="400"
+            lineHeight="16.41px"
+          >
+            {task.timeEnd.toLocaleDateString()}
+          </Text>
+
+          <Menu >
+            <MenuButton
+              // onClick={() => setOpenParameters(!isOpenParameters)}
+              bg="inherit"
+              size="xs"
+              aria-label="Options"
+            >
+              <Image boxSize="13px" src="/assets/Vector_3.svg" alt="Vector_3" />
+            </MenuButton>
+            <MenuList 
+              borderRadius="10px"
+              border="1px solid #9333EA"
+              bg="white"
+              size='xs'
+              
+            >
+              <MenuItem
+              onClick={() => setOpenModalEditTask(true)}
+              >
+                <EditIcon color="gray.600" />
+              </MenuItem>
+              {isOpenModalEditTask && (
+                <ModalEditTask
+                  closeModal={setOpenModalEditTask}
+                  task={task}
+                  saveEditTask={saveEditTask}
+                  setOpenParameters={setOpenParameters}
+                />
+              )}
+              <MenuItem 
+              onClick={() => setOpenModalDeleteTask(true)}
+              >
+                <DeleteIcon color="red.600" />
+              </MenuItem>
+              {isOpenModalDeleteTask && (
+                <ModalDeleteTask
+                  closeModal={setOpenModalDeleteTask}
+                  deleteTask={deleteTask}
+                  task={task}
+                  setOpenParameters={setOpenParameters}
+                />
+              )}
+            </MenuList>
+          </Menu>
+        </Flex>
       </Flex>
     </Container>
+
+    
     // <div className="task" >
     //   <div className="task-content">
     //     <label className="custom-checkbox">

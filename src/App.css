@@ -125,20 +125,9 @@
 }
 
 .availables-marks {
-  width: 185px;
-  height: 40px;
-  border-radius: 10px;
-  border:0;
-  display: flex;
-  align-items: center;
-  padding: 0 0 0 13px;
-  gap:10px;
-  font-family: Roboto;
-  font-size: 16px;;
-  font-weight: 400;
-  line-height: 18.75px;
-  color: #6B7280;
-  cursor: pointer;
+  background: inherit;
+
+
 }
 
 .availables-marks:hover {
@@ -150,7 +139,7 @@
   color: rgba(147, 51, 234, 1);
 }
 
-.add-task-button {
+/* .add-task-button {
   width: 185px;
   height: 40px;
   background: rgba(147, 51, 234, 0.06);
@@ -176,7 +165,7 @@
   font-weight: 400;
   line-height: 18.75px;
   color: rgba(147, 51, 234, 1);
-}
+} */
 
 .task-list {
   display: flex;
@@ -311,7 +300,7 @@
   cursor: pointer;
   background: inherit;
 }
-
+/* 
 .menu-operation-task {
   width: 53px;
   height: 24px;
@@ -336,12 +325,12 @@
   border: 0;
   background: white;
   cursor: pointer;
-}
+} */
 
 .crossText {
-  color: #9333EA;
   text-decoration: line-through;
   font-style: italic;
+  color: #9333EA;
 }
 
 .listItem {
