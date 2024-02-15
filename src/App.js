@@ -9,7 +9,9 @@ import {
   Image,
   Heading,
   Text,
+  HStack,
 } from "@chakra-ui/react";
+// import { newStyleTheme } from "./styles/theme.js";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
@@ -39,11 +41,14 @@ function App() {
   const [isOpenModalEditTask, setOpenModalEditTask] = useState(false);
   const [isOpenModalDeleteTask, setOpenModalDeleteTask] = useState(false);
 
+
+
+  // console.log('selectedStatus', selectedStatus)
   function handleFilterChange(el) {
     //фильтр
     setSelectedStatus(el);
     setOpen(false);
-    console.log(taskList);
+    // console.log(taskList);
   }
 
   const [taskNew, setTaskNew] = useState({
@@ -63,7 +68,7 @@ function App() {
     const newTask = {
       id: Date.now(),
       ...taskNew,
-      timeStart: new Date().toLocaleDateString(),
+      timeStart: /*new Date().toLocaleDateString()*/ new Date(),
       isCompleted: false,
     };
     setTaskNew({
@@ -103,7 +108,7 @@ function App() {
   };
 
   return (
-    <ChakraProvider>
+    <ChakraProvider /*theme={newStyleTheme}*/>
       <Flex
         maxW="1366px"
         maxH="1024px"
@@ -112,15 +117,27 @@ function App() {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Heading
-          color="#404040"
-          fontSize="96px"
-          fontFamily="Roboto"
-          fontWeight="700"
-          ml="65px"
-        >
-          To-Do <Text color="#9333EA">UI</Text>
-        </Heading>
+        <HStack>
+          <Heading
+            color="#404040"
+            fontSize="96px"
+            fontFamily="Roboto"
+            fontWeight="700"
+            // textStyle='h1'
+            ml="65px"
+          >
+            To-Do
+          </Heading>{" "}
+          <Text
+            color="#9333EA"
+            fontSize="96px"
+            fontFamily="Roboto"
+            fontWeight="700"
+          >
+            UI
+          </Text>
+        </HStack>
+
         <Container>
           <Flex flexDirection="column" alignItems="baseline" mr="90px">
             <Flex

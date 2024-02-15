@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import ModalAddTask from "./ModalAddTask";
 
 import {
   Image,
@@ -19,8 +18,12 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
+  useColorMode,
+  Box,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, CloseIcon } from "@chakra-ui/icons";
+import { SingleDatepicker } from "chakra-dayzed-datepicker";
+import { extendTheme } from '@chakra-ui/react'
 
 function Sidebar({
   addTask,
@@ -38,6 +41,7 @@ function Sidebar({
 }) {
   const handleOpenedFilter = (name) => {
     if (name == "Today") {
+      // (taskList.filter(item => item.timeEnd == new Date()))
       console.log(taskList.taskTime);
       setSelectedStatus("All");
       console.log("AAAAAAAAAAAAAAAAA");
@@ -46,26 +50,43 @@ function Sidebar({
     }
   };
   const [value, setValue] = useState("");
-
+  const theme = extendTheme({
+    textStyles: {
+      h1: {
+        fontFamily: 'Roboto',
+        fontSize: '20px',
+        fontWeight: '700',
+        lineHeight: '23.44px',
+      },
+      h2: {
+        fontFamily: 'Roboto',
+        fontSize: '16px',
+        fontWeight: '400',
+        lineHeight: '18.74px',
+      },
+    },
+  })
+  
   function saveTask() {
     if (task !== "") {
       addTask(value);
-      setValue("")
-      onClose(true)
+      setValue("");
+      onClose(true);
     }
   }
   const { onOpen, onClose, isOpen, onToggle } = useDisclosure();
+  const [date, setDate] = useState(new Date());
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       if (task !== "") {
         addTask(value);
         event.preventDefault();
-        onClose(true)
+        onClose(true);
       }
     }
     if (event.key === "Escape") {
-      onClose(true)
+      onClose(true);
       setTaskNew({
         title: "",
         timeEnd: "",
@@ -83,9 +104,11 @@ function Sidebar({
               h="40px"
               borderRadius="10px"
               pl="13px"
+              // bg={item.id==='All' && (selectedStatus=== 'All') ? "rgba(147, 51, 234, 0.25)" : 'none'}
               _hover={{ bg: "rgba(147, 51, 234, 0.25)" }}
               _active={{ bg: "rgba(147, 51, 234, 0.25)" }}
               onClick={() => handleOpenedFilter(item.name)}
+              // onClick={toggleColorMode}
             >
               <Flex alignItems="center" gap="10px">
                 <CheckCircleIcon color="#6B7280" fontSize="20px" />
@@ -94,7 +117,7 @@ function Sidebar({
                   fontSize="16px"
                   fontWeight="400"
                   lineHeight="18.75px"
-                  color="#404040"
+                  color="#404040" 
                 >
                   {item.name}
                 </Text>
@@ -105,7 +128,7 @@ function Sidebar({
                 bg="linear-gradient(300deg, #B9D5FF 0, #F6D1FC 98.93%)"
                 border="0"
                 minW="185px"
-                gap="10px"
+                // gap="10px"
               >
                 {statusList.map((el, ind) => (
                   <MenuItem
@@ -118,6 +141,7 @@ function Sidebar({
                       bg: "rgba(147, 51, 234, 0.25)",
                       color: "#9333EA",
                     }}
+                    
                     // className={`availables-marks + ${
                     //   el === selectedStatus && "active"
                     // }`}
@@ -172,109 +196,112 @@ function Sidebar({
         </Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} >
         <ModalOverlay />
-          <ModalContent
-            w="466px"
-            h="181px"
-            borderRadius="10px"
-            // gap="26px"
-            bg="white"
+        <ModalContent
+          w="466px"
+          h="181px"
+          borderRadius="10px"
+          // gap="26px"
+          bg="white"
+        >
+          <ModalHeader
+            borderRadius="10px 10px 0 0"
+            bg="linear-gradient(#F5EDFD,#FEEFF5)"
+            h="48px"
           >
-            <ModalHeader
-              borderRadius="10px 10px 0 0"
-              bg="linear-gradient(#F5EDFD,#FEEFF5)"
-              h='48px'
+            <Heading
+              fontFamily="Roboto"
+              fontSize="20px"
+              fontWeight="700"
+              lineHeight="23.44px"
+              color="#9333EA"
             >
-              <Heading
-                fontFamily="Roboto"
-                fontSize="20px"
-                fontWeight="700"
-                lineHeight="23.44px"
-                color="#9333EA"
-                >
-                Create task
-              </Heading>
-            </ModalHeader>
-            <ModalBody>
-              <Flex alignItems="center" justifyContent="center" gap="10px">
-                <Input
-                  h="27px"
-                  border="1px solid #6B7280"
-                  bg="#F3F3F3"
-                  borderRadius="10px"
-                  pl="27px"
-                  placeholder="Enter text..."
-                  onChange={handleInputChange}
-                  value={task}
-                  autoFocus={true}
-                  onKeyDown={handleKeyDown}
-                  required
-                ></Input>
-                <Input
-                  type="date"
-                  w="55px"
-                  border="0"
-                  onChange={handleTimeChange}
-                />
+              Create task
+            </Heading>
+          </ModalHeader>
+            <ModalBody p="15px 15px 5px 25px">
+              <Flex>
+              <Input
+                h="40px"
+                w='275px'
+                border="1px solid #6B7280"
+                bg="#F3F3F3"
+                borderRadius="10px"
+                pl="27px"
+                placeholder="Enter text..."
+                onChange={handleInputChange}
+                value={task}
+                autoFocus={true}
+                onKeyDown={handleKeyDown}
+                required
+              ></Input>
+              <Box width={'30%'} >
+              <SingleDatepicker
+                name="date-input"
+                date={date}
+                onDateChange={setDate}
+                // onChange={handleTimeChange}
+                
+              />
+              </Box>
               </Flex>
             </ModalBody>
-            <ModalFooter py='17px'>
-              <Flex
-                alignItems="center"
-                justifyContent="space-between"
-                width="422px"
+          <ModalFooter py="17px">
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              width="422px"
+            >
+              <Button
+                leftIcon={<CheckCircleIcon fontSize="larger" />}
+                onClick={saveTask}
+                width="185px"
+                height="40px"
+                lineHeight="1.2"
+                transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+                borderRadius="10px"
+                fontSize="16px"
+                bg="linear-gradient(300deg, #B9D5FF, #F6D1FC 98.93%)"
+                color="#9333EA"
+                _hover={{
+                  bg: "linear-gradient(300deg, #B9D5FF, #F6D1FC 98.93%)",
+                }}
+                _active={{
+                  transform: "scale(0.9)",
+                }}
+                _focus={{
+                  boxShadow: "0 0 1px 2px , 0 1px 1px rgba(0, 0, 0, .15)",
+                }}
               >
-                <Button
-                  leftIcon={<CheckCircleIcon fontSize="larger" />}
-                  onClick={saveTask}
-                  width="185px"
-                  height="40px"
-                  lineHeight="1.2"
-                  transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-                  borderRadius="10px"
-                  fontSize="16px"
-                  bg="linear-gradient(300deg, #B9D5FF, #F6D1FC 98.93%)"
-                  color="#9333EA"
-                  _hover={{
-                    bg: "linear-gradient(300deg, #B9D5FF, #F6D1FC 98.93%)",
-                  }}
-                  _active={{
-                    transform: "scale(0.9)",
-                  }}
-                  _focus={{
-                    boxShadow: "0 0 1px 2px , 0 1px 1px rgba(0, 0, 0, .15)",
-                  }}
-                >
-                  Save Task
-                </Button>
-                <Button
-                  leftIcon={<CloseIcon fontSize="xs" />}
-                  onClick={onClose}
-                  width="185px"
-                  height="40px"
-                  lineHeight="1.2"
-                  transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-                  borderRadius="10px"
-                  fontSize="16px"
-                  fontWeight="semibold"
-                  bg="#6B7280"
-                  color="white"
-                  _hover={{ bg: "gray.500" }}
-                  _active={{
-                    bg: "gray.500",
-                    transform: "scale(0.9)",
-                  }}
-                  _focus={{
-                    boxShadow:
-                      "0 0 1px 2px black, 0 1px 1px rgba(0, 0, 0, .15)",
-                  }}
-                >
-                  Close
-                </Button>
-              </Flex>
-            </ModalFooter>
-          </ModalContent>
+                Save Task
+              </Button>
+              <Button
+                leftIcon={<CloseIcon fontSize="xs" />}
+                onClick={onClose}
+                width="185px"
+                height="40px"
+                lineHeight="1.2"
+                transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+                borderRadius="10px"
+                fontSize="16px"
+                fontWeight="semibold"
+                bg="#6B7280"
+                color="white"
+                _hover={{ bg: "gray.500" }}
+                _active={{
+                  bg: "gray.500",
+                  transform: "scale(0.9)",
+                }}
+                _focus={{
+                  boxShadow: "0 0 1px 2px black, 0 1px 1px rgba(0, 0, 0, .15)",
+                }}
+              >
+                Close
+              </Button>
+            </Flex>
+          </ModalFooter>
+        </ModalContent>
       </Modal>
     </Flex>
   );
