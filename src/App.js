@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
 import Sidebar from "./components/Sidebar.js";
@@ -10,8 +10,9 @@ import {
   Heading,
   Text,
   HStack,
+  useDisclosure,
 } from "@chakra-ui/react";
-// import { newStyleTheme } from "./styles/theme.js";
+// import theme from "./styles/themes/theme.js";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
@@ -35,19 +36,28 @@ function App() {
       path: "/assets/arrows.svg",
     },
   ]; //
+  const [isTodaySelected, setTodaySelected] = useState(true);
 
-  const [isOpen, setOpen] = useState(false);
-  const [isOpenModalAddTask, setOpenModalAddTask] = useState(false);
-  const [isOpenModalEditTask, setOpenModalEditTask] = useState(false);
-  const [isOpenModalDeleteTask, setOpenModalDeleteTask] = useState(false);
-
-
+  const {
+    onOpen: onAddModalOpen,
+    onClose: onAddModalClose,
+    isOpen: isAddModalOpen,
+  } = useDisclosure();
+  const {
+    onOpen: onDeleteModalOpen,
+    onClose: onDeleteModalClose,
+    isOpen: isDeleteModalOpen,
+  } = useDisclosure();
+  const {
+    onOpen: onEditModalOpen,
+    onClose: onEditModalClose,
+    isOpen: isEditModalOpen,
+  } = useDisclosure();
 
   // console.log('selectedStatus', selectedStatus)
   function handleFilterChange(el) {
     //фильтр
     setSelectedStatus(el);
-    setOpen(false);
     // console.log(taskList);
   }
 
@@ -108,7 +118,7 @@ function App() {
   };
 
   return (
-    <ChakraProvider /*theme={newStyleTheme}*/>
+    <ChakraProvider >
       <Flex
         maxW="1366px"
         maxH="1024px"
@@ -123,7 +133,6 @@ function App() {
             fontSize="96px"
             fontFamily="Roboto"
             fontWeight="700"
-            // textStyle='h1'
             ml="65px"
           >
             To-Do
@@ -179,33 +188,39 @@ function App() {
             </Flex>
             <Flex w="672px" h="343px" pt="31px" justifyContent="space-between">
               <Sidebar
-                addTask={addTask}
-                handleInputChange={handleInputChange}
                 task={taskNew.title}
-                taskTime={taskList.timeEnd}
-                handleFilterChange={handleFilterChange}
-                selectedStatus={selectedStatus}
-                setOpen={setOpen}
-                statusList={statusList}
-                isOpen={isOpen}
-                isOpenModalAddTask={isOpenModalAddTask}
-                setOpenModalAddTask={setOpenModalAddTask}
-                handleTimeChange={handleTimeChange}
-                setTaskNew={setTaskNew}
-                sideBarFilter={sideBarFilter}
+                addTask={addTask}
                 taskList={taskList}
+                setTaskList={setTaskList}
+                setTodaySelected={setTodaySelected}
+                isTodaySelected={isTodaySelected}
+                setTaskNew={setTaskNew}
+                handleInputChange={handleInputChange}
+                handleFilterChange={handleFilterChange}
+                handleTimeChange={handleTimeChange}
+                onAddModalOpen={onAddModalOpen}
+                onAddModalClose={onAddModalClose}
+                isAddModalOpen={isAddModalOpen}
+                statusList={statusList}
+                sideBarFilter={sideBarFilter}
+                selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
               />
               <TasksList
+                taskList={taskList}
+                sideBarFilter={sideBarFilter}
                 selectedStatus={selectedStatus}
+                setTodaySelected={setTodaySelected}
+                isTodaySelected={isTodaySelected}
                 deleteTask={deleteTask}
                 saveEditTask={saveEditTask}
                 toggleTaskStatus={toggleTaskStatus}
-                isOpenModalDeleteTask={isOpenModalDeleteTask}
-                setOpenModalDeleteTask={setOpenModalDeleteTask}
-                isOpenModalEditTask={isOpenModalEditTask}
-                setOpenModalEditTask={setOpenModalEditTask}
-                taskList={taskList}
+                onEditModalOpen={onEditModalOpen}
+                onEditModalClose={onEditModalClose}
+                isEditModalOpen={isEditModalOpen}
+                onDeleteModalOpen={onDeleteModalOpen}
+                onDeleteModalClose={onDeleteModalClose}
+                isDeleteModalOpen={isDeleteModalOpen}
               />
             </Flex>
           </Flex>

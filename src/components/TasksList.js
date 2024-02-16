@@ -1,19 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import Task from "./Task";
 import { Flex,Box } from "@chakra-ui/react";
+import { isToday } from "date-fns";
 
 function TasksList({
   selectedStatus,
   deleteTask,
   saveEditTask,
   toggleTaskStatus,
-  isOpenModalDeleteTask,
-  isOpenModalEditTask,
-  setOpenModalDeleteTask,
-  setOpenModalEditTask,
+  onDeleteModalOpen,
+  onDeleteModalClose,
+  isDeleteModalOpen,
+  onEditModalOpen,
+  onEditModalClose,
+  isEditModalOpen,
   taskList,
+  setTodaySelected,
+  isTodaySelected,
+  sideBarFilter
 }) {
+  
   const filteredTaskList = taskList.filter((el) => {
+    if (isTodaySelected) {
+      // if (selectedStatus === 'Done' && isToday(el.timeEnd)) return el.isCompleted
+      // if (selectedStatus === 'Undone'&& isToday(el.timeEnd)) return !el.isCompleted
+      return isToday(el.timeEnd)
+    }
+
+  
     if (selectedStatus === 'Done') return el.isCompleted
     if (selectedStatus === 'Undone') return !el.isCompleted
     return true
@@ -43,10 +57,12 @@ function TasksList({
               deleteTask={deleteTask}
               toggleTaskStatus={toggleTaskStatus}
               saveEditTask={saveEditTask}
-              isOpenModalEditTask={isOpenModalEditTask}
-              setOpenModalEditTask={setOpenModalEditTask}
-              isOpenModalDeleteTask={isOpenModalDeleteTask}
-              setOpenModalDeleteTask={setOpenModalDeleteTask}
+              onDeleteModalOpen={onDeleteModalOpen}
+              onDeleteModalClose={onDeleteModalClose}
+              isDeleteModalOpen={isDeleteModalOpen}
+              onEditModalOpen={onEditModalOpen}
+              onEditModalClose={onEditModalClose}
+              isEditModalOpen={isEditModalOpen}
             />
           ))}
       </Box>

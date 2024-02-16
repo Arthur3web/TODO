@@ -18,12 +18,8 @@ import {
   ModalBody,
   ModalFooter,
   useDisclosure,
-  useColorMode,
-  Box,
 } from "@chakra-ui/react";
 import { CheckCircleIcon, CloseIcon } from "@chakra-ui/icons";
-import { SingleDatepicker } from "chakra-dayzed-datepicker";
-import { extendTheme } from '@chakra-ui/react'
 
 function Sidebar({
   addTask,
@@ -32,61 +28,48 @@ function Sidebar({
   selectedStatus,
   handleFilterChange,
   statusList,
-  setOpen,
   handleTimeChange,
   setTaskNew,
   sideBarFilter,
   taskList,
+  setTaskList,
   setSelectedStatus,
+  onAddModalOpen,
+  onAddModalClose,
+  isAddModalOpen,
+  setTodaySelected,
+  isTodaySelected,
 }) {
   const handleOpenedFilter = (name) => {
     if (name == "Today") {
-      // (taskList.filter(item => item.timeEnd == new Date()))
-      console.log(taskList.taskTime);
-      setSelectedStatus("All");
-      console.log("AAAAAAAAAAAAAAAAA");
+      setTodaySelected(!isTodaySelected);
+      console.log(isTodaySelected);
+      // setSelectedStatus("All");
     } else if (name == selectedStatus) {
-      setOpen(!isOpen);
+      // setOpen(!isOpen);
     }
   };
   const [value, setValue] = useState("");
-  const theme = extendTheme({
-    textStyles: {
-      h1: {
-        fontFamily: 'Roboto',
-        fontSize: '20px',
-        fontWeight: '700',
-        lineHeight: '23.44px',
-      },
-      h2: {
-        fontFamily: 'Roboto',
-        fontSize: '16px',
-        fontWeight: '400',
-        lineHeight: '18.74px',
-      },
-    },
-  })
-  
+
   function saveTask() {
     if (task !== "") {
       addTask(value);
       setValue("");
-      onClose(true);
+      onAddModalClose(true);
     }
   }
-  const { onOpen, onClose, isOpen, onToggle } = useDisclosure();
-  const [date, setDate] = useState(new Date());
+  const { onToggle } = useDisclosure();
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       if (task !== "") {
         addTask(value);
         event.preventDefault();
-        onClose(true);
+        onAddModalClose(true);
       }
     }
     if (event.key === "Escape") {
-      onClose(true);
+      onAddModalClose(true);
       setTaskNew({
         title: "",
         timeEnd: "",
@@ -108,7 +91,6 @@ function Sidebar({
               _hover={{ bg: "rgba(147, 51, 234, 0.25)" }}
               _active={{ bg: "rgba(147, 51, 234, 0.25)" }}
               onClick={() => handleOpenedFilter(item.name)}
-              // onClick={toggleColorMode}
             >
               <Flex alignItems="center" gap="10px">
                 <CheckCircleIcon color="#6B7280" fontSize="20px" />
@@ -117,7 +99,7 @@ function Sidebar({
                   fontSize="16px"
                   fontWeight="400"
                   lineHeight="18.75px"
-                  color="#404040" 
+                  color="#404040"
                 >
                   {item.name}
                 </Text>
@@ -141,7 +123,6 @@ function Sidebar({
                       bg: "rgba(147, 51, 234, 0.25)",
                       color: "#9333EA",
                     }}
-                    
                     // className={`availables-marks + ${
                     //   el === selectedStatus && "active"
                     // }`}
@@ -165,6 +146,7 @@ function Sidebar({
         ))}
       </Flex>
       <Button
+        // variant='searchItem'
         w="185px"
         h="40px"
         borderRadius="10px"
@@ -180,7 +162,7 @@ function Sidebar({
           boxShadow: "0 0 1px 2px #9333EA, 0 1px 1px rgba(0, 0, 0, .15)",
           bg: "rgba(147, 51, 234, 0.25",
         }}
-        onClick={onOpen}
+        onClick={onAddModalOpen}
       >
         <Image mr="10px" src="/assets/Vector_2.svg" alt="add-task" />
         <Text
@@ -196,7 +178,7 @@ function Sidebar({
         </Text>
       </Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} >
+      <Modal isOpen={isAddModalOpen} onClose={onAddModalClose}>
         <ModalOverlay />
         <ModalContent
           w="466px"
@@ -220,11 +202,11 @@ function Sidebar({
               Create task
             </Heading>
           </ModalHeader>
-            <ModalBody p="15px 15px 5px 25px">
-              <Flex>
+          <ModalBody p="15px 25px 5px 25px">
+            <Flex>
               <Input
                 h="40px"
-                w='275px'
+                w="275px"
                 border="1px solid #6B7280"
                 bg="#F3F3F3"
                 borderRadius="10px"
@@ -236,17 +218,9 @@ function Sidebar({
                 onKeyDown={handleKeyDown}
                 required
               ></Input>
-              <Box width={'30%'} >
-              <SingleDatepicker
-                name="date-input"
-                date={date}
-                onDateChange={setDate}
-                // onChange={handleTimeChange}
-                
-              />
-              </Box>
-              </Flex>
-            </ModalBody>
+              <Input type="date" w="40%" onChange={handleTimeChange} />
+            </Flex>
+          </ModalBody>
           <ModalFooter py="17px">
             <Flex
               alignItems="center"
@@ -278,7 +252,7 @@ function Sidebar({
               </Button>
               <Button
                 leftIcon={<CloseIcon fontSize="xs" />}
-                onClick={onClose}
+                onClick={onAddModalClose}
                 width="185px"
                 height="40px"
                 lineHeight="1.2"

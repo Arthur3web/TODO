@@ -8,7 +8,6 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  useDisclosure,
   Input,
   Heading,
   Button,
@@ -27,21 +26,21 @@ import {
   CloseIcon,
 } from "@chakra-ui/icons";
 
-const Task = ({ task, deleteTask, toggleTaskStatus, saveEditTask }) => {
+const Task = ({
+  task,
+  deleteTask,
+  toggleTaskStatus,
+  saveEditTask,
+  onDeleteModalOpen,
+  onDeleteModalClose,
+  isDeleteModalOpen,
+  onEditModalOpen,
+  onEditModalClose,
+  isEditModalOpen,
+}) => {
   //Деструктуризация
   const [note, setNote] = useState(task.title);
   const [noteTime, setNoteTime] = useState(new Date(task.timeEnd));
-
-  const {
-    onOpen: onDeleteModalOpen,
-    onClose: onDeleteModalClose,
-    isOpen: isDeleteModalOpen,
-  } = useDisclosure();
-  const {
-    onOpen: onEditModalOpen,
-    onClose: onEditModalClose,
-    isOpen: isEditModalOpen,
-  } = useDisclosure();
 
   function handleInputChangeEditTask(e) {
     setNote(e.target.value);
@@ -89,11 +88,11 @@ const Task = ({ task, deleteTask, toggleTaskStatus, saveEditTask }) => {
       <Flex gap="10px" alignItems="center" justifyContent="space-between">
         <Flex gap="10px" alignItems="center">
           <Checkbox
-            border='gray'
-            colorScheme='purple'
+            border="gray"
+            colorScheme="purple"
             isChecked={task.isCompleted}
             onChange={() => toggleTaskStatus(task.id)}
-          /> 
+          />
           <Text
             className={task.isCompleted ? "crossText" : "listItem"}
             padding="2"
@@ -158,30 +157,28 @@ const Task = ({ task, deleteTask, toggleTaskStatus, saveEditTask }) => {
                         Edit task
                       </Heading>
                     </ModalHeader>
-                    <ModalBody p="25px 15px 5px 25px">
-                      <Input
-                        h="27px"
-                        w="350px"
-                        border="1px solid #6B7280"
-                        bg="#F3F3F3"
-                        borderRadius="10px"
-                        pl="27px"
-                        value={note}
-                        onChange={handleInputChangeEditTask}
-                        autoFocus={true}
-                        onKeyDown={handleKeyDown}
-                        // _invalid={{borderColor: 'red'}}
-                        // _valid={{borderColor: '#ccc'}}
-                        required
-                      />
-                      <Input
-                        type="date"
-                        w="50px"
-                        border="0"
-                        h="27px"
-                        value={noteTime}
-                        onChange={handleInputChangeEditTaskTime}
-                      />
+                    <ModalBody p="15px 25px 5px 25px">
+                      <Flex>
+                        <Input
+                          h="40px"
+                          w="275px"
+                          border="1px solid #6B7280"
+                          bg="#F3F3F3"
+                          borderRadius="10px"
+                          pl="27px"
+                          value={note}
+                          onChange={handleInputChangeEditTask}
+                          autoFocus={true}
+                          onKeyDown={handleKeyDown}
+                          required
+                        />
+                        <Input
+                          type="date"
+                          w="40%"
+                          value={noteTime}
+                          onChange={handleInputChangeEditTaskTime}
+                        />
+                      </Flex>
                     </ModalBody>
                     <ModalFooter py="17px">
                       <Flex
@@ -267,20 +264,20 @@ const Task = ({ task, deleteTask, toggleTaskStatus, saveEditTask }) => {
                         Delete task
                       </Heading>
                     </ModalHeader>
-                      <ModalBody w="448px" >
-                    <Flex alignItems="center" justifyContent='center'>
+                    <ModalBody w="448px">
+                      <Flex alignItems="center" justifyContent="center">
                         <Text
                           fontFamily="Roboto"
                           fontSize="20px"
                           fontWeight="700"
                           lineHeight="23.44px"
-                          pt='15px'
+                          pt="15px"
                         >
                           Are you sure about deleting this task?
                         </Text>
-                    </Flex>
-                      </ModalBody>
-                    <ModalFooter h='40px' my='15px'>
+                      </Flex>
+                    </ModalBody>
+                    <ModalFooter h="40px" my="15px">
                       <Flex
                         alignItems="center"
                         justifyContent="space-between"
