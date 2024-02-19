@@ -39,18 +39,31 @@ function Sidebar({
   isAddModalOpen,
   setTodaySelected,
   isTodaySelected,
+  isDateSelected,
+  setDateSelected,
 }) {
   const handleOpenedFilter = (name) => {
     if (name == "Today") {
       setTodaySelected(!isTodaySelected);
       console.log(isTodaySelected);
-      // setSelectedStatus("All");
-    } else if (name == selectedStatus) {
-      // setOpen(!isOpen);
+      setSelectedStatus("All");
+    } else if (name == "Date") {
+      setDateSelected(!isDateSelected)
+      taskList.sort(function(a, b) {
+        if (isDateSelected) {
+          return new Date(a.timeEnd) - new Date(b.timeEnd);
+        } else {
+          return new Date(b.timeEnd) - new Date(a.timeEnd);
+        } 
+      })
+      // console.log(taskList);
     }
   };
   const [value, setValue] = useState("");
 
+  function compare(a, b) {
+    return new Date(b.timeEnd) - new Date(a.timeEnd);  
+  };
   function saveTask() {
     if (task !== "") {
       addTask(value);
@@ -77,6 +90,8 @@ function Sidebar({
     }
   };
 
+
+
   return (
     <Flex flexDirection="column" justifyContent="space-between">
       <Flex flexDirection="column" gap="21px">
@@ -87,19 +102,22 @@ function Sidebar({
               h="40px"
               borderRadius="10px"
               pl="13px"
-              // bg={item.id==='All' && (selectedStatus=== 'All') ? "rgba(147, 51, 234, 0.25)" : 'none'}
+              // bg={item.id==='All' && (selectedStatus=== 'All', 'Done', 'Undone') ? "rgba(147, 51, 234, 0.25)" : 'none'}
+              bg={item.id==='Today' ? "rgba(147, 51, 234, 0.25)" : 'none'}
+
               _hover={{ bg: "rgba(147, 51, 234, 0.25)" }}
               _active={{ bg: "rgba(147, 51, 234, 0.25)" }}
               onClick={() => handleOpenedFilter(item.name)}
             >
               <Flex alignItems="center" gap="10px">
-                <CheckCircleIcon color="#6B7280" fontSize="20px" />
+                <CheckCircleIcon color={item.id==='Today' ? "#9333EA" : '#6B7280'} /*color="#6B7280"*/ fontSize="20px" />
                 <Text
                   fontFamily="Roboto"
                   fontSize="16px"
                   fontWeight="400"
                   lineHeight="18.75px"
-                  color="#404040"
+                  // color="#404040"
+                  color={item.id==='Today' ? "#9333EA" : '#404040'}
                 >
                   {item.name}
                 </Text>
@@ -178,7 +196,7 @@ function Sidebar({
         </Text>
       </Button>
 
-      <Modal isOpen={isAddModalOpen} onClose={onAddModalClose}>
+      <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} isCentered>
         <ModalOverlay />
         <ModalContent
           w="466px"

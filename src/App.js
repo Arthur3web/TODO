@@ -11,7 +11,19 @@ import {
   Text,
   HStack,
   useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  Portal,
+  IconButton,
+  Button,
 } from "@chakra-ui/react";
+import { WarningIcon } from "@chakra-ui/icons";
 // import theme from "./styles/themes/theme.js";
 
 function App() {
@@ -37,7 +49,7 @@ function App() {
     },
   ]; //
   const [isTodaySelected, setTodaySelected] = useState(true);
-
+  const [isDateSelected, setDateSelected] = useState(true);
   const {
     onOpen: onAddModalOpen,
     onClose: onAddModalClose,
@@ -180,11 +192,33 @@ function App() {
               >
                 UserName
               </Text>
-              <Image
-                src="/assets/bi_person-circle.svg"
-                alt="avatar"
-                size="1.5rem"
-              />
+              <Popover placement="bottom-end" isLazy>
+                <PopoverTrigger>
+                  <IconButton
+                    isRound={true}
+                    variant='solid'
+                    size='1.5rem'
+                    icon={<Image
+                      src="/assets/bi_person-circle.svg"
+                      alt="avatar"
+                    />}
+                  />
+                </PopoverTrigger>
+                <Portal>
+                  <PopoverContent width='330px' zIndex={40} >
+                    <PopoverArrow />
+                    <PopoverHeader fontFamily="Roboto" fontSize='20px' fontWeight='400'>Добро пожаловать!</PopoverHeader>
+                    <PopoverCloseButton />
+                    <PopoverBody >
+                      <Flex alignItems='center' justifyContent='space-around'>
+                        <Button colorScheme='purple'>Войти</Button>
+                        <Button colorScheme='pink'>Зарегистрироваться</Button>
+                      </Flex>
+                    </PopoverBody>
+                    <PopoverFooter><Flex alignItems='center' gap='10px'><WarningIcon color='red.500' /><Text fontFamily="Roboto" fontSize='14px' fontWeight='200' color='#6B7280'>Для продолжения выберите один из вариантов</Text></Flex></PopoverFooter>
+                  </PopoverContent>
+                </Portal>
+              </Popover>
             </Flex>
             <Flex w="672px" h="343px" pt="31px" justifyContent="space-between">
               <Sidebar
@@ -194,6 +228,8 @@ function App() {
                 setTaskList={setTaskList}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
+                isDateSelected={isDateSelected}
+                setDateSelected={setDateSelected}
                 setTaskNew={setTaskNew}
                 handleInputChange={handleInputChange}
                 handleFilterChange={handleFilterChange}

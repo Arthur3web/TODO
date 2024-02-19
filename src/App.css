@@ -168,20 +168,31 @@
 } */
 
 .task-list {
-  display: flex;
-  flex-direction: column;
-  width: 466px;
-  height: 312px;
-  border-radius: 10px;
-  background: rgba(244, 244, 244, 1);
-  padding: 31px 17px 21px 21px;
-  gap: 10px;
   overflow-y: scroll;
 }
 
 .task-list::-webkit-scrollbar {
-  display: none;
-}
+    width: 15px; /* Ширина всего элемента навигации */
+  }
+  
+  .task-list::-webkit-scrollbar-track {
+    background: #f9f9fd; /* Цвет дорожки */
+    -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+    border-radius: 10px;
+  }
+  
+  .task-list::-webkit-scrollbar-thumb {
+    background: #9333EA; /* Цвет бегунка */
+    background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, .25) 25%,
+                    transparent 25%,
+                    transparent 50%,
+                    rgba(255, 255, 255, .25) 50%,
+                    rgba(255, 255, 255, .25) 75%,
+                    transparent 75%,
+                    transparent);
+
+    border-radius: 10px; /* Округление бегунка */
+  }
 
 .task {
   border: 0;

@@ -134,7 +134,7 @@ const Task = ({
                 <MenuItem w="50%" onClick={onEditModalOpen}>
                   <EditIcon color="gray.600" />
                 </MenuItem>
-                <Modal isOpen={isEditModalOpen} onClose={onEditModalClose}>
+                <Modal isOpen={isEditModalOpen} onClose={onEditModalClose} isCentered>
                   <ModalOverlay />
                   <ModalContent
                     w="466px"
@@ -241,7 +241,7 @@ const Task = ({
                 <MenuItem w="50%" onClick={onDeleteModalOpen}>
                   <DeleteIcon color="red.600" />
                 </MenuItem>
-                <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose}>
+                <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} isCentered>
                   <ModalOverlay />
                   <ModalContent
                     w="466px"
