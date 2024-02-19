@@ -7,9 +7,7 @@ import {
   Flex,
   Container,
   Image,
-  Heading,
   Text,
-  HStack,
   useDisclosure,
   Popover,
   PopoverTrigger,
@@ -22,34 +20,82 @@ import {
   Portal,
   IconButton,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
 } from "@chakra-ui/react";
-import { WarningIcon } from "@chakra-ui/icons";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CalendarIcon,
+  CheckCircleIcon,
+  WarningIcon,
+} from "@chakra-ui/icons";
 // import theme from "./styles/themes/theme.js";
 
 function App() {
   const [taskList, setTaskList] = useState([]);
-
+  const [isTodaySelected, setTodaySelected] = useState(true); //today
+  const [isDateSelected, setDateSelected] = useState(true); //date
   const [selectedStatus, setSelectedStatus] = useState("All"); //sidebar
-  const statusList = ["All", "Done", "Undone"]; //
+  const statusList = ["All", "Done", "Undone"]; //menu-filter
   const sideBarFilter = [
     {
       id: "Today",
       name: "Today",
-      path: "/assets/Vector_4.svg",
+      path: (
+        <CalendarIcon
+          fontSize="17px"
+          color={isTodaySelected && "Today" ? "#9333EA" : "#404040"}
+        />
+      ),
     },
     {
       id: "All",
       name: /*"All"*/ selectedStatus,
-      path: "/assets/done-circle.svg",
+      path: (
+        <CheckCircleIcon
+          fontSize="20px"
+          color={
+            !isTodaySelected &&
+            "All" &&
+            (selectedStatus === "All", "Done", "Undone")
+              ? "#9333EA"
+              : "#6B7280"
+          }
+        />
+      ),
     },
     {
       id: "Date",
       name: "Date",
-      path: "/assets/arrows.svg",
+      path: (
+        <Flex>
+          <ArrowDownIcon
+            fontSize="small"
+            color={isDateSelected ? "#9333EA" : "#404040"}
+          />
+          <ArrowUpIcon
+            fontSize="small"
+            color={!isDateSelected ? "#9333EA" : "#404040"}
+          />
+        </Flex>
+      ),
     },
   ]; //
-  const [isTodaySelected, setTodaySelected] = useState(true);
-  const [isDateSelected, setDateSelected] = useState(true);
+  const [taskNew, setTaskNew] = useState({
+    title: "",
+    timeEnd: new Date(),
+  });
   const {
     onOpen: onAddModalOpen,
     onClose: onAddModalClose,
@@ -65,18 +111,18 @@ function App() {
     onClose: onEditModalClose,
     isOpen: isEditModalOpen,
   } = useDisclosure();
+  const { onToggle } = useDisclosure();
+  const {
+    onOpen: onCreateAccountModalOpen,
+    onClose: onCreateAccountModalClose,
+    isOpen: isCreateAccountModalOpen,
+  } = useDisclosure();
 
-  // console.log('selectedStatus', selectedStatus)
+
   function handleFilterChange(el) {
     //фильтр
     setSelectedStatus(el);
-    // console.log(taskList);
   }
-
-  const [taskNew, setTaskNew] = useState({
-    title: "",
-    timeEnd: new Date(),
-  });
 
   const handleInputChange = (e) => {
     setTaskNew({ ...taskNew, title: e.target.value });
@@ -129,8 +175,14 @@ function App() {
     setTaskList(newTaskList);
   };
 
+  const [input, setInput] = useState("");
+
+  const handleInputEmailChange = (e) => setInput(e.target.value);
+
+  const isError = input === "";
+
   return (
-    <ChakraProvider >
+    <ChakraProvider>
       <Flex
         maxW="1366px"
         maxH="1024px"
@@ -139,17 +191,16 @@ function App() {
         alignItems="center"
         justifyContent="space-between"
       >
-        <HStack>
-          <Heading
-            color="#404040"
-            fontSize="96px"
-            fontFamily="Roboto"
-            fontWeight="700"
-            ml="65px"
-          >
-            To-Do
-          </Heading>{" "}
+        <Text
+          color="#404040"
+          fontSize="96px"
+          fontFamily="Roboto"
+          fontWeight="700"
+          ml="65px"
+        >
+          To-Do{" "}
           <Text
+            as="span"
             color="#9333EA"
             fontSize="96px"
             fontFamily="Roboto"
@@ -157,7 +208,7 @@ function App() {
           >
             UI
           </Text>
-        </HStack>
+        </Text>
 
         <Container>
           <Flex flexDirection="column" alignItems="baseline" mr="90px">
@@ -196,36 +247,108 @@ function App() {
                 <PopoverTrigger>
                   <IconButton
                     isRound={true}
-                    variant='solid'
-                    size='1.5rem'
-                    icon={<Image
-                      src="/assets/bi_person-circle.svg"
-                      alt="avatar"
-                    />}
+                    variant="solid"
+                    size="1.5rem"
+                    icon={
+                      <Image src="/assets/bi_person-circle.svg" alt="avatar" />
+                    }
                   />
                 </PopoverTrigger>
                 <Portal>
-                  <PopoverContent width='330px' zIndex={40} >
+                  <PopoverContent width="330px">
                     <PopoverArrow />
-                    <PopoverHeader fontFamily="Roboto" fontSize='20px' fontWeight='400'>Добро пожаловать!</PopoverHeader>
+                    <PopoverHeader
+                      fontFamily="Roboto"
+                      fontSize="20px"
+                      fontWeight="400"
+                    >
+                      Добро пожаловать!
+                    </PopoverHeader>
                     <PopoverCloseButton />
-                    <PopoverBody >
-                      <Flex alignItems='center' justifyContent='space-around'>
-                        <Button colorScheme='purple'>Войти</Button>
-                        <Button colorScheme='pink'>Зарегистрироваться</Button>
+                    <PopoverBody>
+                      <Flex alignItems="center" justifyContent="space-around">
+                        <Button colorScheme="purple">Войти</Button>
+                        <Button
+                          colorScheme="pink"
+                          onClick={onCreateAccountModalOpen}
+                        >
+                          Зарегистрироваться
+                        </Button>
                       </Flex>
                     </PopoverBody>
-                    <PopoverFooter><Flex alignItems='center' gap='10px'><WarningIcon color='red.500' /><Text fontFamily="Roboto" fontSize='14px' fontWeight='200' color='#6B7280'>Для продолжения выберите один из вариантов</Text></Flex></PopoverFooter>
+                    <PopoverFooter>
+                      <Flex alignItems="center" gap="10px">
+                        <WarningIcon color="red.500" />
+                        <Text
+                          fontFamily="Roboto"
+                          fontSize="14px"
+                          fontWeight="200"
+                          color="#6B7280"
+                        >
+                          Для продолжения выберите один из вариантов
+                        </Text>
+                      </Flex>
+                    </PopoverFooter>
                   </PopoverContent>
                 </Portal>
               </Popover>
             </Flex>
+            <Modal
+              isOpen={isCreateAccountModalOpen}
+              onClose={onCreateAccountModalClose}
+              isCentered
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Create your account</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <FormControl isInvalid={isError} isRequired>
+                    <FormLabel>Email adress</FormLabel>
+                    <Input
+                      type="email"
+                      value={input}
+                      onChange={handleInputEmailChange}
+                      width='400px'
+                    />
+                    {!isError ? (
+                      <FormHelperText>
+                        Enter the email address you would like to register an
+                        account with.
+                      </FormHelperText>
+                    ) : (
+                      <FormErrorMessage>Email is required.</FormErrorMessage>
+                    )}
+                  </FormControl>
+
+                  <FormControl>
+                    <FormLabel>First name</FormLabel>
+                    <Input placeholder="Last name" />
+                  </FormControl>
+                </ModalBody>
+
+                <ModalFooter p="10px" >
+                  <Flex alignItems="center" justifyContent="space-around" width='422px'>
+                    <Button width="185px" height="40px" colorScheme="blue">
+                      Save
+                    </Button>
+                    <Button
+                      width="185px"
+                      height="40px"
+                      onClick={onCreateAccountModalClose}
+                      colorScheme="blackAlpha"
+                    >
+                      Cancel
+                    </Button>
+                  </Flex>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
             <Flex w="672px" h="343px" pt="31px" justifyContent="space-between">
               <Sidebar
                 task={taskNew.title}
                 addTask={addTask}
                 taskList={taskList}
-                setTaskList={setTaskList}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
                 isDateSelected={isDateSelected}
@@ -241,12 +364,11 @@ function App() {
                 sideBarFilter={sideBarFilter}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
+                onToggle={onToggle}
               />
               <TasksList
                 taskList={taskList}
-                sideBarFilter={sideBarFilter}
                 selectedStatus={selectedStatus}
-                setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
                 deleteTask={deleteTask}
                 saveEditTask={saveEditTask}

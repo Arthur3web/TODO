@@ -25,6 +25,7 @@ import {
   CheckCircleIcon,
   CloseIcon,
 } from "@chakra-ui/icons";
+import EditTaskModal from "./EditTaskModal";
 
 const Task = ({
   task,
@@ -134,7 +135,22 @@ const Task = ({
                 <MenuItem w="50%" onClick={onEditModalOpen}>
                   <EditIcon color="gray.600" />
                 </MenuItem>
-                <Modal isOpen={isEditModalOpen} onClose={onEditModalClose} isCentered>
+                <EditTaskModal 
+                isEditModalOpen={isEditModalOpen}
+                onEditModalClose={onEditModalClose}
+                handleInputChangeEditTask={handleInputChangeEditTask}
+                handleInputChangeEditTaskTime={handleInputChangeEditTaskTime}
+                handleKeyDown={handleKeyDown}
+                noteTime={noteTime}
+                editTask={editTask}
+                task={task}
+                note={note}
+                />
+                {/* <Modal
+                  isOpen={isEditModalOpen}
+                  onClose={onEditModalClose}
+                  isCentered
+                >
                   <ModalOverlay />
                   <ModalContent
                     w="466px"
@@ -158,10 +174,10 @@ const Task = ({
                       </Heading>
                     </ModalHeader>
                     <ModalBody p="15px 25px 5px 25px">
-                      <Flex>
+                      <Flex gap="10px">
                         <Input
                           h="40px"
-                          w="275px"
+                          w="270px"
                           border="1px solid #6B7280"
                           bg="#F3F3F3"
                           borderRadius="10px"
@@ -175,6 +191,9 @@ const Task = ({
                         <Input
                           type="date"
                           w="40%"
+                          bg="#F3F3F3"
+                          borderRadius="10px"
+                          border="1px solid #6B7280"
                           value={noteTime}
                           onChange={handleInputChangeEditTaskTime}
                         />
@@ -195,23 +214,19 @@ const Task = ({
                           transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
                           borderRadius="10px"
                           fontSize="16px"
-                          bg="linear-gradient(300deg, #B9D5FF, #F6D1FC 98.93%)"
-                          color="#9333EA"
-                          _hover={{
-                            bg: "linear-gradient(300deg, #B9D5FF, #F6D1FC 98.93%)",
-                          }}
+                          bg="rgba(103, 184, 203, 0.4)"
+                          color="#2A4365"
+                          _hover={{ bg: "rgba(103, 184, 203, 0.2)" }}
                           _active={{
                             transform: "scale(0.9)",
                           }}
                           _focus={{
-                            boxShadow:
-                              "0 0 1px 2px , 0 1px 1px rgba(0, 0, 0, .15)",
+                            boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
                           }}
                         >
                           Save
                         </Button>
                         <Button
-                          leftIcon={<CloseIcon fontSize="xs" />}
                           width="185px"
                           height="40px"
                           lineHeight="1.2"
@@ -219,29 +234,33 @@ const Task = ({
                           borderRadius="10px"
                           fontSize="16px"
                           fontWeight="semibold"
-                          bg="#6B7280"
+                          bg="gray.400"
                           color="white"
-                          _hover={{ bg: "gray.500" }}
+                          _hover={{ bg: "gray.300" }}
                           _active={{
-                            bg: "gray.500",
                             transform: "scale(0.9)",
                           }}
                           _focus={{
-                            boxShadow:
-                              "0 0 1px 2px black, 0 1px 1px rgba(0, 0, 0, .15)",
+                            boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
                           }}
                           onClick={onEditModalClose}
                         >
+                        <Image src="/assets/Vector_s.svg" alt="close-button" mr='10px' />
+
                           Close
                         </Button>
                       </Flex>
                     </ModalFooter>
                   </ModalContent>
-                </Modal>
+                </Modal> */}
                 <MenuItem w="50%" onClick={onDeleteModalOpen}>
                   <DeleteIcon color="red.600" />
                 </MenuItem>
-                <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} isCentered>
+                <Modal
+                  isOpen={isDeleteModalOpen}
+                  onClose={onDeleteModalClose}
+                  isCentered
+                >
                   <ModalOverlay />
                   <ModalContent
                     w="466px"
@@ -293,23 +312,21 @@ const Task = ({
                           transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
                           borderRadius="10px"
                           fontSize="16px"
-                          bg="rgba(245, 108, 156, 0.35)"
+                          bg="rgba(245, 108, 156, 0.45)"
                           color="red"
                           _hover={{
-                            bg: "rgba(245, 108, 156, 0.35)",
+                            bg: "rgba(245, 108, 156, 0.25)",
                           }}
                           _active={{
                             transform: "scale(0.9)",
                           }}
                           _focus={{
-                            boxShadow:
-                              "0 0 1px 2px , 0 1px 1px rgba(0, 0, 0, .15)",
+                            boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
                           }}
                         >
                           Delete
                         </Button>
                         <Button
-                          leftIcon={<CloseIcon fontSize="xs" />}
                           width="185px"
                           height="40px"
                           lineHeight="1.2"
@@ -317,19 +334,18 @@ const Task = ({
                           borderRadius="10px"
                           fontSize="16px"
                           fontWeight="semibold"
-                          bg="#6B7280"
+                          bg="gray.400"
                           color="white"
-                          _hover={{ bg: "gray.500" }}
+                          _hover={{ bg: "gray.300" }}
                           _active={{
-                            bg: "gray.500",
                             transform: "scale(0.9)",
                           }}
                           _focus={{
-                            boxShadow:
-                              "0 0 1px 2px black, 0 1px 1px rgba(0, 0, 0, .15)",
+                            boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
                           }}
                           onClick={onDeleteModalClose}
                         >
+                          <Image src="/assets/Vector_s.svg" alt="close-button" mr='10px' />
                           Close
                         </Button>
                       </Flex>
