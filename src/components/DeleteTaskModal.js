@@ -1,6 +1,22 @@
 import React from "react";
+import {
+  Flex,
+  Text,
+  Image,
+  Heading,
+  Button,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
+  ModalBody,
+  ModalHeader,
+  Modal,
+} from "@chakra-ui/react";
+import {
+  DeleteIcon,
+} from "@chakra-ui/icons";
 
-function DeleteTaskModal() {
+function DeleteTaskModal({ isDeleteModalOpen, onDeleteModalClose, task, deleteTaskButton}) {
   return (
     <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} isCentered>
       <ModalOverlay />

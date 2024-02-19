@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
 import Sidebar from "./components/Sidebar.js";
@@ -20,18 +20,6 @@ import {
   Portal,
   IconButton,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalHeader,
-  ModalContent,
-  ModalBody,
-  ModalFooter,
-  ModalCloseButton,
-  FormControl,
-  FormLabel,
-  Input,
-  FormHelperText,
-  FormErrorMessage,
 } from "@chakra-ui/react";
 import {
   ArrowDownIcon,
@@ -40,6 +28,7 @@ import {
   CheckCircleIcon,
   WarningIcon,
 } from "@chakra-ui/icons";
+import CreateAccountModal from "./components/CreateAccountModal.js";
 // import theme from "./styles/themes/theme.js";
 
 function App() {
@@ -293,57 +282,13 @@ function App() {
                 </Portal>
               </Popover>
             </Flex>
-            <Modal
-              isOpen={isCreateAccountModalOpen}
-              onClose={onCreateAccountModalClose}
-              isCentered
-            >
-              <ModalOverlay />
-              <ModalContent>
-                <ModalHeader>Create your account</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <FormControl isInvalid={isError} isRequired>
-                    <FormLabel>Email adress</FormLabel>
-                    <Input
-                      type="email"
-                      value={input}
-                      onChange={handleInputEmailChange}
-                      width='400px'
-                    />
-                    {!isError ? (
-                      <FormHelperText>
-                        Enter the email address you would like to register an
-                        account with.
-                      </FormHelperText>
-                    ) : (
-                      <FormErrorMessage>Email is required.</FormErrorMessage>
-                    )}
-                  </FormControl>
-
-                  <FormControl>
-                    <FormLabel>First name</FormLabel>
-                    <Input placeholder="Last name" />
-                  </FormControl>
-                </ModalBody>
-
-                <ModalFooter p="10px" >
-                  <Flex alignItems="center" justifyContent="space-around" width='422px'>
-                    <Button width="185px" height="40px" colorScheme="blue">
-                      Save
-                    </Button>
-                    <Button
-                      width="185px"
-                      height="40px"
-                      onClick={onCreateAccountModalClose}
-                      colorScheme="blackAlpha"
-                    >
-                      Cancel
-                    </Button>
-                  </Flex>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
+            <CreateAccountModal 
+            isCreateAccountModalOpen={isCreateAccountModalOpen}
+            onCreateAccountModalClose={onCreateAccountModalClose}
+            isError={isError}
+            handleInputEmailChange={handleInputEmailChange}
+            input={input}
+            />
             <Flex w="672px" h="343px" pt="31px" justifyContent="space-between">
               <Sidebar
                 task={taskNew.title}

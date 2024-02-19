@@ -1,4 +1,22 @@
-function CreateAccountModal() {
+import React, { useState, useEffect } from "react";
+import {
+  Flex,
+  Button,
+  Modal,
+  ModalOverlay,
+  ModalHeader,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  FormHelperText,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+
+function CreateAccountModal({ isCreateAccountModalOpen, onCreateAccountModalClose, isError, handleInputEmailChange, input }) {
   return (
     <Modal
       isOpen={isCreateAccountModalOpen}
