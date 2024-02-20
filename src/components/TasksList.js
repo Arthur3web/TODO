@@ -2,20 +2,18 @@ import React from "react";
 import Task from "./Task";
 import { Flex, Box } from "@chakra-ui/react";
 import { isToday } from "date-fns";
+// import EditTaskModal from "./EditTaskModal";
 
 function TasksList({
   taskList,
   selectedStatus,
   isTodaySelected,
-  deleteTask,
-  saveEditTask,
   toggleTaskStatus,
-  onEditModalOpen,
-  onEditModalClose,
-  isEditModalOpen,
-  onDeleteModalOpen,
-  onDeleteModalClose,
-  isDeleteModalOpen,
+  handleEditTask,
+  isClickEditTaskButton,
+  setClickEditTaskButton,
+  handleDeleteTask,
+  setClickDeleteTaskButton,
 }) {
   const filteredTaskList = taskList.filter((el) => {
     if (isTodaySelected) {
@@ -29,6 +27,7 @@ function TasksList({
     if (selectedStatus === "Undone") return !el.isCompleted;
     return true;
   });
+  
 
   return (
     <Flex
@@ -47,18 +46,17 @@ function TasksList({
           <Task
             key={elem.id}
             task={elem}
-            deleteTask={deleteTask}
             toggleTaskStatus={toggleTaskStatus}
-            saveEditTask={saveEditTask}
-            onDeleteModalOpen={onDeleteModalOpen}
-            onDeleteModalClose={onDeleteModalClose}
-            isDeleteModalOpen={isDeleteModalOpen}
-            onEditModalOpen={onEditModalOpen}
-            onEditModalClose={onEditModalClose}
-            isEditModalOpen={isEditModalOpen}
+            handleEditTask={handleEditTask}
+            isClickEditTaskButton={isClickEditTaskButton}
+            setClickEditTaskButton={setClickEditTaskButton}
+            handleDeleteTask={handleDeleteTask}
+            setClickDeleteTaskButton={setClickDeleteTaskButton}
           />
         ))}
       </Box>
+      
+      
     </Flex>
   );
 }

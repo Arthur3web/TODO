@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
 import Sidebar from "./components/Sidebar.js";
+import EditTaskModal from "./components/EditTaskModal.js";
+import DeleteTaskModal from "./components/DeleteTaskModal.js";
+import CreateAccountModal from "./components/CreateAccountModal.js";
 import {
   ChakraProvider,
   Flex,
@@ -28,16 +31,18 @@ import {
   CheckCircleIcon,
   WarningIcon,
 } from "@chakra-ui/icons";
-import CreateAccountModal from "./components/CreateAccountModal.js";
-// import theme from "./styles/themes/theme.js";
+import themeNew from "./styles/themes/themeNew.js";
+// import theme  from './styles/themes/theme.js'
+
 
 function App() {
-  const [taskList, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useState([]); //tasklist
   const [isTodaySelected, setTodaySelected] = useState(true); //today
   const [isDateSelected, setDateSelected] = useState(true); //date
-  const [selectedStatus, setSelectedStatus] = useState("All"); //sidebar
+  const [selectedStatus, setSelectedStatus] = useState("All"); //status
   const statusList = ["All", "Done", "Undone"]; //menu-filter
   const sideBarFilter = [
+    //sidebar
     {
       id: "Today",
       name: "Today",
@@ -86,27 +91,18 @@ function App() {
     timeEnd: new Date(),
   });
   const {
+    //добавление задачи
     onOpen: onAddModalOpen,
     onClose: onAddModalClose,
     isOpen: isAddModalOpen,
   } = useDisclosure();
+  const { onToggle } = useDisclosure(); //фильтр задач
   const {
-    onOpen: onDeleteModalOpen,
-    onClose: onDeleteModalClose,
-    isOpen: isDeleteModalOpen,
-  } = useDisclosure();
-  const {
-    onOpen: onEditModalOpen,
-    onClose: onEditModalClose,
-    isOpen: isEditModalOpen,
-  } = useDisclosure();
-  const { onToggle } = useDisclosure();
-  const {
+    //регистрация пользователя
     onOpen: onCreateAccountModalOpen,
     onClose: onCreateAccountModalClose,
     isOpen: isCreateAccountModalOpen,
   } = useDisclosure();
-
 
   function handleFilterChange(el) {
     //фильтр
@@ -164,14 +160,29 @@ function App() {
     setTaskList(newTaskList);
   };
 
+  //CreateAccountModal
   const [input, setInput] = useState("");
-
   const handleInputEmailChange = (e) => setInput(e.target.value);
-
   const isError = input === "";
 
+  //EditTaskModal
+  const [isEditingTask, setEditingTask] = useState();
+  const [isClickEditTaskButton, setClickEditTaskButton] = useState(false);
+  const handleEditTask = (el) => {
+    setEditingTask(el);
+  };
+
+  //DeleteTaskModal
+  const [isDeletedTask, setDeletedTask] = useState();
+  const [isClickDeleteTaskButton, setClickDeleteTaskButton] = useState(false);
+  const handleDeleteTask = (el) => {
+    setDeletedTask(el);
+  };
+
+  // console.log(isClickEditTaskButton);
+
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={themeNew}>
       <Flex
         maxW="1366px"
         maxH="1024px"
@@ -282,12 +293,12 @@ function App() {
                 </Portal>
               </Popover>
             </Flex>
-            <CreateAccountModal 
-            isCreateAccountModalOpen={isCreateAccountModalOpen}
-            onCreateAccountModalClose={onCreateAccountModalClose}
-            isError={isError}
-            handleInputEmailChange={handleInputEmailChange}
-            input={input}
+            <CreateAccountModal
+              isCreateAccountModalOpen={isCreateAccountModalOpen}
+              onCreateAccountModalClose={onCreateAccountModalClose}
+              isError={isError}
+              handleInputEmailChange={handleInputEmailChange}
+              input={input}
             />
             <Flex w="672px" h="343px" pt="31px" justifyContent="space-between">
               <Sidebar
@@ -315,20 +326,33 @@ function App() {
                 taskList={taskList}
                 selectedStatus={selectedStatus}
                 isTodaySelected={isTodaySelected}
-                deleteTask={deleteTask}
-                saveEditTask={saveEditTask}
                 toggleTaskStatus={toggleTaskStatus}
-                onEditModalOpen={onEditModalOpen}
-                onEditModalClose={onEditModalClose}
-                isEditModalOpen={isEditModalOpen}
-                onDeleteModalOpen={onDeleteModalOpen}
-                onDeleteModalClose={onDeleteModalClose}
-                isDeleteModalOpen={isDeleteModalOpen}
+                handleEditTask={handleEditTask}
+                isClickEditTaskButton={isClickEditTaskButton}
+                setClickEditTaskButton={setClickEditTaskButton}
+                handleDeleteTask={handleDeleteTask}
+                setClickDeleteTaskButton={setClickDeleteTaskButton}
               />
             </Flex>
           </Flex>
         </Container>
       </Flex>
+      {isClickEditTaskButton && (
+        <EditTaskModal
+          isClickEditTaskButton={isClickEditTaskButton}
+          saveEditTask={saveEditTask}
+          isEditingTask={isEditingTask}
+          closeModal={setClickEditTaskButton}
+        />
+      )}
+      {isClickDeleteTaskButton && (
+        <DeleteTaskModal
+          isClickDeleteTaskButton={isClickDeleteTaskButton}
+          deleteTask={deleteTask}
+          closeModal={setClickDeleteTaskButton}
+          isDeletedTask={isDeletedTask}
+        />
+      )}
     </ChakraProvider>
   );
 }

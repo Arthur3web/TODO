@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Flex,
@@ -18,21 +18,42 @@ function AddTaskModal({
   isAddModalOpen,
   onAddModalClose,
   handleInputChange,
-  handleKeyDown,
   handleTimeChange,
-  saveTask,
   task,
+  addTask,
+  setTaskNew,
 }) {
+  const [value, setValue] = useState("");
+
+  function saveTask() {
+    if (task !== "") {
+      addTask(value);
+      setValue("");
+      onAddModalClose(true);
+    }
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      if (task !== "") {
+        addTask(value);
+        event.preventDefault();
+        onAddModalClose(true);
+      }
+    }
+    if (event.key === "Escape") {
+      onAddModalClose(true);
+      setTaskNew({
+        title: "",
+        timeEnd: "",
+      });
+    }
+  };
+
   return (
     <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} isCentered>
       <ModalOverlay />
-      <ModalContent
-        w="466px"
-        h="181px"
-        borderRadius="10px"
-        // gap="26px"
-        bg="white"
-      >
+      <ModalContent w="466px" h="181px" borderRadius="10px" bg="white">
         <ModalHeader
           borderRadius="10px 10px 0 0"
           bg="linear-gradient(#F5EDFD,#FEEFF5)"
@@ -83,42 +104,13 @@ function AddTaskModal({
             <Button
               leftIcon={<CheckCircleIcon boxSize="20px" />}
               onClick={saveTask}
-              width="185px"
-              height="40px"
-              lineHeight="1.2"
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-              borderRadius="10px"
-              fontSize="16px"
-              bg="rgba(103, 184, 203, 0.4)"
-              color="#2A4365"
-              _hover={{ bg: "rgba(103, 184, 203, 0.2)" }}
-              _active={{
-                transform: "scale(0.9)",
-              }}
-              _focus={{
-                boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
-              }}
+              variant='saveTaskButton'
             >
               Save Task
             </Button>
             <Button
               onClick={onAddModalClose}
-              width="185px"
-              height="40px"
-              lineHeight="1.2"
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-              borderRadius="10px"
-              fontSize="16px"
-              fontWeight="semibold"
-              bg="gray.400"
-              color="white"
-              _hover={{ bg: "gray.300" }}
-              _active={{
-                transform: "scale(0.9)",
-              }}
-              _focus={{
-                boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
-              }}
+              variant='closeModalButton'
             >
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close

@@ -12,13 +12,35 @@ import {
   ModalHeader,
   Modal,
 } from "@chakra-ui/react";
-import {
-  DeleteIcon,
-} from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 
-function DeleteTaskModal({ isDeleteModalOpen, onDeleteModalClose, task, deleteTaskButton}) {
+function DeleteTaskModal({
+  isClickDeleteTaskButton,
+  deleteTask,
+  closeModal,
+  isDeletedTask,
+}) {
+  function deleteTaskButton(id) {
+    deleteTask(id);
+    closeModal(false);
+  }
+
+  const handleKeyDown = (event) => {
+    //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
+    if (event.key === "Enter") {
+      closeModal(false);
+    }
+    if (event.key === "Escape") {
+      closeModal(false);
+    }
+  };
+
   return (
-    <Modal isOpen={isDeleteModalOpen} onClose={onDeleteModalClose} isCentered>
+    <Modal
+      isOpen={isClickDeleteTaskButton}
+      onClose={() => closeModal(false)}
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent w="466px" h="181px" borderRadius="10px" bg="white">
         <ModalHeader
@@ -57,46 +79,14 @@ function DeleteTaskModal({ isDeleteModalOpen, onDeleteModalClose, task, deleteTa
           >
             <Button
               leftIcon={<DeleteIcon fontSize="larger" />}
-              className="delete-button"
-              onClick={() => deleteTaskButton(task.id)}
-              width="185px"
-              height="40px"
-              lineHeight="1.2"
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-              borderRadius="10px"
-              fontSize="16px"
-              bg="rgba(245, 108, 156, 0.45)"
-              color="red"
-              _hover={{
-                bg: "rgba(245, 108, 156, 0.25)",
-              }}
-              _active={{
-                transform: "scale(0.9)",
-              }}
-              _focus={{
-                boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
-              }}
+              onClick={() => deleteTaskButton(isDeletedTask.id)}
+              variant="deleteTaskButton"
             >
               Delete
             </Button>
             <Button
-              width="185px"
-              height="40px"
-              lineHeight="1.2"
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-              borderRadius="10px"
-              fontSize="16px"
-              fontWeight="semibold"
-              bg="gray.400"
-              color="white"
-              _hover={{ bg: "gray.300" }}
-              _active={{
-                transform: "scale(0.9)",
-              }}
-              _focus={{
-                boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
-              }}
-              onClick={onDeleteModalClose}
+              variant="closeModalButton"
+              onClick={() => closeModal(false)}
             >
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close

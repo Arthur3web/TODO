@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   Flex,
   Button,
@@ -16,7 +16,13 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 
-function CreateAccountModal({ isCreateAccountModalOpen, onCreateAccountModalClose, isError, handleInputEmailChange, input }) {
+function CreateAccountModal({
+  isCreateAccountModalOpen,
+  onCreateAccountModalClose,
+  isError,
+  handleInputEmailChange,
+  input,
+}) {
   return (
     <Modal
       isOpen={isCreateAccountModalOpen}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Flex,
   Image,
@@ -11,24 +11,47 @@ import {
   ModalBody,
   ModalHeader,
   Modal,
-  Checkbox,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
 function EditTaskModal({
-  isEditModalOpen,
-  onEditModalClose,
-  onEditModalOpen,
-  handleInputChangeEditTask,
-  handleInputChangeEditTaskTime,
-  handleKeyDown,
-  noteTime,
-  editTask,
-  task,
-  note,
+  saveEditTask,
+  isEditingTask,
+  isClickEditTaskButton,
+  closeModal,
 }) {
+
+  const [note, setNote] = useState(isEditingTask.title);
+  const [noteTime, setNoteTime] = useState(new Date(isEditingTask.timeEnd));
+  
+  function editTask(id) {
+    if (note !== "") {
+      saveEditTask(isEditingTask.id, note, new Date(noteTime));
+      closeModal(false)
+      console.log(isEditingTask);
+    }
+  }
+  function handleInputChangeEditTask(e) {
+    setNote(e.target.value);
+  }
+  function handleInputChangeEditTaskTime(e) {
+    setNoteTime(e.target.value);
+  }
+  const handleKeyDown = (event) => {
+    //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
+    if (event.key === "Enter") {
+      if (note !== "") {
+        saveEditTask(isEditingTask.id, note, new Date(noteTime));
+        closeModal(false)
+      }
+    }
+    if (event.key === "Escape") {
+      closeModal(false)
+    }
+  };
+
   return (
-    <Modal isOpen={isEditModalOpen} onClose={onEditModalClose} isCentered>
+    <Modal isOpen={isClickEditTaskButton} onClose={() => closeModal(false)} isCentered>
       <ModalOverlay />
       <ModalContent w="466px" h="181px" borderRadius="10px" bg="white">
         <ModalHeader
@@ -80,43 +103,14 @@ function EditTaskModal({
           >
             <Button
               leftIcon={<CheckCircleIcon fontSize="larger" />}
-              onClick={() => editTask(task.id, note)}
-              width="185px"
-              height="40px"
-              lineHeight="1.2"
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-              borderRadius="10px"
-              fontSize="16px"
-              bg="rgba(103, 184, 203, 0.4)"
-              color="#2A4365"
-              _hover={{ bg: "rgba(103, 184, 203, 0.2)" }}
-              _active={{
-                transform: "scale(0.9)",
-              }}
-              _focus={{
-                boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
-              }}
+              onClick={() => editTask(isEditingTask.id, note)}
+              variant='saveTaskButton'
             >
               Save
             </Button>
             <Button
-              width="185px"
-              height="40px"
-              lineHeight="1.2"
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-              borderRadius="10px"
-              fontSize="16px"
-              fontWeight="semibold"
-              bg="gray.400"
-              color="white"
-              _hover={{ bg: "gray.300" }}
-              _active={{
-                transform: "scale(0.9)",
-              }}
-              _focus={{
-                boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
-              }}
-              onClick={onEditModalClose}
+              onClick={() => closeModal(false)}
+              variant="closeModalButton"
             >
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close

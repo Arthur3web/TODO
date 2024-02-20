@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import {
   Button,
@@ -8,17 +8,9 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  Heading,
-  Input,
-  Modal,
-  ModalOverlay,
-  ModalHeader,
-  ModalContent,
-  ModalBody,
-  ModalFooter,
   Image,
 } from "@chakra-ui/react";
-import { CheckCircleIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import { CheckCircleIcon } from "@chakra-ui/icons";
 import AddTaskModal from "./AddTaskModal";
 
 function Sidebar({
@@ -60,32 +52,6 @@ function Sidebar({
       console.log(taskList);
     }
   };
-  const [value, setValue] = useState("");
-
-  function saveTask() {
-    if (task !== "") {
-      addTask(value);
-      setValue("");
-      onAddModalClose(true);
-    }
-  }
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      if (task !== "") {
-        addTask(value);
-        event.preventDefault();
-        onAddModalClose(true);
-      }
-    }
-    if (event.key === "Escape") {
-      onAddModalClose(true);
-      setTaskNew({
-        title: "",
-        timeEnd: "",
-      });
-    }
-  };
 
   return (
     <Flex flexDirection="column" justifyContent="space-between">
@@ -93,20 +59,16 @@ function Sidebar({
         {sideBarFilter.map((item) => (
           <Menu key={item.id}>
             <MenuButton
-              w="185px"
-              h="40px"
-              borderRadius="10px"
-              pl="13px"
+              variant="sideBarButton"
               bg={
                 isTodaySelected && item.id === "Today"
-                  ? "rgba(147, 51, 234, 0.25)"
+                  ? "#d3c8fc"
                   : !isTodaySelected &&
                     item.id === "All" &&
                     (selectedStatus === "All", "Done", "Undone")
-                  ? "rgba(147, 51, 234, 0.25)"
+                  ? "#d3c8fc"
                   : "inherit"
               }
-              _hover={{ bg: "rgba(147, 51, 234, 0.25)" }}
               onClick={() => handleOpenedFilter(item.name)}
             >
               <Flex alignItems="center" gap="10px">
@@ -139,7 +101,7 @@ function Sidebar({
             </MenuButton>
             {item.name === selectedStatus && onToggle && (
               <MenuList
-                bg="#d3c9fc"
+                bg="#d3c8fb"
                 border="0"
                 minW="185px"
                 // gap="10px"
@@ -147,13 +109,13 @@ function Sidebar({
                 {statusList.map((el, ind) => (
                   <MenuItem
                     key={el + ind}
-                    bg={el === selectedStatus ? "#C6ABF9" : "inherit"}
+                    bg={el === selectedStatus ? "#cfc0fc" : "inherit"}
                     gap="10px"
                     w="171px"
                     h="40px"
                     m="0 0 0 7px"
                     borderRadius="10px" //отступы меню
-                    _hover={{ bg: "rgba(147, 51, 234, 0.25)" }}
+                    _hover={{ bg: "#cfc0fc" }}
                     onClick={() => handleFilterChange(el)}
                   >
                     <CheckCircleIcon
@@ -177,22 +139,7 @@ function Sidebar({
         ))}
       </Flex>
       <Button
-        // variant='searchItem'
-        w="185px"
-        h="40px"
-        borderRadius="10px"
-        bg="rgba(147, 51, 234, 0.06)"
-        _hover={{ bg: "rgba(147, 51, 234, 0.25)" }}
-        _active={{
-          bg: "rgba(147, 51, 234, 0.25)",
-          color: "#9333EA",
-          transform: "scale(0.9)",
-        }}
-        transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-        _focus={{
-          boxShadow: "0 0 1px 2px #9333EA, 0 1px 1px rgba(0, 0, 0, .15)",
-          bg: "rgba(147, 51, 234, 0.25",
-        }}
+        variant='addTaskButton'
         onClick={onAddModalOpen}
       >
         <Image src="/assets/Vector_2.svg" alt="add-task-button" mr="10px" />
@@ -212,10 +159,10 @@ function Sidebar({
         isAddModalOpen={isAddModalOpen}
         onAddModalClose={onAddModalClose}
         handleInputChange={handleInputChange}
-        handleKeyDown={handleKeyDown}
         handleTimeChange={handleTimeChange}
-        saveTask={saveTask}
         task={task}
+        addTask={addTask}
+        setTaskNew={setTaskNew}
       />
     </Flex>
   );

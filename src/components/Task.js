@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   Flex,
@@ -10,62 +10,25 @@ import {
   MenuItem,
   Checkbox,
 } from "@chakra-ui/react";
-import {
-  EditIcon,
-  DeleteIcon,
-} from "@chakra-ui/icons";
-import EditTaskModal from "./EditTaskModal";
-import DeleteTaskModal from "./DeleteTaskModal";
+import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
 const Task = ({
   task,
-  deleteTask,
   toggleTaskStatus,
-  saveEditTask,
-  onDeleteModalOpen,
-  onDeleteModalClose,
-  isDeleteModalOpen,
-  onEditModalOpen,
-  onEditModalClose,
-  isEditModalOpen,
+  handleEditTask,
+  setClickEditTaskButton,
+  setClickDeleteTaskButton,
+  handleDeleteTask,
 }) => {
   //Деструктуризация
-  const [note, setNote] = useState(task.title);
-  const [noteTime, setNoteTime] = useState(new Date(task.timeEnd));
 
-  function handleInputChangeEditTask(e) {
-    setNote(e.target.value);
-  }
-  function handleInputChangeEditTaskTime(e) {
-    setNoteTime(e.target.value);
-  }
-
-  function editTask(id) {
-    if (note !== "") {
-      saveEditTask(task.id, note, new Date(noteTime));
-      onEditModalClose(true);
-      console.log(task);
-    }
-  }
-
-  function deleteTaskButton(id) {
-    deleteTask(id);
-    onDeleteModalClose(true);
-  }
-
-  const handleKeyDown = (event) => {
-    //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
-    if (event.key === "Enter") {
-      if (note !== "") {
-        saveEditTask(task.id, note, new Date(noteTime));
-        onDeleteModalClose(true);
-        onEditModalClose(true);
-      }
-    }
-    if (event.key === "Escape") {
-      onDeleteModalClose(true);
-      onEditModalClose(true);
-    }
+  const handleOpenedModalEditTask = () => {
+    handleEditTask(task);
+    setClickEditTaskButton(true);
+  };
+  const handleOpenedModalDeleteTask = () => {
+    handleDeleteTask(task);
+    setClickDeleteTaskButton(true);
   };
 
   return (
@@ -122,29 +85,12 @@ const Task = ({
               m="5px 0 0 -53px"
             >
               <Flex>
-                <MenuItem w="50%" onClick={onEditModalOpen}>
+                <MenuItem w="50%" onClick={handleOpenedModalEditTask}>
                   <EditIcon color="gray.600" />
                 </MenuItem>
-                <EditTaskModal 
-                isEditModalOpen={isEditModalOpen}
-                onEditModalClose={onEditModalClose}
-                handleInputChangeEditTask={handleInputChangeEditTask}
-                handleInputChangeEditTaskTime={handleInputChangeEditTaskTime}
-                handleKeyDown={handleKeyDown}
-                noteTime={noteTime}
-                editTask={editTask}
-                task={task}
-                note={note}
-                />
-                <MenuItem w="50%" onClick={onDeleteModalOpen}>
+                <MenuItem w="50%" onClick={handleOpenedModalDeleteTask}>
                   <DeleteIcon color="red.600" />
                 </MenuItem>
-                <DeleteTaskModal 
-                isDeleteModalOpen={isDeleteModalOpen}
-                onDeleteModalClose={onDeleteModalClose}
-                task={task}
-                deleteTaskButton={deleteTaskButton}
-                />
               </Flex>
             </MenuList>
           </Menu>
