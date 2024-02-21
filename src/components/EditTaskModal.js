@@ -17,32 +17,33 @@ import { CheckCircleIcon } from "@chakra-ui/icons";
 
 function EditTaskModal({
   editTask,
-  isEditingTask,
+  newEditTask,
   isClickEditTaskButton,
   closeModal,
 }) {
 
-  const [note, setNote] = useState(isEditingTask.title);
-  const [noteTime, setNoteTime] = useState(new Date(isEditingTask.timeEnd));
+  const [note, setNote] = useState(newEditTask.title);
+  const [noteTime, setNoteTime] = useState(new Date(newEditTask.timeEnd));
   const isError = note === "";
   function saveEditTask(id) {
     if (note !== "") {
-      editTask(isEditingTask.id, note, new Date(noteTime));
+      editTask(newEditTask.id, note, new Date(noteTime));
       closeModal(false)
-      console.log(isEditingTask);
+      // console.log(newEditTask);
     }
   }
+
   function handleInputChangeEditTask(e) {
     setNote(e.target.value);
   }
   function handleInputChangeEditTaskTime(e) {
-    setNoteTime(e.target.value);
+    setNoteTime(new Date(e.target.value));
   }
   const handleKeyDown = (event) => {
     //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
     if (event.key === "Enter") {
       if (note !== "") {
-        editTask(isEditingTask.id, note, new Date(noteTime));
+        editTask(newEditTask.id, note, new Date(noteTime));
         closeModal(false)
       }
     }
@@ -50,51 +51,38 @@ function EditTaskModal({
       closeModal(false)
     }
   };
-
+  console.log(noteTime)
   return (
-    <Modal isOpen={isClickEditTaskButton} onClose={() => closeModal(false)} isCentered>
+    <Modal isOpen={isClickEditTaskButton} onClose={() => closeModal(false)} variant="taskModal" isCentered>
       <ModalOverlay />
-      <ModalContent w="466px" h="181px" borderRadius="10px" bg="white">
-        <ModalHeader
-          borderRadius="10px 10px 0 0"
-          bg="linear-gradient(#F5EDFD,#FEEFF5)"
-          h="48px"
-        >
+      <ModalContent>
+        <ModalHeader>
           <Heading variant="modalHeaderContentHeading" >
             Edit task
           </Heading>
         </ModalHeader>
-        <ModalBody p="15px 25px 5px 25px">
+        <ModalBody>
           <Flex gap="10px">
             <Input
               isInvalid={isError}
-              h="40px"
-              w="270px"
-              border="1px solid #6B7280"
-              bg="#F3F3F3"
-              borderRadius="10px"
-              pl="27px"
+              variant="titleTaskInput"
               value={note}
               onChange={handleInputChangeEditTask}
-              autoFocus={true}
               onKeyDown={handleKeyDown}
             />
             <Input
               type="date"
-              w="40%"
-              bg="#F3F3F3"
-              borderRadius="10px"
-              border="1px solid #6B7280"
-              value={noteTime}
+              variant="timeEndTaskInput"
+              value={noteTime.toLocaleDateString('en-ca')} 
               onChange={handleInputChangeEditTaskTime}
             />
           </Flex>
         </ModalBody>
-        <ModalFooter py="17px">
+        <ModalFooter>
           <Container variant="modalFooterContainer" >
             <Button
               leftIcon={<CheckCircleIcon fontSize="larger" />}
-              onClick={() => saveEditTask(isEditingTask.id, note)}
+              onClick={() => saveEditTask(newEditTask.id, note)}
               variant='saveTaskButton'
             >
               Save

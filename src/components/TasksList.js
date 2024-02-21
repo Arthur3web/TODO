@@ -26,11 +26,10 @@ function TasksList({
     if (selectedStatus === "Undone") return !el.isCompleted;
     return true;
   });
-  
 
   return (
-    <Container variant='taskListContainer' className="task-list" >
-      <Box >
+    <Container variant="taskListContainer" className="task-list">
+      <Box>
         {filteredTaskList.map((elem) => (
           <Task
             key={elem.id}
@@ -44,8 +43,6 @@ function TasksList({
           />
         ))}
       </Box>
-      
-      
     </Container>
   );
 }

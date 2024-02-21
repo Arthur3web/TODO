@@ -164,10 +164,10 @@ function App() {
   const isError = input === "";
 
   //EditTaskModal
-  const [isEditingTask, setEditingTask] = useState();
+  const [newEditTask, setNewEditTask] = useState();
   const [isClickEditTaskButton, setClickEditTaskButton] = useState(false);
   const handleEditTask = (el) => {
-    setEditingTask(el);
+    setNewEditTask(el);
   };
 
   //DeleteTaskModal
@@ -177,7 +177,6 @@ function App() {
     setDeletedTask(el);
   };
 
-  // console.log(isClickEditTaskButton);
 
   return (
     <ChakraProvider theme={themeNew}>
@@ -302,8 +301,9 @@ function App() {
         <EditTaskModal
           isClickEditTaskButton={isClickEditTaskButton}
           editTask={editTask}
-          isEditingTask={isEditingTask}
+          newEditTask={newEditTask}
           closeModal={setClickEditTaskButton}
+          setNewEditTask={setNewEditTask}
         />
       )}
       {isClickDeleteTaskButton && (

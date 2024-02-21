@@ -37,32 +37,25 @@ function DeleteTaskModal({
 
   return (
     <Modal
+      variant='deleteTaskModal'
       isOpen={isClickDeleteTaskButton}
       onClose={() => closeModal(false)}
       isCentered
     >
       <ModalOverlay />
-      <ModalContent w="466px" h="181px" borderRadius="10px" bg="white">
-        <ModalHeader
-          borderRadius="10px 10px 0 0"
-          bg="linear-gradient(#F5EDFD,#FEEFF5)"
-          h="48px"
-        >
-          <Heading variant="modalHeaderContentHeading" >
-            Delete task
-          </Heading>
+      <ModalContent>
+        <ModalHeader>
+          <Heading variant="modalHeaderContentHeading">Delete task</Heading>
         </ModalHeader>
-        <ModalBody >
+        <ModalBody>
           <Container variant="deleteTaskModalContentContainer">
-            <Text
-              variant='deleteTaskModalContentContainerText'
-            >
+            <Text variant="deleteTaskModalContentContainerText">
               Are you sure about deleting this task?
             </Text>
           </Container>
         </ModalBody>
-        <ModalFooter h="40px" mb="15px">
-          <Container variant="modalFooterContainer" >
+        <ModalFooter>
+          <Container variant="modalFooterContainer">
             <Button
               leftIcon={<DeleteIcon fontSize="larger" />}
               onClick={() => deletingTask(isDeletedTask.id)}

@@ -56,21 +56,10 @@ function Sidebar({
 
   return (
     <Container variant="sideBarContainer">
-      <Container variant='sideBarContentContainer'>
+      <Container variant="sideBarContentContainer">
         {sideBarFilter.map((item) => (
-          <Menu key={item.id}>
+          <Menu key={item.id} variant="sideBar">
             <MenuButton
-              w="185px"
-              h="40px"
-              borderRadius="10px"
-              pl="13px"
-              _hover={
-                { 
-                  bg: "#d3c8fc",
-                  boxShadow: "0 1px 1px rgba(0, 0, 0, .15)" 
-                }
-              }
-              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
               bg={
                 isTodaySelected && item.id === "Today"
                   ? "#d3c8fc"
@@ -82,7 +71,7 @@ function Sidebar({
               }
               onClick={() => handleOpenedFilter(item.name)}
             >
-              <Container variant='sideBarFilterButtonContentContainer'>
+              <Container variant="sideBarFilterButtonContentContainer">
                 <Flex //sideBarFilterButtonIconContainer
                   w="27px"
                   h="27px"
@@ -92,7 +81,7 @@ function Sidebar({
                   {item.path}
                 </Flex>
                 <Text
-                  variant='sideBarFilterContentText'
+                  variant="sideBarFilterContentText"
                   color={
                     isTodaySelected && item.id === "Today"
                       ? "#9333EA"
@@ -108,22 +97,11 @@ function Sidebar({
               </Container>
             </MenuButton>
             {item.name === selectedStatus && onToggle && (
-              <MenuList
-                bg="#d3c8fb"
-                border="0"
-                minW="185px"
-                // gap="10px"
-              >
+              <MenuList>
                 {statusList.map((el, ind) => (
                   <MenuItem
                     key={el + ind}
-                    bg={el === selectedStatus ? "#cebffb" : "inherit"}
-                    gap="10px"
-                    w="171px"
-                    h="40px"
-                    m="0 0 0 7px"
-                    borderRadius="10px" //отступы меню
-                    _hover={{ bg: "#cfc0fc" }}
+                    bg={el === selectedStatus ? "#e2d9ff" : "inherit"}
                     onClick={() => handleFilterChange(el)}
                   >
                     <CheckCircleIcon
@@ -131,7 +109,7 @@ function Sidebar({
                       fontSize="20px"
                     />
                     <Text
-                      variant='sideBarFilterContentText'
+                      variant="sideBarFilterContentText"
                       color={el === selectedStatus ? "#9333EA" : "#404040"}
                     >
                       {el}
@@ -143,16 +121,9 @@ function Sidebar({
           </Menu>
         ))}
       </Container>
-      <Button
-        variant='addTaskButton'
-        onClick={onAddModalOpen}
-      >
+      <Button variant="addTaskButton" onClick={onAddModalOpen}>
         <Image src="/assets/Vector_2.svg" alt="add-task-button" mr="10px" />
-        <Text
-          variant='addTaskButtonContentText'
-        >
-          AddTask
-        </Text>
+        <Text variant="addTaskButtonContentText">AddTask</Text>
       </Button>
       <AddTaskModal
         isAddModalOpen={isAddModalOpen}

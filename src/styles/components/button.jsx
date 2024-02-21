@@ -9,7 +9,7 @@ export const Button = defineStyleConfig({
       bg: "rgba(147, 51, 234, 0.06)",
       _hover: {
         bg: "rgba(147, 51, 234, 0.06)",
-        boxShadow: "0 1px 1px rgba(0, 0, 0, .15)"
+        boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
       },
       _active: {
         transform: "scale(0.9)",
@@ -29,7 +29,7 @@ export const Button = defineStyleConfig({
       fontSize: "16px",
       bg: "rgba(103, 184, 203, 0.06)",
       color: "#67B8CB",
-      _hover: { 
+      _hover: {
         bg: "rgba(103, 184, 203, 0.03)",
         boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
       },
@@ -50,9 +50,9 @@ export const Button = defineStyleConfig({
       fontWeight: "semibold",
       bg: "rgba(107, 114, 128, 0.06)",
       color: "#6B7280",
-      _hover: { 
+      _hover: {
         bg: "rgba(107, 114, 128, 0.03)",
-        boxShadow: "0 1px 1px rgba(0, 0, 0, .15)", 
+        boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
       },
       _active: {
         transform: "scale(0.9)",
@@ -82,10 +82,8 @@ export const Button = defineStyleConfig({
     loginButton: {
       w: "185px",
       h: "40px",
-      // lineHeight: "1.2",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
       borderRadius: "10px",
-      // fontSize: "16px",
       bg: "purple.400",
       color: "black",
       _hover: {

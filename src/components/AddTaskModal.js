@@ -31,6 +31,7 @@ function AddTaskModal({
       addTask(value);
       setValue("");
       onAddModalClose(true);
+      // console.log(task)
     }
   }
 
@@ -52,58 +53,39 @@ function AddTaskModal({
   };
 
   return (
-    <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} isCentered>
+    <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} variant="taskModal" isCentered>
       <ModalOverlay />
-      <ModalContent w="466px" h="181px" borderRadius="10px" bg="white">
-        <ModalHeader
-          borderRadius="10px 10px 0 0"
-          bg="linear-gradient(#F5EDFD,#FEEFF5)"
-          h='48px'
-        >
-          <Heading variant="modalHeaderContentHeading" >
-            Create task
-          </Heading>
+      <ModalContent>
+        <ModalHeader>
+          <Heading variant="modalHeaderContentHeading">Create task</Heading>
         </ModalHeader>
-        <ModalBody p="15px 25px 5px 25px">
+        <ModalBody>
           <Flex gap="10px">
             <Input
               isInvalid={isError}
-              h="40px"
-              w="270px"
-              bg="#F3F3F3"
-              borderRadius="10px"
-              pl="27px"
+              variant="titleTaskInput"
               placeholder="Enter text..."
               onChange={handleInputChange}
               value={task}
-              autoFocus={true}
-              _focus={{border: "1px solid rgba(147, 51, 234, 0.06)"}}
               onKeyDown={handleKeyDown}
             ></Input>
             <Input
-              // variant="timeEndTaskInput"
+              variant="timeEndTaskInput"
               type="date"
-              w="40%"
-              bg="#F3F3F3"
-              borderRadius="10px"
-              _focus={{border: "1px solid rgba(147, 51, 234, 0.06)"}}
               onChange={handleTimeChange}
             />
           </Flex>
         </ModalBody>
-        <ModalFooter py="17px">
-          <Container variant="modalFooterContainer" >
+        <ModalFooter>
+          <Container variant="modalFooterContainer">
             <Button
               leftIcon={<CheckCircleIcon boxSize="20px" />}
               onClick={saveTask}
-              variant='saveTaskButton'
+              variant="saveTaskButton"
             >
               Save Task
             </Button>
-            <Button
-              onClick={onAddModalClose}
-              variant='closeModalButton'
-            >
+            <Button onClick={onAddModalClose} variant="closeModalButton">
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close
             </Button>
