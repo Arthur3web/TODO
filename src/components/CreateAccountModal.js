@@ -14,6 +14,7 @@ import {
   Input,
   FormHelperText,
   FormErrorMessage,
+  Container,
 } from "@chakra-ui/react";
 
 function CreateAccountModal({
@@ -30,8 +31,8 @@ function CreateAccountModal({
       isCentered
     >
       <ModalOverlay />
-      <ModalContent>
-        <ModalHeader>Create your account</ModalHeader>
+      <ModalContent w="450px" h="310px">
+        <ModalHeader h='50px'>Create your account</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl isInvalid={isError} isRequired>
@@ -52,26 +53,24 @@ function CreateAccountModal({
             )}
           </FormControl>
 
-          <FormControl>
+          <FormControl isRequired>
             <FormLabel>First name</FormLabel>
             <Input placeholder="Last name" />
           </FormControl>
         </ModalBody>
 
-        <ModalFooter p="10px">
-          <Flex alignItems="center" justifyContent="space-around" width="422px">
-            <Button width="185px" height="40px" colorScheme="blue">
+        <ModalFooter h="40px" mb="15px">
+          <Container variant="modalFooterContainer">
+            <Button variant="saveTaskButton">
               Save
             </Button>
             <Button
-              width="185px"
-              height="40px"
+              variant="closeModalButton"
               onClick={onCreateAccountModalClose}
-              colorScheme="blackAlpha"
             >
               Cancel
             </Button>
-          </Flex>
+          </Container>
         </ModalFooter>
       </ModalContent>
     </Modal>

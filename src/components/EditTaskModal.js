@@ -11,11 +11,12 @@ import {
   ModalBody,
   ModalHeader,
   Modal,
+  Container,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
 function EditTaskModal({
-  saveEditTask,
+  editTask,
   isEditingTask,
   isClickEditTaskButton,
   closeModal,
@@ -23,10 +24,10 @@ function EditTaskModal({
 
   const [note, setNote] = useState(isEditingTask.title);
   const [noteTime, setNoteTime] = useState(new Date(isEditingTask.timeEnd));
-  
-  function editTask(id) {
+  const isError = note === "";
+  function saveEditTask(id) {
     if (note !== "") {
-      saveEditTask(isEditingTask.id, note, new Date(noteTime));
+      editTask(isEditingTask.id, note, new Date(noteTime));
       closeModal(false)
       console.log(isEditingTask);
     }
@@ -41,7 +42,7 @@ function EditTaskModal({
     //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
     if (event.key === "Enter") {
       if (note !== "") {
-        saveEditTask(isEditingTask.id, note, new Date(noteTime));
+        editTask(isEditingTask.id, note, new Date(noteTime));
         closeModal(false)
       }
     }
@@ -59,19 +60,14 @@ function EditTaskModal({
           bg="linear-gradient(#F5EDFD,#FEEFF5)"
           h="48px"
         >
-          <Heading
-            fontFamily="Roboto"
-            fontSize="20px"
-            fontWeight="700"
-            lineHeight="23.44px"
-            color="#9333EA"
-          >
+          <Heading variant="modalHeaderContentHeading" >
             Edit task
           </Heading>
         </ModalHeader>
         <ModalBody p="15px 25px 5px 25px">
           <Flex gap="10px">
             <Input
+              isInvalid={isError}
               h="40px"
               w="270px"
               border="1px solid #6B7280"
@@ -82,7 +78,6 @@ function EditTaskModal({
               onChange={handleInputChangeEditTask}
               autoFocus={true}
               onKeyDown={handleKeyDown}
-              required
             />
             <Input
               type="date"
@@ -96,14 +91,10 @@ function EditTaskModal({
           </Flex>
         </ModalBody>
         <ModalFooter py="17px">
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            width="422px"
-          >
+          <Container variant="modalFooterContainer" >
             <Button
               leftIcon={<CheckCircleIcon fontSize="larger" />}
-              onClick={() => editTask(isEditingTask.id, note)}
+              onClick={() => saveEditTask(isEditingTask.id, note)}
               variant='saveTaskButton'
             >
               Save
@@ -115,7 +106,7 @@ function EditTaskModal({
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close
             </Button>
-          </Flex>
+          </Container>
         </ModalFooter>
       </ModalContent>
     </Modal>

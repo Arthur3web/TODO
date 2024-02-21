@@ -9,6 +9,7 @@ import {
   MenuList,
   MenuItem,
   Image,
+  Container,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import AddTaskModal from "./AddTaskModal";
@@ -54,12 +55,22 @@ function Sidebar({
   };
 
   return (
-    <Flex flexDirection="column" justifyContent="space-between">
-      <Flex flexDirection="column" gap="21px">
+    <Container variant="sideBarContainer">
+      <Container variant='sideBarContentContainer'>
         {sideBarFilter.map((item) => (
           <Menu key={item.id}>
             <MenuButton
-              variant="sideBarButton"
+              w="185px"
+              h="40px"
+              borderRadius="10px"
+              pl="13px"
+              _hover={
+                { 
+                  bg: "#d3c8fc",
+                  boxShadow: "0 1px 1px rgba(0, 0, 0, .15)" 
+                }
+              }
+              transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
               bg={
                 isTodaySelected && item.id === "Today"
                   ? "#d3c8fc"
@@ -71,8 +82,8 @@ function Sidebar({
               }
               onClick={() => handleOpenedFilter(item.name)}
             >
-              <Flex alignItems="center" gap="10px">
-                <Flex
+              <Container variant='sideBarFilterButtonContentContainer'>
+                <Flex //sideBarFilterButtonIconContainer
                   w="27px"
                   h="27px"
                   alignItems="center"
@@ -81,10 +92,7 @@ function Sidebar({
                   {item.path}
                 </Flex>
                 <Text
-                  fontFamily="Roboto"
-                  fontSize="16px"
-                  fontWeight="400"
-                  lineHeight="18.75px"
+                  variant='sideBarFilterContentText'
                   color={
                     isTodaySelected && item.id === "Today"
                       ? "#9333EA"
@@ -97,7 +105,7 @@ function Sidebar({
                 >
                   {item.name}
                 </Text>
-              </Flex>
+              </Container>
             </MenuButton>
             {item.name === selectedStatus && onToggle && (
               <MenuList
@@ -109,7 +117,7 @@ function Sidebar({
                 {statusList.map((el, ind) => (
                   <MenuItem
                     key={el + ind}
-                    bg={el === selectedStatus ? "#cfc0fc" : "inherit"}
+                    bg={el === selectedStatus ? "#cebffb" : "inherit"}
                     gap="10px"
                     w="171px"
                     h="40px"
@@ -123,10 +131,7 @@ function Sidebar({
                       fontSize="20px"
                     />
                     <Text
-                      fontFamily="Roboto"
-                      fontSize="16px"
-                      fontWeight="400"
-                      lineHeight="18.75px"
+                      variant='sideBarFilterContentText'
                       color={el === selectedStatus ? "#9333EA" : "#404040"}
                     >
                       {el}
@@ -137,20 +142,14 @@ function Sidebar({
             )}
           </Menu>
         ))}
-      </Flex>
+      </Container>
       <Button
         variant='addTaskButton'
         onClick={onAddModalOpen}
       >
         <Image src="/assets/Vector_2.svg" alt="add-task-button" mr="10px" />
         <Text
-          w="63px"
-          h="19px"
-          fontFamily="Roboto"
-          fontSize="16px"
-          fontWeight="400"
-          lineHeight="18.75px"
-          color="#9333EA"
+          variant='addTaskButtonContentText'
         >
           AddTask
         </Text>
@@ -164,7 +163,7 @@ function Sidebar({
         addTask={addTask}
         setTaskNew={setTaskNew}
       />
-    </Flex>
+    </Container>
   );
 }
 

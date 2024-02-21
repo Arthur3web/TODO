@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Container,
-  Flex,
   Text,
   Image,
   Menu,
@@ -32,15 +31,9 @@ const Task = ({
   };
 
   return (
-    <Container
-      maxW="428px"
-      bg="purple.100"
-      borderRadius="10px"
-      mb="10px"
-      _hover={{ bg: "purple.200" }}
-    >
-      <Flex gap="10px" alignItems="center" justifyContent="space-between">
-        <Flex gap="10px" alignItems="center">
+    <Container variant="taskContainer" >
+      <Container variant="taskContentContainer">
+        <Container variant="taskContentTitleContainer">
           <Checkbox
             border="gray"
             colorScheme="purple"
@@ -49,53 +42,44 @@ const Task = ({
           />
           <Text
             className={task.isCompleted ? "crossText" : "listItem"}
-            padding="2"
-            maxW="257px"
-            bg="inherit"
-            fontSize="14px"
-            fontWeight="400"
-            fontFamily="Roboto"
-            lineHeight="18.75px"
+            variant='taskContentTitleContainerText'
             isTruncated
           >
             {task.title}
           </Text>
-        </Flex>
-        <Flex alignItems="center" gap="10px">
+        </Container>
+        <Container variant='taskContentDateContainer'>
           <Text
-            fontSize="14px"
-            color="#6b7280"
-            fontFamily="Roboto"
-            fontWeight="400"
-            lineHeight="16.41px"
+            variant='taskContentDateContainerText'
           >
+            {/* .toLocaleDateString() */}
             {task.timeEnd.toLocaleDateString()}
           </Text>
 
-          <Menu>
+          <Menu placement="bottom-end">
             <MenuButton bg="inherit" size="xs" aria-label="Options">
               <Image boxSize="13px" src="/assets/Vector_3.svg" alt="Vector_3" />
             </MenuButton>
             <MenuList
               borderRadius="10px"
-              border="1px solid #9333EA"
-              bg="white"
-              size="xs"
-              minW="100%"
-              m="5px 0 0 -53px"
+              border="1px solid #7D40FF"
+              minW="53px"
+              h="24px"
+              m="1.5px 0 0 0"
+              py='4px'
             >
-              <Flex>
-                <MenuItem w="50%" onClick={handleOpenedModalEditTask}>
-                  <EditIcon color="gray.600" />
+              <Container variant="menuOperationTaskContainer" >
+                <MenuItem boxSize='15px' p={0} onClick={handleOpenedModalEditTask}>
+                  <EditIcon color="#8687E7" />
                 </MenuItem>
-                <MenuItem w="50%" onClick={handleOpenedModalDeleteTask}>
-                  <DeleteIcon color="red.600" />
+                <MenuItem boxSize='15px' p={0} onClick={handleOpenedModalDeleteTask}>
+                  <DeleteIcon color="#F56497" />
                 </MenuItem>
-              </Flex>
+              </Container>
             </MenuList>
           </Menu>
-        </Flex>
-      </Flex>
+        </Container>
+      </Container>
     </Container>
   );
 };

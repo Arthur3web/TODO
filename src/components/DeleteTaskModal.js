@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Flex,
   Text,
   Image,
   Heading,
@@ -11,6 +10,7 @@ import {
   ModalBody,
   ModalHeader,
   Modal,
+  Container,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 
@@ -20,7 +20,7 @@ function DeleteTaskModal({
   closeModal,
   isDeletedTask,
 }) {
-  function deleteTaskButton(id) {
+  function deletingTask(id) {
     deleteTask(id);
     closeModal(false);
   }
@@ -48,38 +48,24 @@ function DeleteTaskModal({
           bg="linear-gradient(#F5EDFD,#FEEFF5)"
           h="48px"
         >
-          <Heading
-            fontFamily="Roboto"
-            fontSize="20px"
-            fontWeight="700"
-            lineHeight="23.44px"
-            color="#9333EA"
-          >
+          <Heading variant="modalHeaderContentHeading" >
             Delete task
           </Heading>
         </ModalHeader>
-        <ModalBody w="448px">
-          <Flex alignItems="center" justifyContent="center">
+        <ModalBody >
+          <Container variant="deleteTaskModalContentContainer">
             <Text
-              fontFamily="Roboto"
-              fontSize="20px"
-              fontWeight="700"
-              lineHeight="23.44px"
-              pt="15px"
+              variant='deleteTaskModalContentContainerText'
             >
               Are you sure about deleting this task?
             </Text>
-          </Flex>
+          </Container>
         </ModalBody>
-        <ModalFooter h="40px" my="15px">
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            width="422px"
-          >
+        <ModalFooter h="40px" mb="15px">
+          <Container variant="modalFooterContainer" >
             <Button
               leftIcon={<DeleteIcon fontSize="larger" />}
-              onClick={() => deleteTaskButton(isDeletedTask.id)}
+              onClick={() => deletingTask(isDeletedTask.id)}
               variant="deleteTaskButton"
             >
               Delete
@@ -91,7 +77,7 @@ function DeleteTaskModal({
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close
             </Button>
-          </Flex>
+          </Container>
         </ModalFooter>
       </ModalContent>
     </Modal>

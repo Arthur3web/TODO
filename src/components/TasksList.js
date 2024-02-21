@@ -1,8 +1,7 @@
 import React from "react";
 import Task from "./Task";
-import { Flex, Box } from "@chakra-ui/react";
+import { Box, Container } from "@chakra-ui/react";
 import { isToday } from "date-fns";
-// import EditTaskModal from "./EditTaskModal";
 
 function TasksList({
   taskList,
@@ -30,18 +29,8 @@ function TasksList({
   
 
   return (
-    <Flex
-      flexDirection="column"
-      className="task-list"
-      w="466px"
-      h="312px"
-      borderRadius="10px"
-      bg="rgba(244, 244, 244, 1)"
-      p="31px 17px 21px 21px"
-      gap="10px"
-      overflowY="auto"
-    >
-      <Box className="tasks">
+    <Container variant='taskListContainer' className="task-list" >
+      <Box >
         {filteredTaskList.map((elem) => (
           <Task
             key={elem.id}
@@ -57,7 +46,7 @@ function TasksList({
       </Box>
       
       
-    </Flex>
+    </Container>
   );
 }
 

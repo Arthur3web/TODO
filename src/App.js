@@ -32,8 +32,6 @@ import {
   WarningIcon,
 } from "@chakra-ui/icons";
 import themeNew from "./styles/themes/themeNew.js";
-// import theme  from './styles/themes/theme.js'
-
 
 function App() {
   const [taskList, setTaskList] = useState([]); //tasklist
@@ -131,9 +129,9 @@ function App() {
     setTaskList([...taskList, newTask]);
   };
 
-  function saveEditTask(id, title, timeEnd) {
+  function editTask(id, title, timeEnd) {
     const newTodo = taskList.map((item) => {
-      if (item.id == id) {
+      if (item.id === id) {
         return {
           ...item,
           title: title,
@@ -151,7 +149,7 @@ function App() {
   };
 
   const toggleTaskStatus = (id) => {
-    const element = taskList.findIndex((elem) => elem.id == id);
+    const element = taskList.findIndex((elem) => elem.id === id);
     const newTaskList = [...taskList];
     newTaskList[element] = {
       ...newTaskList[element],
@@ -183,63 +181,29 @@ function App() {
 
   return (
     <ChakraProvider theme={themeNew}>
-      <Flex
-        maxW="1366px"
-        maxH="1024px"
-        w="100%"
-        h="100%"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <Container variant="titleWrapperContainer" >
         <Text
-          color="#404040"
-          fontSize="96px"
-          fontFamily="Roboto"
-          fontWeight="700"
-          ml="65px"
+          variant="titleWrapperContainerText"
         >
           To-Do{" "}
           <Text
             as="span"
-            color="#9333EA"
-            fontSize="96px"
-            fontFamily="Roboto"
-            fontWeight="700"
+            variant='highlightedTitleWrapperContainerText' 
           >
             UI
           </Text>
         </Text>
 
         <Container>
-          <Flex flexDirection="column" alignItems="baseline" mr="90px">
-            <Flex
-              w="672px"
-              h="47px"
-              bg="rgba(244, 244, 244, 1)"
-              borderRadius="10px"
-              p="16px 20px 16px 20px"
-              justifyContent="space-between"
-              alignItems="center"
-            >
+          <Container variant="todoContainer">
+            <Container variant="todoHeaderContainer" >
               <Text
-                w="55px"
-                h="23px"
-                color="#9333EA"
-                fontFamily="Roboto"
-                fontSize="20px"
-                lineHeight="23.44px"
-                fontWeight="700"
+                variant='titleTodoHeaderContainerText'
               >
                 To-Do
               </Text>
               <Text
-                w="76px"
-                h="19px"
-                color="#9333EA"
-                fontFamily="Roboto"
-                fontSize="16px"
-                lineHeight="18.75px"
-                fontWeight="400"
+                variant='userNameTodoHeaderContainerText'
               >
                 UserName
               </Text>
@@ -255,7 +219,7 @@ function App() {
                   />
                 </PopoverTrigger>
                 <Portal>
-                  <PopoverContent width="330px">
+                  <PopoverContent width="420px">
                     <PopoverArrow />
                     <PopoverHeader
                       fontFamily="Roboto"
@@ -266,33 +230,30 @@ function App() {
                     </PopoverHeader>
                     <PopoverCloseButton />
                     <PopoverBody>
-                      <Flex alignItems="center" justifyContent="space-around">
-                        <Button colorScheme="purple">Войти</Button>
+                      <Container variant='popoverBodyContainer'>
+                        <Button variant='loginButton'>Войти</Button>
                         <Button
-                          colorScheme="pink"
+                         variant="userRegistrationButton"
                           onClick={onCreateAccountModalOpen}
                         >
                           Зарегистрироваться
                         </Button>
-                      </Flex>
+                      </Container>
                     </PopoverBody>
                     <PopoverFooter>
-                      <Flex alignItems="center" gap="10px">
+                      <Container variant="popoverFooterContentContainer">
                         <WarningIcon color="red.500" />
                         <Text
-                          fontFamily="Roboto"
-                          fontSize="14px"
-                          fontWeight="200"
-                          color="#6B7280"
+                          variant='popoverFooterContentContainerText'
                         >
                           Для продолжения выберите один из вариантов
                         </Text>
-                      </Flex>
+                      </Container>
                     </PopoverFooter>
                   </PopoverContent>
                 </Portal>
               </Popover>
-            </Flex>
+            </Container>
             <CreateAccountModal
               isCreateAccountModalOpen={isCreateAccountModalOpen}
               onCreateAccountModalClose={onCreateAccountModalClose}
@@ -300,7 +261,7 @@ function App() {
               handleInputEmailChange={handleInputEmailChange}
               input={input}
             />
-            <Flex w="672px" h="343px" pt="31px" justifyContent="space-between">
+            <Container variant="todoContentContainer" >
               <Sidebar
                 task={taskNew.title}
                 addTask={addTask}
@@ -333,14 +294,14 @@ function App() {
                 handleDeleteTask={handleDeleteTask}
                 setClickDeleteTaskButton={setClickDeleteTaskButton}
               />
-            </Flex>
-          </Flex>
+            </Container>
+          </Container>
         </Container>
-      </Flex>
+      </Container>
       {isClickEditTaskButton && (
         <EditTaskModal
           isClickEditTaskButton={isClickEditTaskButton}
-          saveEditTask={saveEditTask}
+          editTask={editTask}
           isEditingTask={isEditingTask}
           closeModal={setClickEditTaskButton}
         />

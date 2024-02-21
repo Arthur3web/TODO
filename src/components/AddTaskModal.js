@@ -11,6 +11,7 @@ import {
   ModalBody,
   ModalFooter,
   Image,
+  Container,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -24,7 +25,7 @@ function AddTaskModal({
   setTaskNew,
 }) {
   const [value, setValue] = useState("");
-
+  const isError = task === "";
   function saveTask() {
     if (task !== "") {
       addTask(value);
@@ -57,24 +58,18 @@ function AddTaskModal({
         <ModalHeader
           borderRadius="10px 10px 0 0"
           bg="linear-gradient(#F5EDFD,#FEEFF5)"
-          h="48px"
+          h='48px'
         >
-          <Heading
-            fontFamily="Roboto"
-            fontSize="20px"
-            fontWeight="700"
-            lineHeight="23.44px"
-            color="#9333EA"
-          >
+          <Heading variant="modalHeaderContentHeading" >
             Create task
           </Heading>
         </ModalHeader>
         <ModalBody p="15px 25px 5px 25px">
           <Flex gap="10px">
             <Input
+              isInvalid={isError}
               h="40px"
               w="270px"
-              border="1px solid #6B7280"
               bg="#F3F3F3"
               borderRadius="10px"
               pl="27px"
@@ -82,25 +77,22 @@ function AddTaskModal({
               onChange={handleInputChange}
               value={task}
               autoFocus={true}
+              _focus={{border: "1px solid rgba(147, 51, 234, 0.06)"}}
               onKeyDown={handleKeyDown}
-              isRequired
             ></Input>
             <Input
+              // variant="timeEndTaskInput"
               type="date"
               w="40%"
               bg="#F3F3F3"
               borderRadius="10px"
-              border="1px solid #6B7280"
+              _focus={{border: "1px solid rgba(147, 51, 234, 0.06)"}}
               onChange={handleTimeChange}
             />
           </Flex>
         </ModalBody>
         <ModalFooter py="17px">
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            width="422px"
-          >
+          <Container variant="modalFooterContainer" >
             <Button
               leftIcon={<CheckCircleIcon boxSize="20px" />}
               onClick={saveTask}
@@ -115,7 +107,7 @@ function AddTaskModal({
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close
             </Button>
-          </Flex>
+          </Container>
         </ModalFooter>
       </ModalContent>
     </Modal>
