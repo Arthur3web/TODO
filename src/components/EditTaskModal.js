@@ -62,7 +62,7 @@ function EditTaskModal({
           </Heading>
         </ModalHeader>
         <ModalBody>
-          <Flex gap="10px">
+          <Container variant='taskModalBodyContainer'>
             <Input
               isInvalid={isError}
               variant="titleTaskInput"
@@ -76,7 +76,7 @@ function EditTaskModal({
               value={noteTime.toLocaleDateString('en-ca')} 
               onChange={handleInputChangeEditTaskTime}
             />
-          </Flex>
+          </Container>
         </ModalBody>
         <ModalFooter>
           <Container variant="modalFooterContainer" >

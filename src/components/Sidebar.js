@@ -37,11 +37,11 @@ function Sidebar({
 }) {
   const handleOpenedFilter = (name) => {
     //функция вызова действий при нажатии на элементы sidebar
-    if (name == "Today") {
+    if (name === "Today") {
       setTodaySelected(!isTodaySelected);
       console.log(isTodaySelected);
       setSelectedStatus("All");
-    } else if (name == "Date") {
+    } else if (name === "Date") {
       setDateSelected(!isDateSelected);
       taskList.sort(function (a, b) {
         if (isDateSelected) {

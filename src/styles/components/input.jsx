@@ -13,7 +13,7 @@ const titleTaskInput = definePartsStyle({
     pl: "27px",
     autoFocus: true,
     _focus: { border: "1px solid gray" },
-    // _invalid: { border: "2px sold red" },
+    _invalid: { border: "2px solid red" }
   },
 });
 const timeEndTaskInput = definePartsStyle({
@@ -22,6 +22,7 @@ const timeEndTaskInput = definePartsStyle({
     bg: "#F3F3F3",
     borderRadius: "10px",
     _focus: { border: "1px solid gray" },
+    // p: '0 6px 0 6px'
   },
 });
 

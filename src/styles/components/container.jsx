@@ -148,5 +148,10 @@ export const Container = defineStyleConfig({
       gap: "10px",
       overflowY: "auto",
     },
+    taskModalBodyContainer: {
+      display: "flex",
+      gap: "10px",
+      p: 0,
+    },
   },
 });

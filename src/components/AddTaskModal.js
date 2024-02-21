@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Flex,
   Heading,
   Input,
   Modal,
@@ -31,7 +30,6 @@ function AddTaskModal({
       addTask(value);
       setValue("");
       onAddModalClose(true);
-      // console.log(task)
     }
   }
 
@@ -60,7 +58,7 @@ function AddTaskModal({
           <Heading variant="modalHeaderContentHeading">Create task</Heading>
         </ModalHeader>
         <ModalBody>
-          <Flex gap="10px">
+          <Container variant='taskModalBodyContainer'>
             <Input
               isInvalid={isError}
               variant="titleTaskInput"
@@ -68,13 +66,13 @@ function AddTaskModal({
               onChange={handleInputChange}
               value={task}
               onKeyDown={handleKeyDown}
-            ></Input>
+            />
             <Input
               variant="timeEndTaskInput"
               type="date"
               onChange={handleTimeChange}
             />
-          </Flex>
+          </Container>
         </ModalBody>
         <ModalFooter>
           <Container variant="modalFooterContainer">
