@@ -19,7 +19,6 @@ import {
   PopoverBody,
   PopoverFooter,
   PopoverArrow,
-  PopoverCloseButton,
   Portal,
   IconButton,
   Button,
@@ -176,7 +175,7 @@ function App() {
   const handleDeleteTask = (el) => {
     setDeletedTask(el);
   };
-
+  const { onOpen, onClose, isOpen } = useDisclosure()
 
   return (
     <ChakraProvider theme={themeNew}>
@@ -193,7 +192,6 @@ function App() {
           </Text>
         </Text>
 
-        <Container>
           <Container variant="todoContainer">
             <Container variant="todoHeaderContainer" >
               <Text
@@ -206,36 +204,29 @@ function App() {
               >
                 UserName
               </Text>
-              <Popover placement="bottom-end" isLazy>
+              <Popover variant="custom" placement="bottom-end" onClose={onClose} onOpen={onOpen} isOpen={isOpen} isLazy>
                 <PopoverTrigger>
                   <IconButton
-                    isRound={true}
-                    variant="solid"
-                    size="1.5rem"
+                    variant='avatarUser'
                     icon={
                       <Image src="/assets/bi_person-circle.svg" alt="avatar" />
                     }
                   />
                 </PopoverTrigger>
                 <Portal>
-                  <PopoverContent width="420px">
+                  <PopoverContent>
                     <PopoverArrow />
-                    <PopoverHeader
-                      fontFamily="Roboto"
-                      fontSize="20px"
-                      fontWeight="400"
-                    >
-                      Добро пожаловать!
+                    <PopoverHeader>
+                      Welcome!
                     </PopoverHeader>
-                    <PopoverCloseButton />
                     <PopoverBody>
                       <Container variant='popoverBodyContainer'>
-                        <Button variant='loginButton'>Войти</Button>
+                        <Button variant='loginButton'>Login</Button>
                         <Button
                          variant="userRegistrationButton"
                           onClick={onCreateAccountModalOpen}
                         >
-                          Зарегистрироваться
+                          Register
                         </Button>
                       </Container>
                     </PopoverBody>
@@ -245,7 +236,7 @@ function App() {
                         <Text
                           variant='popoverFooterContentContainerText'
                         >
-                          Для продолжения выберите один из вариантов
+                          To save your checklist, you must log in to your account.
                         </Text>
                       </Container>
                     </PopoverFooter>
@@ -296,7 +287,6 @@ function App() {
             </Container>
           </Container>
         </Container>
-      </Container>
       {isClickEditTaskButton && (
         <EditTaskModal
           isClickEditTaskButton={isClickEditTaskButton}

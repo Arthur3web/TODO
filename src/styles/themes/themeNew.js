@@ -7,6 +7,8 @@ import { Text } from '../components/text';
 import { Menu } from '../components/menu';
 import { Checkbox } from '../components/checkbox';
 import { Modal } from '../components/modal';
+import { Popover } from '../components/popover';
+import { IconButton } from '../components/iconButton';
 
 const themeNew = extendTheme({
   components: {
@@ -18,6 +20,8 @@ const themeNew = extendTheme({
     Menu,
     Checkbox,
     Modal,
+    Popover,
+    IconButton,
   }
 
 });

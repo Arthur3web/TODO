@@ -30,6 +30,7 @@ const Task = ({
     setClickDeleteTaskButton(true);
   };
 
+  console.log('task.timeEnd', task.timeEnd)
   return (
     <Container variant="taskContainer">
       <Container variant="taskContentContainer">

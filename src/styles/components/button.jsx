@@ -84,10 +84,10 @@ export const Button = defineStyleConfig({
       h: "40px",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
       borderRadius: "10px",
-      bg: "purple.400",
+      bg: "purple.200",
       color: "black",
       _hover: {
-        bg: "purple.300",
+        bg: "purple.100",
         boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
       },
       _active: {
@@ -102,10 +102,10 @@ export const Button = defineStyleConfig({
       h: "40px",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
       borderRadius: "10px",
-      bg: "pink.400",
+      bg: "pink.200",
       color: "black",
       _hover: {
-        bg: "pink.300",
+        bg: "pink.100",
         boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
       },
       _active: {

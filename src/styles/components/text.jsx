@@ -7,7 +7,7 @@ export const Text = defineStyleConfig({
       fontSize: "96px",
       fontFamily: "Roboto",
       fontWeight: "700",
-      ml: "65px",
+      // ml: "65px",
     },
     highlightedTitleWrapperContainerText: {
       color: "#9333EA",
@@ -50,12 +50,19 @@ export const Text = defineStyleConfig({
     },
     taskContentTitleContainerText: { 
       p: "2",
-      w: "270px",
+      // w: "270px",
+      w: '100%',
+      maxW: '270px',
       bg: "inherit",
       fontSize: "14px",
       fontWeight: "400",
       fontFamily: "Roboto",
       lineHeight: "18.75px",
+      overflowX: 'scroll',
+      _hover: {
+        //scroll 
+        scrollBehavior: 'auto',
+      },
     },
     taskContentDateContainerText: {
       w: '80px',

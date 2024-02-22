@@ -78,7 +78,9 @@ function Sidebar({
                   alignItems="center"
                   justifyContent="center"
                 >
+                {/* <Container variant="sideBarFilterButtonIconContainer" w='27px' h='27px'> */}
                   {item.path}
+                {/* </Container> */}
                 </Flex>
                 <Text
                   variant="sideBarFilterContentText"
