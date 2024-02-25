@@ -25,7 +25,7 @@ function AddTaskModal({
 }) {
   const [value, setValue] = useState("");
   const isError = task === "";
-  function saveTask() {
+  function handleTaskAdd() {
     if (task !== "") {
       addTask(value);
       setValue("");
@@ -78,7 +78,7 @@ function AddTaskModal({
           <Container variant="modalFooterContainer">
             <Button
               leftIcon={<CheckCircleIcon boxSize="20px" />}
-              onClick={saveTask}
+              onClick={handleTaskAdd}
               variant="saveTaskButton"
             >
               Save Task

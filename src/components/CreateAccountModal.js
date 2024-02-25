@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Flex,
   Button,
   Modal,
   ModalOverlay,
@@ -21,8 +20,8 @@ function CreateAccountModal({
   isCreateAccountModalOpen,
   onCreateAccountModalClose,
   isError,
-  handleInputEmailChange,
-  input,
+  handleInputEmailUserChange,
+  inputUserData,
 }) {
   return (
     <Modal
@@ -39,8 +38,8 @@ function CreateAccountModal({
             <FormLabel>Email adress</FormLabel>
             <Input
               type="email"
-              value={input}
-              onChange={handleInputEmailChange}
+              value={inputUserData}
+              onChange={handleInputEmailUserChange}
               width="400px"
             />
             {!isError ? (

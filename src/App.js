@@ -158,9 +158,9 @@ function App() {
   };
 
   //CreateAccountModal
-  const [input, setInput] = useState("");
-  const handleInputEmailChange = (e) => setInput(e.target.value);
-  const isError = input === "";
+  const [inputUserData, setInputUserData] = useState("");
+  const handleInputEmailUserChange = (e) => setInputUserData(e.target.value);
+  const isError = inputUserData === "";
 
   //EditTaskModal
   const [newEditTask, setNewEditTask] = useState();
@@ -175,7 +175,12 @@ function App() {
   const handleDeleteTask = (el) => {
     setDeletedTask(el);
   };
-  const { onOpen, onClose, isOpen } = useDisclosure()
+  //UserLoginWindow
+  const { 
+    onOpen: onUserLoginWindowOpen, 
+    onClose:onUserLoginWindowClose, 
+    isOpen: isUserLoginWindowOpen 
+  } = useDisclosure()
 
   return (
     <ChakraProvider theme={themeNew}>
@@ -204,7 +209,7 @@ function App() {
               >
                 UserName
               </Text>
-              <Popover variant="custom" placement="bottom-end" onClose={onClose} onOpen={onOpen} isOpen={isOpen} isLazy>
+              <Popover variant="custom" placement="bottom-end" onClose={onUserLoginWindowClose} onOpen={onUserLoginWindowOpen} isOpen={isUserLoginWindowOpen} isLazy>
                 <PopoverTrigger>
                   <IconButton
                     variant='avatarUser'
@@ -248,11 +253,11 @@ function App() {
               isCreateAccountModalOpen={isCreateAccountModalOpen}
               onCreateAccountModalClose={onCreateAccountModalClose}
               isError={isError}
-              handleInputEmailChange={handleInputEmailChange}
-              input={input}
+              handleInputEmailUserChange={handleInputEmailUserChange}
+              inputUserData={inputUserData}
             />
             <Container variant="todoContentContainer" >
-              <Sidebar
+              {/* <Sidebar
                 task={taskNew.title}
                 addTask={addTask}
                 taskList={taskList}
@@ -272,7 +277,17 @@ function App() {
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
                 onToggle={onToggle}
-              />
+              /> */}
+              <div className='sidebar-mobile'>
+                <button className="today-button">Today</button>
+                <div className='filter-task' gap='10px'>
+                  <button className="button-all">All</button>
+                  <button className="button-done">Done</button>
+                  <button className="button-undone">Undone</button>
+                </div>
+                <button className="add-task-button">AddTask</button>
+              </div>
+              
               <TasksList
                 taskList={taskList}
                 selectedStatus={selectedStatus}

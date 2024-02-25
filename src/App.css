@@ -26,3 +26,14 @@
   background: #c0c0c0; /* Цвет бегунка */
   border-radius: 10px; /* Округление бегунка */
 }
+
+.sidebar-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.filter-task {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

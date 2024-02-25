@@ -24,7 +24,7 @@ function EditTaskModal({
   const [note, setNote] = useState(newEditTask.title);
   const [noteTime, setNoteTime] = useState(new Date(newEditTask.timeEnd));
   const isError = note === "";
-  function saveEditTask(id) {
+  function handleTaskEdit(id) {
     if (note !== "") {
       editTask(newEditTask.id, note, new Date(noteTime));
       closeModal(false)
@@ -81,7 +81,7 @@ function EditTaskModal({
           <Container variant="modalFooterContainer" >
             <Button
               leftIcon={<CheckCircleIcon fontSize="larger" />}
-              onClick={() => saveEditTask(newEditTask.id, note)}
+              onClick={() => handleTaskEdit(newEditTask.id, note)}
               variant='saveTaskButton'
             >
               Save

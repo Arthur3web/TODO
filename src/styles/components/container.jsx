@@ -24,6 +24,8 @@ export const Container = defineStyleConfig({
       alignItems: "center",
       padding: 0,
       m: 0,
+      // w: '300px',
+      // float: 'left',
     },
     taskContentDateContainer: {
       display: "flex",
@@ -49,7 +51,10 @@ export const Container = defineStyleConfig({
       padding: 0,
       m: 0,
       pl: '5%', //~65px
-      pr: '7%' //~90px
+      pr: '7%', //~90px
+      //mobile-version
+      // flexDirection: 'column',
+      // justifyContent: 'center',
     },
     todoContainer: {
       display: "flex",
@@ -82,6 +87,8 @@ export const Container = defineStyleConfig({
       m: 0,
       justifyContent: "space-between",
       gap: "10px",
+      //mobile version
+      flexDirection: 'column',
     },
     popoverBodyContainer: {
       display: "flex",
@@ -155,7 +162,7 @@ export const Container = defineStyleConfig({
     taskListContainer: {
       display: "flex",
       flexDirection: "column",
-      w: "466px",
+      // w: "466px",
       h: "312px",
       borderRadius: "10px",
       bg: "rgba(244, 244, 244, 1)",
@@ -163,6 +170,8 @@ export const Container = defineStyleConfig({
       m: 0,
       gap: "10px",
       overflowY: "auto",
+    //mobile-version
+      maxW: '672px',
     },
     taskModalBodyContainer: {
       display: "flex",

@@ -20,20 +20,10 @@ function DeleteTaskModal({
   closeModal,
   isDeletedTask,
 }) {
-  function deletingTask(id) {
+  function handleTaskDelete(id) {
     deleteTask(id);
     closeModal(false);
   }
-
-  const handleKeyDown = (event) => {
-    //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
-    if (event.key === "Enter") {
-      closeModal(false);
-    }
-    if (event.key === "Escape") {
-      closeModal(false);
-    }
-  };
 
   return (
     <Modal
@@ -58,7 +48,7 @@ function DeleteTaskModal({
           <Container variant="modalFooterContainer">
             <Button
               leftIcon={<DeleteIcon fontSize="larger" />}
-              onClick={() => deletingTask(isDeletedTask.id)}
+              onClick={() => handleTaskDelete(isDeletedTask.id)}
               variant="deleteTaskButton"
             >
               Delete

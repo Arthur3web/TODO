@@ -50,18 +50,22 @@ export const Text = defineStyleConfig({
     },
     taskContentTitleContainerText: { 
       p: "2",
-      // w: "270px",
-      w: '100%',
-      maxW: '270px',
+      w: "270px",
+      // w: '100%',
+      // maxW: '270px',
       bg: "inherit",
       fontSize: "14px",
       fontWeight: "400",
       fontFamily: "Roboto",
       lineHeight: "18.75px",
+      // transition: '3s linear',
+      display: 'inline-block',
       overflowX: 'scroll',
       _hover: {
         //scroll 
-        scrollBehavior: 'auto',
+        textOverflow: 'clip',
+        // animation: 'trey 5s infinite',
+      
       },
     },
     taskContentDateContainerText: {
