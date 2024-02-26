@@ -30,9 +30,9 @@ const Task = ({
     setClickDeleteTaskButton(true);
   };
 
-  console.log('task.timeEnd', task.timeEnd)
+  console.log("task.timeEnd", task.timeEnd);
   return (
-    <Container variant="taskContainer">
+    <Container className="task" /*variant="taskContainer"*/>
       <Container variant="taskContentContainer">
         <Container variant="taskContentTitleContainer">
           <Checkbox
@@ -50,29 +50,33 @@ const Task = ({
             {task.title}
           </Text>
         </Container>
-        <Container variant="taskContentDateContainer">
-          <Text
-            variant="taskContentDateContainerText"
-            className={task.isCompleted ? "crossText" : "listItem"}
-          >
-            {task.timeEnd.toLocaleDateString("en-ca")}
-          </Text>
-          <Menu variant="parametersTask" placement="bottom-end">
-            <MenuButton>
-              <Image boxSize="13px" src="/assets/Vector_3.svg" alt="Vector_3" />
-            </MenuButton>
-            <MenuList>
-              <Container variant="menuOperationTaskContainer">
-                <MenuItem onClick={handleOpenedModalEditTask}>
-                  <EditIcon color="#8687E7" />
-                </MenuItem>
-                <MenuItem onClick={handleOpenedModalDeleteTask}>
-                  <DeleteIcon color="#F56497" />
-                </MenuItem>
-              </Container>
-            </MenuList>
-          </Menu>
-        </Container>
+          <Container variant="taskContentDateContainer"> {/*проверить*/}
+            {/* <Text
+              variant="taskContentDateContainerText"
+              className={task.isCompleted ? "crossText" : "listItem"}
+            >
+              {task.timeEnd.toLocaleDateString("en-ca")}
+            </Text> */}
+            <Menu variant="parametersTask" placement="bottom-end">
+              <MenuButton>
+                <Image
+                  boxSize="13px"
+                  src="/assets/Vector_3.svg"
+                  alt="Vector_3"
+                />
+              </MenuButton>
+              <MenuList>
+                <Container variant="menuOperationTaskContainer">
+                  <MenuItem onClick={handleOpenedModalEditTask}>
+                    <EditIcon color="#8687E7" />
+                  </MenuItem>
+                  <MenuItem onClick={handleOpenedModalDeleteTask}>
+                    <DeleteIcon color="#F56497" />
+                  </MenuItem>
+                </Container>
+              </MenuList>
+            </Menu>
+          </Container>
       </Container>
     </Container>
   );

@@ -51,7 +51,7 @@ function AddTaskModal({
   };
 
   return (
-    <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} variant="taskModal" isCentered>
+    <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} className='wrapper-modal-add-task' isCentered>
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>

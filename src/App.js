@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
 import Sidebar from "./components/Sidebar.js";
+import SidebarMobile from "./components/SidebarMobile.js";
 import EditTaskModal from "./components/EditTaskModal.js";
 import DeleteTaskModal from "./components/DeleteTaskModal.js";
 import CreateAccountModal from "./components/CreateAccountModal.js";
+// import AddTaskModal from "./AddTaskModal";
+import useWindowSize from "./useWindowSize.jsx";
+import "./responsive.css";
 import {
   ChakraProvider,
   Flex,
@@ -38,6 +42,8 @@ function App() {
   const [isDateSelected, setDateSelected] = useState(true); //date
   const [selectedStatus, setSelectedStatus] = useState("All"); //status
   const statusList = ["All", "Done", "Undone"]; //menu-filter
+
+  const { height, width } = useWindowSize();
   const sideBarFilter = [
     //sidebar
     {
@@ -176,88 +182,80 @@ function App() {
     setDeletedTask(el);
   };
   //UserLoginWindow
-  const { 
-    onOpen: onUserLoginWindowOpen, 
-    onClose:onUserLoginWindowClose, 
-    isOpen: isUserLoginWindowOpen 
-  } = useDisclosure()
+  const {
+    onOpen: onUserLoginWindowOpen,
+    onClose: onUserLoginWindowClose,
+    isOpen: isUserLoginWindowOpen,
+  } = useDisclosure();
 
+  console.log({ width });
   return (
     <ChakraProvider theme={themeNew}>
-      <Container variant="titleWrapperContainer" >
-        <Text
-          variant="titleWrapperContainerText"
-        >
+      <Flex className="wrapper">
+        <Text className="title-wrapper">
           To-Do{" "}
-          <Text
-            as="span"
-            variant='highlightedTitleWrapperContainerText' 
-          >
+          <Text as="span" id="text">
             UI
           </Text>
         </Text>
 
-          <Container variant="todoContainer">
-            <Container variant="todoHeaderContainer" >
-              <Text
-                variant='titleTodoHeaderContainerText'
-              >
-                To-Do
-              </Text>
-              <Text
-                variant='userNameTodoHeaderContainerText'
-              >
-                UserName
-              </Text>
-              <Popover variant="custom" placement="bottom-end" onClose={onUserLoginWindowClose} onOpen={onUserLoginWindowOpen} isOpen={isUserLoginWindowOpen} isLazy>
-                <PopoverTrigger>
-                  <IconButton
-                    variant='avatarUser'
-                    icon={
-                      <Image src="/assets/bi_person-circle.svg" alt="avatar" />
-                    }
-                  />
-                </PopoverTrigger>
-                <Portal>
-                  <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverHeader>
-                      Welcome!
-                    </PopoverHeader>
-                    <PopoverBody>
-                      <Container variant='popoverBodyContainer'>
-                        <Button variant='loginButton'>Login</Button>
-                        <Button
-                         variant="userRegistrationButton"
-                          onClick={onCreateAccountModalOpen}
-                        >
-                          Register
-                        </Button>
-                      </Container>
-                    </PopoverBody>
-                    <PopoverFooter>
-                      <Container variant="popoverFooterContentContainer">
-                        <WarningIcon color="red.500" />
-                        <Text
-                          variant='popoverFooterContentContainerText'
-                        >
-                          To save your checklist, you must log in to your account.
-                        </Text>
-                      </Container>
-                    </PopoverFooter>
-                  </PopoverContent>
-                </Portal>
-              </Popover>
-            </Container>
-            <CreateAccountModal
-              isCreateAccountModalOpen={isCreateAccountModalOpen}
-              onCreateAccountModalClose={onCreateAccountModalClose}
-              isError={isError}
-              handleInputEmailUserChange={handleInputEmailUserChange}
-              inputUserData={inputUserData}
-            />
-            <Container variant="todoContentContainer" >
-              {/* <Sidebar
+        <Container variant="todoContainer">
+          <Container variant="todoHeaderContainer">
+            <Text variant="titleTodoHeaderContainerText">To-Do</Text>
+            <Text variant="userNameTodoHeaderContainerText">UserName</Text>
+            <Popover
+              variant="custom"
+              placement="bottom-end"
+              onClose={onUserLoginWindowClose}
+              onOpen={onUserLoginWindowOpen}
+              isOpen={isUserLoginWindowOpen}
+              isLazy
+            >
+              <PopoverTrigger>
+                <IconButton
+                  variant="avatarUser"
+                  icon={
+                    <Image src="/assets/bi_person-circle.svg" alt="avatar" />
+                  }
+                />
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader>Welcome!</PopoverHeader>
+                  <PopoverBody>
+                    <Container variant="popoverBodyContainer">
+                      <Button variant="loginButton">Login</Button>
+                      <Button
+                        variant="userRegistrationButton"
+                        onClick={onCreateAccountModalOpen}
+                      >
+                        Register
+                      </Button>
+                    </Container>
+                  </PopoverBody>
+                  <PopoverFooter>
+                    <Container variant="popoverFooterContentContainer">
+                      <WarningIcon color="red.500" />
+                      <Text variant="popoverFooterContentContainerText">
+                        To save your checklist, you must log in to your account.
+                      </Text>
+                    </Container>
+                  </PopoverFooter>
+                </PopoverContent>
+              </Portal>
+            </Popover>
+          </Container>
+          <CreateAccountModal
+            isCreateAccountModalOpen={isCreateAccountModalOpen}
+            onCreateAccountModalClose={onCreateAccountModalClose}
+            isError={isError}
+            handleInputEmailUserChange={handleInputEmailUserChange}
+            inputUserData={inputUserData}
+          />
+          <Flex className="todo-container-content">
+            {width >= 771 ? (
+              <Sidebar
                 task={taskNew.title}
                 addTask={addTask}
                 taskList={taskList}
@@ -277,31 +275,45 @@ function App() {
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
                 onToggle={onToggle}
-              /> */}
-              <div className='sidebar-mobile'>
-                <button className="today-button">Today</button>
-                <div className='filter-task' gap='10px'>
-                  <button className="button-all">All</button>
-                  <button className="button-done">Done</button>
-                  <button className="button-undone">Undone</button>
-                </div>
-                <button className="add-task-button">AddTask</button>
-              </div>
-              
-              <TasksList
-                taskList={taskList}
-                selectedStatus={selectedStatus}
-                isTodaySelected={isTodaySelected}
-                toggleTaskStatus={toggleTaskStatus}
-                handleEditTask={handleEditTask}
-                isClickEditTaskButton={isClickEditTaskButton}
-                setClickEditTaskButton={setClickEditTaskButton}
-                handleDeleteTask={handleDeleteTask}
-                setClickDeleteTaskButton={setClickDeleteTaskButton}
               />
-            </Container>
-          </Container>
+            ) : (
+              <SidebarMobile
+                task={taskNew.title}
+                addTask={addTask}
+                taskList={taskList}
+                setTodaySelected={setTodaySelected}
+                isTodaySelected={isTodaySelected}
+                isDateSelected={isDateSelected}
+                setDateSelected={setDateSelected}
+                setTaskNew={setTaskNew}
+                handleInputChange={handleInputChange}
+                handleFilterChange={handleFilterChange}
+                handleTimeChange={handleTimeChange}
+                onAddModalOpen={onAddModalOpen}
+                onAddModalClose={onAddModalClose}
+                isAddModalOpen={isAddModalOpen}
+                statusList={statusList}
+                sideBarFilter={sideBarFilter}
+                selectedStatus={selectedStatus}
+                setSelectedStatus={setSelectedStatus}
+                onToggle={onToggle}
+              />
+            )}
+            <TasksList
+              taskList={taskList}
+              selectedStatus={selectedStatus}
+              isTodaySelected={isTodaySelected}
+              toggleTaskStatus={toggleTaskStatus}
+              handleEditTask={handleEditTask}
+              isClickEditTaskButton={isClickEditTaskButton}
+              setClickEditTaskButton={setClickEditTaskButton}
+              handleDeleteTask={handleDeleteTask}
+              setClickDeleteTaskButton={setClickDeleteTaskButton}
+            />
+          </Flex>
+          {/* /////////////////////////////////////////////////////////////// */}
         </Container>
+      </Flex>
       {isClickEditTaskButton && (
         <EditTaskModal
           isClickEditTaskButton={isClickEditTaskButton}

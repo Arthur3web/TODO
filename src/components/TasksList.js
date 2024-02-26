@@ -1,6 +1,6 @@
 import React from "react";
 import Task from "./Task";
-import { Box, Container } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import { isToday } from "date-fns";
 
 function TasksList({
@@ -28,7 +28,7 @@ function TasksList({
   });
 
   return (
-    <Container variant="taskListContainer" className="task-list">
+    <Flex className="task-list">
       <Box>
         {filteredTaskList.map((elem) => (
           <Task
@@ -43,7 +43,7 @@ function TasksList({
           />
         ))}
       </Box>
-    </Container>
+    </Flex>
   );
 }
 

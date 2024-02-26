@@ -2,15 +2,15 @@ import { defineStyleConfig } from "@chakra-ui/react";
 
 export const Container = defineStyleConfig({
   variants: {
-    taskContainer: {
-      maxW: "428px",
-      h: "33px",
-      bg: "rgba(147, 51, 234, 0.06)",
-      borderRadius: "10px",
-      mb: "7px",
-      _hover: { bg: "rgba(147, 51, 234, 0.12)" },
-      justifyContent: "space-between",
-    },
+    // taskContainer: {
+    //   maxW: "428px",
+    //   h: "33px",
+    //   bg: "rgba(147, 51, 234, 0.06)",
+    //   borderRadius: "10px",
+    //   mb: "7px",
+    //   _hover: { bg: "rgba(147, 51, 234, 0.12)" },
+    //   justifyContent: "space-between",
+    // },
     taskContentContainer: {
       display: "flex",
       // gap: "10px",
@@ -52,9 +52,6 @@ export const Container = defineStyleConfig({
       m: 0,
       pl: '5%', //~65px
       pr: '7%', //~90px
-      //mobile-version
-      // flexDirection: 'column',
-      // justifyContent: 'center',
     },
     todoContainer: {
       display: "flex",
@@ -65,6 +62,7 @@ export const Container = defineStyleConfig({
       flexDirection: "column",
       alignItems: "baseline",
       p: 0,
+      // pr: '95px',
       m: 0,
     },
     todoHeaderContainer: {
@@ -87,7 +85,17 @@ export const Container = defineStyleConfig({
       m: 0,
       justifyContent: "space-between",
       gap: "10px",
-      //mobile version
+      // mobile version
+      // flexDirection: 'column',
+    },
+    todoContentContainerMobileVersion: {
+      display: "flex",
+      w: '100%',
+      maxW: "672px",
+      h: "343px",
+      p: "10px 0 0 0",
+      m: 0,
+      gap: "10px",
       flexDirection: 'column',
     },
     popoverBodyContainer: {
@@ -159,24 +167,23 @@ export const Container = defineStyleConfig({
       justifyContent: "center",
       padding: 0,
     },
-    taskListContainer: {
-      display: "flex",
-      flexDirection: "column",
-      // w: "466px",
-      h: "312px",
-      borderRadius: "10px",
-      bg: "rgba(244, 244, 244, 1)",
-      p: "31px 17px 21px 21px",
-      m: 0,
-      gap: "10px",
-      overflowY: "auto",
-    //mobile-version
-      maxW: '672px',
-    },
+    // taskListContainer: {
+    //   display: "flex",
+    //   flexDirection: "column",
+    //   // w: "466px",
+    //   h: "312px",
+    //   borderRadius: "10px",
+    //   bg: "rgba(244, 244, 244, 1)",
+    //   p: "31px 17px 21px 21px", //p: '10px 17px 21px 21px'
+    //   m: 0,
+    //   gap: "10px",
+    //   overflowY: "auto",
+    // },
     taskModalBodyContainer: {
       display: "flex",
       gap: "10px",
       p: 0,
+      background: 'rgba(244, 244, 244, 1',
     },
   },
 });

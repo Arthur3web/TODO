@@ -1,20 +1,37 @@
-@media (min-width: 1200px) {
-
-}
-
-@media (min-width: 992px) {
-    .css-1dwu83p {
-        display: flex;
-        flex-direction: column,
+@media (max-width: 1280px) {
+    .wrapper{
+        flex-direction: column;
+        justify-content: center;
+    }
+    .title-wrapper {
+        font-size: 60px;
     }
 }
 
-@media (min-width: 768px) {
-    
+@media (max-width: 992px) {
+    .title-wrapper {
+        font-size: 40px;
+    }
 }
 
-@media (min-width: 480px) {
-    
+@media (max-width: 770px) {
+    .todo-container-content {
+        flex-direction: column;
+        padding: 10px 0 0 0;
+        margin: 0;
+    }
+    .wrapper{
+        padding: 5%;
+    }
+    .title-wrapper {
+        font-size: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper-modal-add-task {
+        width: 200px;
+    }
 }
 
 @media (min-width: 320px) {
