@@ -30,7 +30,11 @@
 
 @media (max-width: 480px) {
     .wrapper-modal-add-task {
-        width: 200px;
+        width: 300px;
+    }
+    .wrapper{
+        justify-content: flex-start;
+        margin-top: 10%;
     }
 }
 

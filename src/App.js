@@ -283,8 +283,6 @@ function App() {
                 taskList={taskList}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
-                isDateSelected={isDateSelected}
-                setDateSelected={setDateSelected}
                 setTaskNew={setTaskNew}
                 handleInputChange={handleInputChange}
                 handleFilterChange={handleFilterChange}
@@ -293,10 +291,9 @@ function App() {
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
                 statusList={statusList}
-                sideBarFilter={sideBarFilter}
-                selectedStatus={selectedStatus}
+                // sideBarFilter={sideBarFilter}
+                // selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
-                onToggle={onToggle}
               />
             )}
             <TasksList
@@ -309,9 +306,9 @@ function App() {
               setClickEditTaskButton={setClickEditTaskButton}
               handleDeleteTask={handleDeleteTask}
               setClickDeleteTaskButton={setClickDeleteTaskButton}
+              width={width}
             />
           </Flex>
-          {/* /////////////////////////////////////////////////////////////// */}
         </Container>
       </Flex>
       {isClickEditTaskButton && (

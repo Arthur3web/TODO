@@ -13,6 +13,7 @@ function TasksList({
   setClickEditTaskButton,
   handleDeleteTask,
   setClickDeleteTaskButton,
+  width,
 }) {
   const filteredTaskList = taskList.filter((el) => {
     if (isTodaySelected) {
@@ -34,6 +35,7 @@ function TasksList({
           <Task
             key={elem.id}
             task={elem}
+            width={width}
             toggleTaskStatus={toggleTaskStatus}
             handleEditTask={handleEditTask}
             isClickEditTaskButton={isClickEditTaskButton}

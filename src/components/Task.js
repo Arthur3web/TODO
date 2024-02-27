@@ -8,6 +8,7 @@ import {
   MenuList,
   MenuItem,
   Checkbox,
+  Flex,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 
@@ -18,6 +19,7 @@ const Task = ({
   setClickEditTaskButton,
   setClickDeleteTaskButton,
   handleDeleteTask,
+  width,
 }) => {
   //Деструктуризация
 
@@ -32,8 +34,8 @@ const Task = ({
 
   console.log("task.timeEnd", task.timeEnd);
   return (
-    <Container className="task" /*variant="taskContainer"*/>
-      <Container variant="taskContentContainer">
+    <Flex className="task" /*variant="taskContainer"*/>
+      <Flex className="task-content">
         <Container variant="taskContentTitleContainer">
           <Checkbox
             variant="circular"
@@ -50,13 +52,14 @@ const Task = ({
             {task.title}
           </Text>
         </Container>
-          <Container variant="taskContentDateContainer"> {/*проверить*/}
-            {/* <Text
+          {width >= 480 ? 
+          (<Container variant="taskContentDateContainer"> {/*проверить*/}
+            <Text
               variant="taskContentDateContainerText"
               className={task.isCompleted ? "crossText" : "listItem"}
             >
               {task.timeEnd.toLocaleDateString("en-ca")}
-            </Text> */}
+            </Text>
             <Menu variant="parametersTask" placement="bottom-end">
               <MenuButton>
                 <Image
@@ -76,9 +79,29 @@ const Task = ({
                 </Container>
               </MenuList>
             </Menu>
-          </Container>
-      </Container>
-    </Container>
+          </Container>) : 
+          ( <Menu variant="parametersTask" placement="bottom-end">
+              <MenuButton>
+                <Image
+                  boxSize="13px"
+                  src="/assets/Vector_3.svg"
+                  alt="Vector_3"
+                />
+              </MenuButton>
+              <MenuList>
+                <Container variant="menuOperationTaskContainer">
+                  <MenuItem onClick={handleOpenedModalEditTask}>
+                    <EditIcon color="#8687E7" />
+                  </MenuItem>
+                  <MenuItem onClick={handleOpenedModalDeleteTask}>
+                    <DeleteIcon color="#F56497" />
+                  </MenuItem>
+                </Container>
+              </MenuList>
+            </Menu>)
+}
+      </Flex>
+    </Flex>
   );
 };
 

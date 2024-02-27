@@ -2,19 +2,6 @@ import { defineStyleConfig } from "@chakra-ui/react";
 
 export const Text = defineStyleConfig({
   variants: {
-    titleWrapperContainerText: {
-      color: "#404040",
-      fontSize: "96px",
-      fontFamily: "Roboto",
-      fontWeight: "700",
-      // ml: "65px",
-    },
-    highlightedTitleWrapperContainerText: {
-      color: "#9333EA",
-      fontSize: "96px",
-      fontFamily: "Roboto",
-      fontWeight: "700",
-    },
     titleTodoHeaderContainerText: {
       color: "#9333EA",
       fontFamily: "Roboto",
@@ -50,22 +37,19 @@ export const Text = defineStyleConfig({
     },
     taskContentTitleContainerText: { 
       p: "2",
-      w: "270px",
-      // w: '100%',
+      // w: "270px",
+      // w: '70%',
       // maxW: '270px',
+      // maxW: '75%',
       bg: "inherit",
       fontSize: "14px",
       fontWeight: "400",
       fontFamily: "Roboto",
       lineHeight: "18.75px",
-      // transition: '3s linear',
       display: 'inline-block',
       overflowX: 'scroll',
       _hover: {
-        //scroll 
-        textOverflow: 'clip',
-        // animation: 'trey 5s infinite',
-      
+        textOverflow: 'clip',      
       },
     },
     taskContentDateContainerText: {
