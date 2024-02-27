@@ -11,6 +11,7 @@ import {
   ModalFooter,
   Image,
   Container,
+  Flex,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 
@@ -51,14 +52,19 @@ function AddTaskModal({
   };
 
   return (
-    <Modal isOpen={isAddModalOpen} onClose={onAddModalClose} className='wrapper-modal-add-task' isCentered>
+    <Modal
+      isOpen={isAddModalOpen}
+      onClose={onAddModalClose}
+      variant="taskModal"
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
           <Heading variant="modalHeaderContentHeading">Create task</Heading>
         </ModalHeader>
         <ModalBody>
-          <Container variant='taskModalBodyContainer'>
+          <Flex className="modal-body">
             <Input
               isInvalid={isError}
               variant="titleTaskInput"
@@ -68,11 +74,13 @@ function AddTaskModal({
               onKeyDown={handleKeyDown}
             />
             <Input
-              variant="timeEndTaskInput"
+            // width={'auto'}
+              className="time-end"
+              // variant='timeEndTaskInput'
               type="date"
               onChange={handleTimeChange}
             />
-          </Container>
+          </Flex>
         </ModalBody>
         <ModalFooter>
           <Container variant="modalFooterContainer">

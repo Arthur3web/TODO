@@ -20,14 +20,13 @@ function EditTaskModal({
   isClickEditTaskButton,
   closeModal,
 }) {
-
   const [note, setNote] = useState(newEditTask.title);
   const [noteTime, setNoteTime] = useState(new Date(newEditTask.timeEnd));
   const isError = note === "";
   function handleTaskEdit(id) {
     if (note !== "") {
       editTask(newEditTask.id, note, new Date(noteTime));
-      closeModal(false)
+      closeModal(false);
       // console.log(newEditTask);
     }
   }
@@ -43,25 +42,28 @@ function EditTaskModal({
     if (event.key === "Enter") {
       if (note !== "") {
         editTask(newEditTask.id, note, new Date(noteTime));
-        closeModal(false)
+        closeModal(false);
       }
     }
     if (event.key === "Escape") {
-      closeModal(false)
+      closeModal(false);
     }
   };
-  console.log(noteTime)
+  console.log(noteTime);
   return (
-    <Modal isOpen={isClickEditTaskButton} onClose={() => closeModal(false)} variant="taskModal" isCentered>
+    <Modal
+      isOpen={isClickEditTaskButton}
+      onClose={() => closeModal(false)}
+      variant="taskModal"
+      isCentered
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>
-          <Heading variant="modalHeaderContentHeading" >
-            Edit task
-          </Heading>
+          <Heading variant="modalHeaderContentHeading">Edit task</Heading>
         </ModalHeader>
         <ModalBody>
-          <Container variant='taskModalBodyContainer'>
+          <Container variant="taskModalBodyContainer">
             <Input
               isInvalid={isError}
               variant="titleTaskInput"
@@ -71,18 +73,18 @@ function EditTaskModal({
             />
             <Input
               type="date"
-              variant="timeEndTaskInput"
-              value={noteTime.toLocaleDateString('en-ca')} 
+              className="time-end"
+              value={noteTime.toLocaleDateString("en-ca")}
               onChange={handleInputChangeEditTaskTime}
             />
           </Container>
         </ModalBody>
         <ModalFooter>
-          <Container variant="modalFooterContainer" >
+          <Container variant="modalFooterContainer">
             <Button
               leftIcon={<CheckCircleIcon fontSize="larger" />}
               onClick={() => handleTaskEdit(newEditTask.id, note)}
-              variant='saveTaskButton'
+              variant="saveTaskButton"
             >
               Save
             </Button>

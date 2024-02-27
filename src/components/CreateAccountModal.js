@@ -27,11 +27,12 @@ function CreateAccountModal({
     <Modal
       isOpen={isCreateAccountModalOpen}
       onClose={onCreateAccountModalClose}
+      variant='createAccountkModal'
       isCentered
     >
       <ModalOverlay />
-      <ModalContent w="450px" h="310px">
-        <ModalHeader h='50px'>Create your account</ModalHeader>
+      <ModalContent>
+        <ModalHeader>Create your account</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl isInvalid={isError} isRequired>
@@ -40,7 +41,7 @@ function CreateAccountModal({
               type="email"
               value={inputUserData}
               onChange={handleInputEmailUserChange}
-              width="400px"
+              width="100%"
             />
             {!isError ? (
               <FormHelperText>
@@ -58,7 +59,7 @@ function CreateAccountModal({
           </FormControl>
         </ModalBody>
 
-        <ModalFooter h="40px" mb="15px">
+        <ModalFooter>
           <Container variant="modalFooterContainer">
             <Button variant="saveTaskButton">
               Save

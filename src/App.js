@@ -192,15 +192,19 @@ function App() {
   return (
     <ChakraProvider theme={themeNew}>
       <Flex className="wrapper">
-        <Text className="title-wrapper">
-          To-Do{" "}
-          <Text as="span" id="text">
-            UI
+        {height >= 480 ? (
+          <Text className="title-wrapper">
+            To-Do{" "}
+            <Text as="span" id="text">
+              UI
+            </Text>
           </Text>
-        </Text>
+        ) : (
+          ""
+        )}
 
         <Container variant="todoContainer">
-          <Container variant="todoHeaderContainer">
+          <Flex className="todo-header">
             <Text variant="titleTodoHeaderContainerText">To-Do</Text>
             <Text variant="userNameTodoHeaderContainerText">UserName</Text>
             <Popover
@@ -245,7 +249,7 @@ function App() {
                 </PopoverContent>
               </Portal>
             </Popover>
-          </Container>
+          </Flex>
           <CreateAccountModal
             isCreateAccountModalOpen={isCreateAccountModalOpen}
             onCreateAccountModalClose={onCreateAccountModalClose}
@@ -253,7 +257,7 @@ function App() {
             handleInputEmailUserChange={handleInputEmailUserChange}
             inputUserData={inputUserData}
           />
-          <Flex className="todo-container-content">
+          <Flex className="todo-content">
             {width >= 771 ? (
               <Sidebar
                 task={taskNew.title}
@@ -291,8 +295,7 @@ function App() {
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
                 statusList={statusList}
-                // sideBarFilter={sideBarFilter}
-                // selectedStatus={selectedStatus}
+                selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
               />
             )}

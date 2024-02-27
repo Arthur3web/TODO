@@ -34,9 +34,9 @@ const Task = ({
 
   console.log("task.timeEnd", task.timeEnd);
   return (
-    <Flex className="task" /*variant="taskContainer"*/>
+    <Flex className="task">
       <Flex className="task-content">
-        <Container variant="taskContentTitleContainer">
+        <Flex className="task-content-title">
           <Checkbox
             variant="circular"
             border="gray"
@@ -51,9 +51,10 @@ const Task = ({
           >
             {task.title}
           </Text>
-        </Container>
-          {width >= 480 ? 
-          (<Container variant="taskContentDateContainer"> {/*проверить*/}
+        </Flex>
+        {width >= 480 ? (
+          <Container variant="taskContentDateContainer">
+            {" "}
             <Text
               variant="taskContentDateContainerText"
               className={task.isCompleted ? "crossText" : "listItem"}
@@ -79,27 +80,24 @@ const Task = ({
                 </Container>
               </MenuList>
             </Menu>
-          </Container>) : 
-          ( <Menu variant="parametersTask" placement="bottom-end">
-              <MenuButton>
-                <Image
-                  boxSize="13px"
-                  src="/assets/Vector_3.svg"
-                  alt="Vector_3"
-                />
-              </MenuButton>
-              <MenuList>
-                <Container variant="menuOperationTaskContainer">
-                  <MenuItem onClick={handleOpenedModalEditTask}>
-                    <EditIcon color="#8687E7" />
-                  </MenuItem>
-                  <MenuItem onClick={handleOpenedModalDeleteTask}>
-                    <DeleteIcon color="#F56497" />
-                  </MenuItem>
-                </Container>
-              </MenuList>
-            </Menu>)
-}
+          </Container>
+        ) : (
+          <Menu variant="parametersTask" placement="bottom-end">
+            <MenuButton>
+              <Image boxSize="13px" src="/assets/Vector_3.svg" alt="Vector_3" />
+            </MenuButton>
+            <MenuList>
+              <Container variant="menuOperationTaskContainer">
+                <MenuItem onClick={handleOpenedModalEditTask}>
+                  <EditIcon color="#8687E7" />
+                </MenuItem>
+                <MenuItem onClick={handleOpenedModalDeleteTask}>
+                  <DeleteIcon color="#F56497" />
+                </MenuItem>
+              </Container>
+            </MenuList>
+          </Menu>
+        )}
       </Flex>
     </Flex>
   );

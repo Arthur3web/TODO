@@ -1,5 +1,6 @@
 import React from "react";
 import AddTaskModal from "./AddTaskModal";
+import { Button, Flex } from "@chakra-ui/react";
 
 function Sidebar({
   task,
@@ -15,33 +16,44 @@ function Sidebar({
   isAddModalOpen,
   statusList,
   setSelectedStatus,
+  selectedStatus,
 }) {
   const handleOpenedFilter = () => {
-      setTodaySelected(!isTodaySelected);
-      console.log(isTodaySelected);
-      setSelectedStatus("All");
+    setTodaySelected(!isTodaySelected);
+    console.log(isTodaySelected);
+    setSelectedStatus("All");
   };
 
   return (
-    <div className="sidebar-mobile">
-      <button 
-      className="today-button" 
-      onClick={() => handleOpenedFilter()}
-      >Today</button>
-      <div className="filter-task" gap="10px">
-      {statusList.map((el, ind) => (
-        <button
-        key={el}
-          className="button-filter"
-          onClick={() => handleFilterChange(el)}
-        >
-          {el}
-        </button>
-      ))}
-      </div>
-      <button className="add-task-button" onClick={onAddModalOpen}>
+    <Flex className="sidebar-mobile">
+      <Button
+        className="today-button"
+        onClick={() => handleOpenedFilter()}
+        color={isTodaySelected ? "#9333EA" : "#404040"}
+        bg={isTodaySelected ? "#d1d3fd" : "#d3c8fc"}
+      >
+        Today
+      </Button>
+      <Flex className="filter-task" gap="10px">
+        {statusList.map((el, ind) => (
+          <Button
+            key={el + ind}
+            className="button-filter"
+            onClick={() => handleFilterChange(el)}
+            color={
+              !isTodaySelected && el === selectedStatus ? "#9333EA" : "#404040"
+            }
+            bg={
+              !isTodaySelected && el === selectedStatus ? "#d1d3fd" : "#d3c8fc"
+            }
+          >
+            {el}
+          </Button>
+        ))}
+      </Flex>
+      <Button variant="addTaskButtonMobileSidebar" onClick={onAddModalOpen}>
         AddTask
-      </button>
+      </Button>
       <AddTaskModal
         isAddModalOpen={isAddModalOpen}
         onAddModalClose={onAddModalClose}
@@ -51,7 +63,7 @@ function Sidebar({
         addTask={addTask}
         setTaskNew={setTaskNew}
       />
-    </div>
+    </Flex>
   );
 }
 

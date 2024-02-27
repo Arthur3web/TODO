@@ -7,7 +7,8 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const titleTaskInput = definePartsStyle({
   field: {
     h: "40px",
-    w: "270px",
+    // w: "270px",
+    w: '90%',
     bg: "#F3F3F3",
     borderRadius: "10px",
     pl: "27px",
@@ -18,7 +19,7 @@ const titleTaskInput = definePartsStyle({
 });
 const timeEndTaskInput = definePartsStyle({
   field: {
-    w: "40%",
+    w: "220px",
     bg: "#F3F3F3",
     borderRadius: "10px",
     _focus: { border: "1px solid gray" },

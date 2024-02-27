@@ -2,22 +2,6 @@ import { defineStyleConfig } from "@chakra-ui/react";
 
 export const Container = defineStyleConfig({
   variants: {
-    taskContentContainer: {
-      display: "flex",
-      // gap: "10px",
-      alignItems: "center",
-      justifyContent: "space-between",
-      padding: 0,
-    },
-    taskContentTitleContainer: {
-      display: "flex",
-      gap: "10px",
-      alignItems: "center",
-      padding: 0,
-      m: 0,
-      maxW: '300px',
-      // float: 'left',
-    },
     taskContentDateContainer: {
       display: "flex",
       w: "90px",
@@ -33,10 +17,10 @@ export const Container = defineStyleConfig({
     },
     todoContainer: {
       display: "flex",
-      w: '100%',
-      h: '100%',
-      maxW: '672px',
-      maxH: '390px',
+      w: "100%",
+      h: "100%",
+      maxW: "672px",
+      maxH: "390px",
       flexDirection: "column",
       alignItems: "baseline",
       p: 0,
@@ -44,7 +28,7 @@ export const Container = defineStyleConfig({
     },
     todoHeaderContainer: {
       display: "flex",
-      w: '100%',
+      w: "100%",
       maxW: "672px",
       h: "47px",
       bg: "rgba(244, 244, 244, 1)",
@@ -93,7 +77,7 @@ export const Container = defineStyleConfig({
     sideBarContainer: {
       display: "flex",
       w: "100%",
-      maxW: '185px',
+      maxW: "185px",
       flexDirection: "column",
       justifyContent: "space-between",
       m: 0,
@@ -102,7 +86,7 @@ export const Container = defineStyleConfig({
     sideBarContentContainer: {
       display: "flex",
       w: "100%",
-      maxW: '185px',
+      maxW: "185px",
       flexDirection: "column",
       gap: "21px",
       padding: 0,
@@ -117,7 +101,7 @@ export const Container = defineStyleConfig({
       display: "flex",
       gap: "10px",
       p: 0,
-      background: 'rgba(244, 244, 244, 1',
+      background: "rgba(244, 244, 244, 1",
     },
   },
 });

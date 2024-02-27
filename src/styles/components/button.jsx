@@ -20,8 +20,27 @@ export const Button = defineStyleConfig({
         bg: "rgba(147, 51, 234, 0.25",
       },
     },
+    addTaskButtonMobileSidebar: {
+      w: "100%",
+      h: "40px",
+      borderRadius: "10px",
+      border: "1px solid gray",
+      bg: "rgba(147, 51, 234, 0.06)",
+      _hover: {
+        bg: "#E2E8F0",
+        boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
+      },
+      _active: {
+        transform: "scale(0.9)",
+      },
+      transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
+      _focus: {
+        boxShadow: " 0 1px 1px rgba(0, 0, 0, .15)",
+        bg: "rgba(147, 51, 234, 0.25",
+      },
+    },
     saveTaskButton: {
-      w: "185px",
+      w: "45%",
       h: "40px",
       lineHeight: "1.2",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
@@ -41,7 +60,7 @@ export const Button = defineStyleConfig({
       },
     },
     closeModalButton: {
-      w: "185px",
+      w: "45%",
       h: "40px",
       lineHeight: "1.2",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
@@ -62,7 +81,7 @@ export const Button = defineStyleConfig({
       },
     },
     deleteTaskButton: {
-      w: "185px",
+      w: "45%",
       h: "40px",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
       borderRadius: "10px",

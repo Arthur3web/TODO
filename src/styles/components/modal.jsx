@@ -6,7 +6,7 @@ const { definePartsStyle, defineMultiStyleConfig } =
 
 const taskModal = definePartsStyle({
   dialog: {
-    w: "466px",
+    w: "80%",
     h: "181px",
     borderRadius: "10px",
     bg: "white",
@@ -26,7 +26,7 @@ const taskModal = definePartsStyle({
 
 const deleteTaskModal = definePartsStyle({
   dialog: {
-    w: "466px",
+    w: "80%",
     h: "181px",
     borderRadius: "10px",
     bg: "white",
@@ -42,6 +42,22 @@ const deleteTaskModal = definePartsStyle({
   },
 });
 
+const createAccountkModal = definePartsStyle({
+  dialog: {
+    w: "80%",
+    h: "310px",
+    borderRadius: "10px",
+    bg: "white",
+  },
+  header: {
+    h: "50px",
+  },
+  footer: {
+    h: "40px",
+    mb: "15px",
+  },
+});
+
 export const Modal = defineMultiStyleConfig({
-  variants: { taskModal, deleteTaskModal },
+  variants: { taskModal, deleteTaskModal, createAccountkModal },
 });
