@@ -54,8 +54,8 @@ function CreateAccountModal({
           </FormControl>
 
           <FormControl isRequired>
-            <FormLabel>First name</FormLabel>
-            <Input placeholder="Last name" />
+            <FormLabel>Password</FormLabel>
+            <Input type="password" />
           </FormControl>
         </ModalBody>
 

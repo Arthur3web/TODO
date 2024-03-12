@@ -1,4 +1,10 @@
 import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import "./App.css";
 import TasksList from "./components/TasksList.js";
 import Sidebar from "./components/Sidebar.js";
@@ -6,8 +12,8 @@ import SidebarMobile from "./components/SidebarMobile.js";
 import EditTaskModal from "./components/EditTaskModal.js";
 import DeleteTaskModal from "./components/DeleteTaskModal.js";
 import CreateAccountModal from "./components/CreateAccountModal.js";
-// import AddTaskModal from "./AddTaskModal";
 import useWindowSize from "./useWindowSize.jsx";
+import LoginModal from "./components/LoginModal.js";
 import "./responsive.css";
 import {
   ChakraProvider,
@@ -106,6 +112,12 @@ function App() {
     onClose: onCreateAccountModalClose,
     isOpen: isCreateAccountModalOpen,
   } = useDisclosure();
+  const {
+    //аутентификация пользователя
+    onOpen: onLoginModalOpen,
+    onClose: onLoginModalClose,
+    isOpen: isLoginModalOpen,
+  } = useDisclosure();
 
   function handleFilterChange(el) {
     //фильтр
@@ -181,14 +193,34 @@ function App() {
   const handleDeleteTask = (el) => {
     setDeletedTask(el);
   };
-  //UserLoginWindow
+
+  // console.log({ width });
+
+  //Проверка авторизации пользователя
+  const [isLoggedIn, setLoggedIn] = useState(false); // Состояние для отслеживания авторизации
   const {
     onOpen: onUserLoginWindowOpen,
     onClose: onUserLoginWindowClose,
     isOpen: isUserLoginWindowOpen,
   } = useDisclosure();
 
-  console.log({ width });
+  // const handleLogin = () => {
+  //   // Устанавливаем состояние, что пользователь авторизован
+  //   // setLoggedIn(true);
+  //   // Закрываем модальное окно с авторизацией
+  //   onUserLoginWindowClose();
+  // };
+
+  // if (!isLoggedIn) {
+  //   return (
+  //     <ChakraProvider theme={themeNew}>
+  //       {/* Выводим модальное окно с авторизацией */}
+  //       <LoginModal isOpen={isUserLoginWindowOpen} onClose={onUserLoginWindowClose} onLogin={handleLogin} />
+  //     </ChakraProvider>
+  //   );
+  // }
+
+  // После авторизации показываем основное приложение
   return (
     <ChakraProvider theme={themeNew}>
       <Flex className="wrapper">
@@ -229,7 +261,9 @@ function App() {
                   <PopoverHeader>Welcome!</PopoverHeader>
                   <PopoverBody>
                     <Container variant="popoverBodyContainer">
-                      <Button variant="loginButton">Login</Button>
+                      <Button variant="loginButton" onClick={onLoginModalOpen}>
+                        Login
+                      </Button>
                       <Button
                         variant="userRegistrationButton"
                         onClick={onCreateAccountModalOpen}
@@ -250,6 +284,10 @@ function App() {
               </Portal>
             </Popover>
           </Flex>
+          <LoginModal
+            isLoginModalOpen={isLoginModalOpen}
+            onLoginModalClose={onLoginModalClose}
+          />
           <CreateAccountModal
             isCreateAccountModalOpen={isCreateAccountModalOpen}
             onCreateAccountModalClose={onCreateAccountModalClose}
@@ -314,6 +352,7 @@ function App() {
           </Flex>
         </Container>
       </Flex>
+
       {isClickEditTaskButton && (
         <EditTaskModal
           isClickEditTaskButton={isClickEditTaskButton}
