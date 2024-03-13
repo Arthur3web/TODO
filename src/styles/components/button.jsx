@@ -40,7 +40,7 @@ export const Button = defineStyleConfig({
       },
     },
     saveTaskButton: {
-      w: "45%",
+      w: "150px",
       h: "40px",
       lineHeight: "1.2",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
@@ -99,7 +99,7 @@ export const Button = defineStyleConfig({
       },
     },
     loginButton: {
-      w: "185px",
+      w: "150px",
       h: "40px",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
       borderRadius: "10px",
@@ -117,7 +117,7 @@ export const Button = defineStyleConfig({
       },
     },
     userRegistrationButton: {
-      w: "185px",
+      w: "150px",
       h: "40px",
       transition: "all 0.2s cubic-bezier(.08,.52,.52,1)",
       borderRadius: "10px",

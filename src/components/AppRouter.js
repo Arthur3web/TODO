@@ -1,23 +1,19 @@
 import React from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
-import { authRoutes, publicRoutes } from "../Routes";
-import { TODO_ROUTE } from "../utils/consts";
-import { Context } from "..";
+import { BrowserRouter as Route, Routes } from "react-router-dom";
+import { authRoutes, publicRoutes } from "../routes";
 
 
 const AppRouter = () => {
-    const {user} = useContext(Context)
-    console.log(user)
+    const isAuth = false
     return (
-        <Switch>
-            {user.isAuth && authRoutes.map(({path, Component}) =>
-            <Route key={path} path={path} component={Component} exact/> 
+        <Routes>
+            {isAuth === true && authRoutes.map(({path, Component}) =>
+                <Route key={path} path={path} component={Component} exact/>
             )}
             {publicRoutes.map(({path, Component}) =>
-            <Route key={path} path={path} component={Component} exact />
+                <Route key={path} path={path} component={Component} exact/>
             )}
-            <Redirect to={TODO_ROUTE}/>
-        </Switch>
+        </Routes>
     );
 };
 
