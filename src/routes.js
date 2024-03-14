@@ -1,21 +1,22 @@
 import RegistrationPage from "./pages/RegistrationPage";
 import LoginPage from "./pages/LoginPage";
 import MainPage from "./pages/MainPage";
+import { LOGIN_ROUTE, MAIN_ROUTE, REGISTRATION_ROUTE } from "./utils/consts";
 
 export const authRoutes = [
   {
-    path: "/",
+    path: MAIN_ROUTE,
     Component: MainPage,
   },
 ];
 
 export const publicRoutes = [
   {
-    path: "/login",
+    path: LOGIN_ROUTE,
     Component: LoginPage,
   },
   {
-    path: "/registration",
+    path: REGISTRATION_ROUTE,
     Component: RegistrationPage,
   },
 ];

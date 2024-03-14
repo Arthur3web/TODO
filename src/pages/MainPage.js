@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -41,6 +41,7 @@ import {
 } from "@chakra-ui/icons";
 import themeNew from "../styles/themes/themeNew.js";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts.js";
+import { Context } from "../index.js";
 
 function App() {
   const [taskList, setTaskList] = useState([]); //tasklist
@@ -106,18 +107,6 @@ function App() {
     isOpen: isAddModalOpen,
   } = useDisclosure();
   const { onToggle } = useDisclosure(); //фильтр задач
-//   const {
-//     //регистрация пользователя
-//     onOpen: onCreateAccountModalOpen,
-//     onClose: onCreateAccountModalClose,
-//     isOpen: isCreateAccountModalOpen,
-//   } = useDisclosure();
-//   const {
-//     //аутентификация пользователя
-//     onOpen: onLoginModalOpen,
-//     onClose: onLoginModalClose,
-//     isOpen: isLoginModalOpen,
-//   } = useDisclosure();
 
   function handleFilterChange(el) {
     //фильтр
@@ -175,11 +164,6 @@ function App() {
     setTaskList(newTaskList);
   };
 
-  //CreateAccountModal
-  const [inputUserData, setInputUserData] = useState("");
-  const handleInputEmailUserChange = (e) => setInputUserData(e.target.value);
-  const isError = inputUserData === "";
-
   //EditTaskModal
   const [newEditTask, setNewEditTask] = useState();
   const [isClickEditTaskButton, setClickEditTaskButton] = useState(false);
@@ -194,15 +178,19 @@ function App() {
     setDeletedTask(el);
   };
 
-  //Проверка авторизации пользователя
-  const [isLoggedIn, setLoggedIn] = useState(false); // Состояние для отслеживания авторизации
+  //popover
   const {
     onOpen: onUserLoginWindowOpen,
     onClose: onUserLoginWindowClose,
     isOpen: isUserLoginWindowOpen,
   } = useDisclosure();
 
-  // const navigate = useNavigate();
+  const { setUser, setIsAuth} = useContext(Context);
+  // настройка выхода
+  const logOut =() => {
+    setUser({})
+    setIsAuth(false)
+  }
 
   return (
     <ChakraProvider theme={themeNew}>
@@ -244,32 +232,14 @@ function App() {
                   <PopoverHeader>Welcome!</PopoverHeader>
                   <PopoverBody>
                     <Container variant="popoverBodyContainer">
-                      <Link to={LOGIN_ROUTE}>
-                      <Button
-                        variant="loginButton"
-                        // onClick={() => navigate.push(LOGIN_ROUTE)}
-                      >
-                        Login
-                      </Button>
-                      </Link>
-                      <Link to={REGISTRATION_ROUTE}>
                         <Button
                           variant="userRegistrationButton"
-                          // onClick={onCreateAccountModalOpen}
+                          onClick={() => logOut()}
                         >
-                          Register
+                          Exit
                         </Button>
-                      </Link>
                     </Container>
                   </PopoverBody>
-                  <PopoverFooter>
-                    <Container variant="popoverFooterContentContainer">
-                      <WarningIcon color="red.500" />
-                      <Text variant="popoverFooterContentContainerText">
-                        To save your checklist, you must log in to your account.
-                      </Text>
-                    </Container>
-                  </PopoverFooter>
                 </PopoverContent>
               </Portal>
             </Popover>

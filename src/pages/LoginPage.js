@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Card,
@@ -12,30 +12,34 @@ import {
   CardFooter,
   Text,
 } from "@chakra-ui/react";
-import { REGISTRATION_ROUTE } from "../utils/consts";
-import axios from "axios";
+import { MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
+import { login } from "../http/userAPI";
+import { Context } from "..";
+import { useNavigate } from "react-router-dom";
 
-const LoginModal = ({ onLogin }) => {
-
+const LoginModal = () => {
+  const { setUser, setIsAuth} = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/login`,
-        { email, password }
-      );
-
-      // Если ответ успешен (например, код ответа 200), вызываем колбэк onLogin
-      if (response.status === 200) {
-        onLogin();
-      } else {
+      let data;
+      try {
+        data = await login(email, password);
+        console.log(data);
+        // Устанавливаем пользователя и флаг авторизации
+        setUser(data);
+        setIsAuth(true);
+        // Переходим на главную страницу
+        navigate(MAIN_ROUTE);
+      } catch (error) {
         setError("Invalid email or password");
       }
-    } catch (error) {
-      setError("Invalid email or password");
+    } catch (e) {
+      alert(e.response.message);
     }
   };
 
@@ -83,7 +87,30 @@ const LoginModal = ({ onLogin }) => {
               Register
             </Link>
           </div>
-          <Button onClick={handleLogin}>Login</Button>
+          <Button
+            w="120px"
+            h="40px"
+            lineHeight="1.2"
+            transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+            borderRadius="10px"
+            border="1px solid silver"
+            fontSize="16px"
+            bg="rgba(103, 184, 203, 0.06)"
+            color="#67B8CB"
+            _hover={{
+              bg: "rgba(103, 184, 203, 0.03)",
+              boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
+            }}
+            _active={{
+              transform: "scale(0.9)",
+            }}
+            _focus={{
+              boxShadow: "0 1px 1px rgba(0, 0, 0, .15)",
+            }}
+            onClick={handleLogin}
+          >
+            Login
+          </Button>
         </CardFooter>
       </Card>
     </Container>
