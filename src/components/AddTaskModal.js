@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Heading,
@@ -14,6 +14,8 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
+import { create_task } from "../http/taskAPI";
+import { Context } from "..";
 
 function AddTaskModal({
   isAddModalOpen,
@@ -26,14 +28,20 @@ function AddTaskModal({
 }) {
   const [value, setValue] = useState("");
   const isError = task === "";
-  function handleTaskAdd() {
-    if (task !== "") {
-      addTask(value);
-      setValue("");
-      onAddModalClose(true);
+
+  const { title, time_end} = useContext(Context);
+
+  const createTask = async() => {
+    try {
+      const data = await create_task(title, time_end);
+      console.log(data)
+    } catch (e) {
+      console.error(e)
+      console.log(e)
     }
   }
 
+  
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       if (task !== "") {
@@ -46,7 +54,7 @@ function AddTaskModal({
       onAddModalClose(true);
       setTaskNew({
         title: "",
-        timeEnd: "",
+        time_end: "",
       });
     }
   };
@@ -77,7 +85,7 @@ function AddTaskModal({
             // width={'auto'}
               className="time-end"
               // variant='timeEndTaskInput'
-              type="date"
+              type="datetime-local"
               onChange={handleTimeChange}
             />
           </Flex>
@@ -86,7 +94,7 @@ function AddTaskModal({
           <Container variant="modalFooterContainer">
             <Button
               leftIcon={<CheckCircleIcon boxSize="20px" />}
-              onClick={handleTaskAdd}
+              onClick={createTask}
               variant="saveTaskButton"
             >
               Save Task

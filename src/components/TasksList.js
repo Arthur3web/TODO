@@ -1,50 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Task from "./Task";
 import { Box, Flex } from "@chakra-ui/react";
-import { isToday } from "date-fns";
+import { getAll } from "../http/taskAPI";
 
 function TasksList({
-  taskList,
-  selectedStatus,
-  isTodaySelected,
-  toggleTaskStatus,
-  handleEditTask,
-  isClickEditTaskButton,
-  setClickEditTaskButton,
-  handleDeleteTask,
-  setClickDeleteTaskButton,
   width,
 }) {
-  const filteredTaskList = taskList.filter((el) => {
-    if (isTodaySelected) {
-      if (selectedStatus === "Done" && isToday(el.timeEnd))
-        return el.isCompleted;
-      if (selectedStatus === "Undone" && isToday(el.timeEnd))
-        return !el.isCompleted;
-      return isToday(el.timeEnd);
-    }
-    if (selectedStatus === "Done") return el.isCompleted;
-    if (selectedStatus === "Undone") return !el.isCompleted;
-    return true;
-  });
+  const [tasks, setTasks] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAll(); // Получаем список задач
+        setTasks(data.tasks); // Обновляем состояние задач
+        // console.log(data)
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
 
+    fetchData(); // Вызываем функцию для получения данных при монтировании компонента
+  }, []);
+
+  console.log(tasks)
   return (
     <Flex className="task-list">
       <Box>
-        {filteredTaskList.map((elem) => (
-          <Task
-            key={elem.id}
-            task={elem}
-            width={width}
-            toggleTaskStatus={toggleTaskStatus}
-            handleEditTask={handleEditTask}
-            isClickEditTaskButton={isClickEditTaskButton}
-            setClickEditTaskButton={setClickEditTaskButton}
-            handleDeleteTask={handleDeleteTask}
-            setClickDeleteTaskButton={setClickDeleteTaskButton}
-          />
-        ))}
-
+        {tasks.length > 0 ? (
+          tasks.map((task) => <Task key={task.id} task={task} width={width} />)
+        ) : (
+          <p>Loading...</p>
+        )}
       </Box>
     </Flex>
   );

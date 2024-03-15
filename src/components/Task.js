@@ -15,24 +15,9 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 const Task = ({
   task,
   toggleTaskStatus,
-  handleEditTask,
-  setClickEditTaskButton,
-  setClickDeleteTaskButton,
-  handleDeleteTask,
   width,
 }) => {
-  //Деструктуризация
-
-  const handleOpenedModalEditTask = () => {
-    handleEditTask(task);
-    setClickEditTaskButton(true);
-  };
-  const handleOpenedModalDeleteTask = () => {
-    handleDeleteTask(task);
-    setClickDeleteTaskButton(true);
-  };
-
-  console.log("task.timeEnd", task.timeEnd);
+  
   return (
     <Flex className="task">
       <Flex className="task-content">
@@ -41,11 +26,11 @@ const Task = ({
             variant="circular"
             border="gray"
             colorScheme="purple"
-            isChecked={task.isCompleted}
+            isChecked={task.is_completed}
             onChange={() => toggleTaskStatus(task.id)}
           />
           <Text
-            className={task.isCompleted ? "crossText" : "listItem"}
+            className={task.is_completed ? "crossText" : "listItem"}
             variant="taskContentTitleContainerText"
             isTruncated
           >
@@ -57,9 +42,9 @@ const Task = ({
             {" "}
             <Text
               variant="taskContentDateContainerText"
-              className={task.isCompleted ? "crossText" : "listItem"}
+              className={task.is_completed ? "crossText" : "listItem"}
             >
-              {task.timeEnd.toLocaleDateString("en-ca")}
+              {task.time_end/*.toLocaleDateString("en-ca")*/}
             </Text>
             <Menu variant="parametersTask" placement="bottom-end">
               <MenuButton>
@@ -71,10 +56,10 @@ const Task = ({
               </MenuButton>
               <MenuList>
                 <Container variant="menuOperationTaskContainer">
-                  <MenuItem onClick={handleOpenedModalEditTask}>
+                  <MenuItem /*onClick={handleOpenedModalEditTask}*/>
                     <EditIcon color="#8687E7" />
                   </MenuItem>
-                  <MenuItem onClick={handleOpenedModalDeleteTask}>
+                  <MenuItem /*onClick={handleOpenedModalDeleteTask}*/>
                     <DeleteIcon color="#F56497" />
                   </MenuItem>
                 </Container>
@@ -88,10 +73,10 @@ const Task = ({
             </MenuButton>
             <MenuList>
               <Container variant="menuOperationTaskContainer">
-                <MenuItem onClick={handleOpenedModalEditTask}>
+                <MenuItem /*onClick={handleOpenedModalEditTask}*/>
                   <EditIcon color="#8687E7" />
                 </MenuItem>
-                <MenuItem onClick={handleOpenedModalDeleteTask}>
+                <MenuItem /*onClick={handleOpenedModalDeleteTask}*/>
                   <DeleteIcon color="#F56497" />
                 </MenuItem>
               </Container>

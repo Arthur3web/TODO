@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import {
   Card,
@@ -18,7 +18,7 @@ import { Context } from "..";
 import { useNavigate } from "react-router-dom";
 
 const LoginModal = () => {
-  const { setUser, setIsAuth} = useContext(Context);
+  const { user, setUser, setIsAuth} = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -29,7 +29,7 @@ const LoginModal = () => {
       let data;
       try {
         data = await login(email, password);
-        console.log(data);
+        // console.log(data);
         // Устанавливаем пользователя и флаг авторизации
         setUser(data);
         setIsAuth(true);

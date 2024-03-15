@@ -23,14 +23,14 @@ function RegistrationPage() {
   const { user, setUser, setIsAuth } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [timezone, setTimezone] = useState("");
+  const [username, setUsername] = useState("");
   const isError = email === "";
 
   const handleRegistration = async () => {
       let data;
       try {
         // Отправляем запрос на сервер для регистрации
-        data = await registration(email, password, timezone);
+        data = await registration(email, password/*, username*/);
         setUser(user);
         setIsAuth(true);
 
@@ -45,7 +45,7 @@ function RegistrationPage() {
   return (
     <ChakraProvider>
       <Container display="flex" justifyContent="center" alignItems="center">
-        <Card>
+        <Card width="600px">
           <CardHeader
             display="flex"
             justifyContent="space-between"
@@ -83,19 +83,20 @@ function RegistrationPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
-            <FormControl isRequired>
-              <FormLabel>TIMEZONE</FormLabel>
+            {/* <FormControl isRequired>
+              <FormLabel>Username</FormLabel>
               <Input
-                value={timezone}
-                onChange={(e) => setTimezone(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
-            </FormControl>
+            </FormControl> */}
           </CardBody>
           <CardFooter
             display="flex"
-            alignItems="center"
             justifyContent="space-between"
-            w="422px"
+            alignItems="center"
+            pl={5}
+            pr={5}
           >
             <Text>
               Do you have an account?{" "}
@@ -125,7 +126,7 @@ function RegistrationPage() {
               }}
               onClick={handleRegistration}
             >
-              Save
+              Register
             </Button>
           </CardFooter>
         </Card>

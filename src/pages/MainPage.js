@@ -1,11 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Link,
-  useNavigate,
-} from "react-router-dom";
+
 import "../App.css";
 import TasksList from "../components/TasksList.js";
 import Sidebar from "../components/Sidebar.js";
@@ -26,7 +20,6 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
-  PopoverFooter,
   PopoverArrow,
   Portal,
   IconButton,
@@ -37,13 +30,17 @@ import {
   ArrowUpIcon,
   CalendarIcon,
   CheckCircleIcon,
-  WarningIcon,
 } from "@chakra-ui/icons";
 import themeNew from "../styles/themes/themeNew.js";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts.js";
 import { Context } from "../index.js";
+import { useNavigate } from "react-router-dom";
+import { LOGIN_ROUTE } from "../utils/consts.js";
+
+
 
 function App() {
+  const { setUser, setIsAuth} = useContext(Context);
+  
   const [taskList, setTaskList] = useState([]); //tasklist
   const [isTodaySelected, setTodaySelected] = useState(true); //today
   const [isDateSelected, setDateSelected] = useState(true); //date
@@ -98,7 +95,7 @@ function App() {
   ]; //
   const [taskNew, setTaskNew] = useState({
     title: "",
-    timeEnd: new Date(),
+    time_end: new Date(),
   });
   const {
     //добавление задачи
@@ -118,19 +115,19 @@ function App() {
   };
 
   const handleTimeChange = (e) => {
-    setTaskNew({ ...taskNew, timeEnd: new Date(e.target.value) });
+    setTaskNew({ ...taskNew, time_end: new Date(e.target.value) });
   };
 
   const addTask = () => {
     const newTask = {
       id: Date.now(),
       ...taskNew,
-      timeStart: /*new Date().toLocaleDateString()*/ new Date(),
-      isCompleted: false,
+      time_start: /*new Date().toLocaleDateString()*/ new Date(),
+      is_completed: false,
     };
     setTaskNew({
       title: "",
-      timeEnd: new Date(),
+      time_end: new Date(),
     });
     setTaskList([...taskList, newTask]);
   };
@@ -141,8 +138,8 @@ function App() {
         return {
           ...item,
           title: title,
-          timeEnd: timeEnd,
-          isCompleted: false,
+          time_end: timeEnd,
+          is_completed: false,
         };
       }
       return item;
@@ -185,11 +182,14 @@ function App() {
     isOpen: isUserLoginWindowOpen,
   } = useDisclosure();
 
-  const { setUser, setIsAuth} = useContext(Context);
+  const navigate = useNavigate();
+
   // настройка выхода
   const logOut =() => {
     setUser({})
     setIsAuth(false)
+    localStorage.removeItem('token');
+    navigate(LOGIN_ROUTE);
   }
 
   return (

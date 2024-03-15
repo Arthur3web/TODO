@@ -72,7 +72,7 @@ function EditTaskModal({
               onKeyDown={handleKeyDown}
             />
             <Input
-              type="date"
+              type="datetime-local"
               className="time-end"
               value={noteTime.toLocaleDateString("en-ca")}
               onChange={handleInputChangeEditTaskTime}
