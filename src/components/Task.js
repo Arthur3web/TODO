@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Text,
@@ -11,13 +11,47 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { change_task } from "../http/taskAPI";
+import DeleteTaskModal from "../components/DeleteTaskModal.js";
+import EditTaskModal from "./EditTaskModal.js";
 
-const Task = ({
-  task,
-  toggleTaskStatus,
-  width,
-}) => {
-  
+const Task = ({ task, width }) => {
+  const [isChecked, setIsChecked] = useState(task.iscompleted);
+  const toggleTaskStatus = async () => {
+    try {
+      const updatedIsChecked = !isChecked; // Получаем противоположное значение isChecked
+      setIsChecked(updatedIsChecked); // Обновляем состояние isChecked
+      console.log("'''''''''")
+      // Отправляем запрос на сервер для обновления статуса задачи с использованием предыдущего значения isChecked
+      await change_task(task.id, {iscompleted: updatedIsChecked});
+    } catch (error) {
+      console.error("Error updating task status:", error);
+    }
+  };
+
+  const formatDateTime = (dateTimeString) => {
+    const options = {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    const dateTime = new Date(dateTimeString);
+    return dateTime.toLocaleString("en-US", options);
+  };
+
+  const [isClickEditTaskButton, setClickEditTaskButton] = useState(false);
+  const [isClickDeleteTaskButton, setClickDeleteTaskButton] = useState(false);
+
+  const handleOpenedModalEditTask = () => {
+    setClickEditTaskButton(true);
+  };
+
+  const handleOpenedModalDeleteTask = () => {
+    setClickDeleteTaskButton(true);
+  };
+
   return (
     <Flex className="task">
       <Flex className="task-content">
@@ -26,11 +60,11 @@ const Task = ({
             variant="circular"
             border="gray"
             colorScheme="purple"
-            isChecked={task.is_completed}
-            onChange={() => toggleTaskStatus(task.id)}
+            checked={isChecked}
+            onChange={toggleTaskStatus}
           />
           <Text
-            className={task.is_completed ? "crossText" : "listItem"}
+            className={task.iscompleted ? "crossText" : "listItem"}
             variant="taskContentTitleContainerText"
             isTruncated
           >
@@ -42,9 +76,9 @@ const Task = ({
             {" "}
             <Text
               variant="taskContentDateContainerText"
-              className={task.is_completed ? "crossText" : "listItem"}
+              className={task.iscompleted ? "crossText" : "listItem"}
             >
-              {task.time_end/*.toLocaleDateString("en-ca")*/}
+              {formatDateTime(task.timeend)}
             </Text>
             <Menu variant="parametersTask" placement="bottom-end">
               <MenuButton>
@@ -56,10 +90,12 @@ const Task = ({
               </MenuButton>
               <MenuList>
                 <Container variant="menuOperationTaskContainer">
-                  <MenuItem /*onClick={handleOpenedModalEditTask}*/>
+                  <MenuItem onClick={() => handleOpenedModalEditTask(task.id)}>
                     <EditIcon color="#8687E7" />
                   </MenuItem>
-                  <MenuItem /*onClick={handleOpenedModalDeleteTask}*/>
+                  <MenuItem
+                    onClick={() => handleOpenedModalDeleteTask(task.id)}
+                  >
                     <DeleteIcon color="#F56497" />
                   </MenuItem>
                 </Container>
@@ -73,10 +109,10 @@ const Task = ({
             </MenuButton>
             <MenuList>
               <Container variant="menuOperationTaskContainer">
-                <MenuItem /*onClick={handleOpenedModalEditTask}*/>
+                <MenuItem onClick={() => handleOpenedModalEditTask(task.id)}>
                   <EditIcon color="#8687E7" />
                 </MenuItem>
-                <MenuItem /*onClick={handleOpenedModalDeleteTask}*/>
+                <MenuItem onClick={() => handleOpenedModalDeleteTask(task.id)}>
                   <DeleteIcon color="#F56497" />
                 </MenuItem>
               </Container>
@@ -84,6 +120,16 @@ const Task = ({
           </Menu>
         )}
       </Flex>
+      <EditTaskModal
+        isClickEditTaskButton={isClickEditTaskButton}
+        closeModal={setClickEditTaskButton}
+        task={task}
+      />
+      <DeleteTaskModal
+        isClickDeleteTaskButton={isClickDeleteTaskButton}
+        closeModal={setClickDeleteTaskButton} // Передаем функцию для закрытия модального окна
+        task={task}
+      />
     </Flex>
   );
 };

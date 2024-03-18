@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Task from "./Task";
 import { Box, Flex } from "@chakra-ui/react";
 import { getAll } from "../http/taskAPI";
 
 function TasksList({
   width,
+  tasks,
+  setTasks,
 }) {
-  const [tasks, setTasks] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -17,9 +18,8 @@ function TasksList({
         console.error("Error fetching tasks:", error);
       }
     };
-
     fetchData(); // Вызываем функцию для получения данных при монтировании компонента
-  }, []);
+  }, [/*tasks*/]);
 
   console.log(tasks)
   return (

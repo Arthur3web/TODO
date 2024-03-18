@@ -30,7 +30,7 @@ function RegistrationPage() {
       let data;
       try {
         // Отправляем запрос на сервер для регистрации
-        data = await registration(email, password/*, username*/);
+        data = await registration(email, password, username);
         setUser(user);
         setIsAuth(true);
 
@@ -83,13 +83,13 @@ function RegistrationPage() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </FormControl>
-            {/* <FormControl isRequired>
+            <FormControl isRequired>
               <FormLabel>Username</FormLabel>
               <Input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
-            </FormControl> */}
+            </FormControl>
           </CardBody>
           <CardFooter
             display="flex"

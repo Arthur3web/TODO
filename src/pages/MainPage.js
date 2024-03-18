@@ -4,8 +4,6 @@ import "../App.css";
 import TasksList from "../components/TasksList.js";
 import Sidebar from "../components/Sidebar.js";
 import SidebarMobile from "../components/SidebarMobile.js";
-import EditTaskModal from "../components/EditTaskModal.js";
-import DeleteTaskModal from "../components/DeleteTaskModal.js";
 import useWindowSize from "../useWindowSize.jsx";
 import "../responsive.css";
 import {
@@ -36,17 +34,13 @@ import { Context } from "../index.js";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../utils/consts.js";
 
-
-
 function App() {
   const { setUser, setIsAuth} = useContext(Context);
-  
-  const [taskList, setTaskList] = useState([]); //tasklist
+  const [tasks, setTasks] = useState([]);
   const [isTodaySelected, setTodaySelected] = useState(true); //today
   const [isDateSelected, setDateSelected] = useState(true); //date
   const [selectedStatus, setSelectedStatus] = useState("All"); //status
   const statusList = ["All", "Done", "Undone"]; //menu-filter
-
   const { height, width } = useWindowSize();
   const sideBarFilter = [
     //sidebar
@@ -93,10 +87,7 @@ function App() {
       ),
     },
   ]; //
-  const [taskNew, setTaskNew] = useState({
-    title: "",
-    time_end: new Date(),
-  });
+  
   const {
     //добавление задачи
     onOpen: onAddModalOpen,
@@ -109,71 +100,6 @@ function App() {
     //фильтр
     setSelectedStatus(el);
   }
-
-  const handleInputChange = (e) => {
-    setTaskNew({ ...taskNew, title: e.target.value });
-  };
-
-  const handleTimeChange = (e) => {
-    setTaskNew({ ...taskNew, time_end: new Date(e.target.value) });
-  };
-
-  const addTask = () => {
-    const newTask = {
-      id: Date.now(),
-      ...taskNew,
-      time_start: /*new Date().toLocaleDateString()*/ new Date(),
-      is_completed: false,
-    };
-    setTaskNew({
-      title: "",
-      time_end: new Date(),
-    });
-    setTaskList([...taskList, newTask]);
-  };
-
-  function editTask(id, title, timeEnd) {
-    const newTodo = taskList.map((item) => {
-      if (item.id === id) {
-        return {
-          ...item,
-          title: title,
-          time_end: timeEnd,
-          is_completed: false,
-        };
-      }
-      return item;
-    });
-    setTaskList(newTodo);
-  }
-
-  const deleteTask = (id) => {
-    setTaskList(taskList.filter((item) => item.id !== id));
-  };
-
-  const toggleTaskStatus = (id) => {
-    const element = taskList.findIndex((elem) => elem.id === id);
-    const newTaskList = [...taskList];
-    newTaskList[element] = {
-      ...newTaskList[element],
-      isCompleted: !newTaskList[element].isCompleted,
-    };
-    setTaskList(newTaskList);
-  };
-
-  //EditTaskModal
-  const [newEditTask, setNewEditTask] = useState();
-  const [isClickEditTaskButton, setClickEditTaskButton] = useState(false);
-  const handleEditTask = (el) => {
-    setNewEditTask(el);
-  };
-
-  //DeleteTaskModal
-  const [isDeletedTask, setDeletedTask] = useState();
-  const [isClickDeleteTaskButton, setClickDeleteTaskButton] = useState(false);
-  const handleDeleteTask = (el) => {
-    setDeletedTask(el);
-  };
 
   //popover
   const {
@@ -248,17 +174,13 @@ function App() {
           <Flex className="todo-content">
             {width >= 771 ? (
               <Sidebar
-                task={taskNew.title}
-                addTask={addTask}
-                taskList={taskList}
+                tasks={tasks}
+                setTasks={setTasks}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
                 isDateSelected={isDateSelected}
                 setDateSelected={setDateSelected}
-                setTaskNew={setTaskNew}
-                handleInputChange={handleInputChange}
                 handleFilterChange={handleFilterChange}
-                handleTimeChange={handleTimeChange}
                 onAddModalOpen={onAddModalOpen}
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
@@ -270,15 +192,11 @@ function App() {
               />
             ) : (
               <SidebarMobile
-                task={taskNew.title}
-                addTask={addTask}
-                taskList={taskList}
+                tasks={tasks}
+                setTasks={setTasks}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
-                setTaskNew={setTaskNew}
-                handleInputChange={handleInputChange}
                 handleFilterChange={handleFilterChange}
-                handleTimeChange={handleTimeChange}
                 onAddModalOpen={onAddModalOpen}
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
@@ -288,37 +206,15 @@ function App() {
               />
             )}
             <TasksList
-              taskList={taskList}
+              tasks={tasks}
+              setTasks={setTasks}
               selectedStatus={selectedStatus}
               isTodaySelected={isTodaySelected}
-              toggleTaskStatus={toggleTaskStatus}
-              handleEditTask={handleEditTask}
-              isClickEditTaskButton={isClickEditTaskButton}
-              setClickEditTaskButton={setClickEditTaskButton}
-              handleDeleteTask={handleDeleteTask}
-              setClickDeleteTaskButton={setClickDeleteTaskButton}
               width={width}
             />
           </Flex>
         </Container>
       </Flex>
-      {isClickEditTaskButton && (
-        <EditTaskModal
-          isClickEditTaskButton={isClickEditTaskButton}
-          editTask={editTask}
-          newEditTask={newEditTask}
-          closeModal={setClickEditTaskButton}
-          setNewEditTask={setNewEditTask}
-        />
-      )}
-      {isClickDeleteTaskButton && (
-        <DeleteTaskModal
-          isClickDeleteTaskButton={isClickDeleteTaskButton}
-          deleteTask={deleteTask}
-          closeModal={setClickDeleteTaskButton}
-          isDeletedTask={isDeletedTask}
-        />
-      )}
     </ChakraProvider>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Button,
   Heading,
@@ -15,47 +15,24 @@ import {
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { create_task } from "../http/taskAPI";
-import { Context } from "..";
 
 function AddTaskModal({
   isAddModalOpen,
   onAddModalClose,
-  handleInputChange,
-  handleTimeChange,
-  task,
-  addTask,
-  setTaskNew,
+  setTasks,
 }) {
-  const [value, setValue] = useState("");
-  const isError = task === "";
+  const [title, setTitle] = useState(""); // Состояние для заголовка задачи
+  const [timeend, setTimeend] = useState(""); // Состояние для времени окончания задачи
+  const isError = title === "";
 
-  const { title, time_end} = useContext(Context);
-
-  const createTask = async() => {
+  const createTask = async () => {
     try {
-      const data = await create_task(title, time_end);
-      console.log(data)
-    } catch (e) {
-      console.error(e)
-      console.log(e)
-    }
-  }
-
-  
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      if (task !== "") {
-        addTask(value);
-        event.preventDefault();
-        onAddModalClose(true);
-      }
-    }
-    if (event.key === "Escape") {
-      onAddModalClose(true);
-      setTaskNew({
-        title: "",
-        time_end: "",
-      });
+      const data = await create_task(title, timeend); // Создаем задачу
+      setTasks(data); // Добавляем новую задачу в список задач
+      onAddModalClose(); // Закрываем модальное окно
+      console.log(data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -77,16 +54,14 @@ function AddTaskModal({
               isInvalid={isError}
               variant="titleTaskInput"
               placeholder="Enter text..."
-              onChange={handleInputChange}
-              value={task}
-              onKeyDown={handleKeyDown}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <Input
             // width={'auto'}
               className="time-end"
               // variant='timeEndTaskInput'
               type="datetime-local"
-              onChange={handleTimeChange}
+              onChange={(e) => setTimeend(e.target.value)}
             />
           </Flex>
         </ModalBody>

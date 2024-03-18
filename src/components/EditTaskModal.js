@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   Input,
@@ -13,43 +13,33 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
+import { change_task } from "../http/taskAPI";
 
 function EditTaskModal({
-  editTask,
-  newEditTask,
   isClickEditTaskButton,
   closeModal,
+  task
 }) {
-  const [note, setNote] = useState(newEditTask.title);
-  const [noteTime, setNoteTime] = useState(new Date(newEditTask.timeEnd));
-  const isError = note === "";
-  function handleTaskEdit(id) {
-    if (note !== "") {
-      editTask(newEditTask.id, note, new Date(noteTime));
-      closeModal(false);
-      // console.log(newEditTask);
-    }
-  }
+  const [note, setNote] = useState(task.title); // Состояние для заголовка задачи
+  const [noteTime, setNoteTime] = useState(task.timeend); // Состояние для времени окончания задачи
+  const [isError, setIsError] = useState(false);
 
-  function handleInputChangeEditTask(e) {
-    setNote(e.target.value);
-  }
-  function handleInputChangeEditTaskTime(e) {
-    setNoteTime(new Date(e.target.value));
-  }
-  const handleKeyDown = (event) => {
-    //настройка закрытия модального окна при нажатии на клавиши Enter и Esc
-    if (event.key === "Enter") {
-      if (note !== "") {
-        editTask(newEditTask.id, note, new Date(noteTime));
-        closeModal(false);
-      }
-    }
-    if (event.key === "Escape") {
-      closeModal(false);
+  // Обновление состояния isError при изменении note
+  useEffect(() => {
+    setIsError(note === "");
+  }, [note]);
+
+  const editTask = async () => {
+    try {
+      const data = await change_task(task.id, { title: note, timeend: noteTime }); // Изменяем задачу на сервере
+      closeModal(); 
+      console.log(data);
+    } catch (error) {
+      console.error(error);
     }
   };
-  console.log(noteTime);
+
+
   return (
     <Modal
       isOpen={isClickEditTaskButton}
@@ -68,14 +58,13 @@ function EditTaskModal({
               isInvalid={isError}
               variant="titleTaskInput"
               value={note}
-              onChange={handleInputChangeEditTask}
-              onKeyDown={handleKeyDown}
+              onChange={(e) => setNote(e.target.value)}
             />
             <Input
               type="datetime-local"
               className="time-end"
-              value={noteTime.toLocaleDateString("en-ca")}
-              onChange={handleInputChangeEditTaskTime}
+              value={noteTime}
+              onChange={(e) => setNoteTime(e.target.value)}
             />
           </Container>
         </ModalBody>
@@ -83,7 +72,7 @@ function EditTaskModal({
           <Container variant="modalFooterContainer">
             <Button
               leftIcon={<CheckCircleIcon fontSize="larger" />}
-              onClick={() => handleTaskEdit(newEditTask.id, note)}
+              onClick={editTask}
               variant="saveTaskButton"
             >
               Save

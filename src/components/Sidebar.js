@@ -13,6 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import AddTaskModal from "./AddTaskModal";
+import { getAll } from "../http/taskAPI";
 
 function Sidebar({
   task,
@@ -34,23 +35,23 @@ function Sidebar({
   selectedStatus,
   setSelectedStatus,
   onToggle,
+  tasks,
+  setTasks,
 }) {
-  const handleOpenedFilter = (name) => {
+  const handleOpenedFilter = async (name) => {
     //функция вызова действий при нажатии на элементы sidebar
     if (name === "Today") {
       setTodaySelected(!isTodaySelected);
       console.log(isTodaySelected);
       setSelectedStatus("All");
+      const data = await getAll("All", "", "All");
+      setTasks(data.tasks)
     } else if (name === "Date") {
       setDateSelected(!isDateSelected);
-      taskList.sort(function (a, b) {
-        if (isDateSelected) {
-          return new Date(a.timeEnd) - new Date(b.timeEnd);
-        } else {
-          return new Date(b.timeEnd) - new Date(a.timeEnd);
-        }
-      });
-      console.log(taskList);
+      // При нажатии на кнопку "Date" вызываем getAll с параметрами "Date" для сортировки
+      const data = await getAll("", "Date");
+      // Обновляем состояние с полученными данными
+      setTasks(data.tasks);
     }
   };
 
@@ -126,6 +127,7 @@ function Sidebar({
         <Text variant="addTaskButtonContentText">AddTask</Text>
       </Button>
       <AddTaskModal
+        setTasks={setTasks}
         isAddModalOpen={isAddModalOpen}
         onAddModalClose={onAddModalClose}
         handleInputChange={handleInputChange}
