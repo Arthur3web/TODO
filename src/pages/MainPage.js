@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import "../App.css";
 import TasksList from "../components/TasksList.js";
@@ -33,14 +33,33 @@ import themeNew from "../styles/themes/themeNew.js";
 import { Context } from "../index.js";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "../utils/consts.js";
+import { getAll } from "../http/taskAPI.js";
 
 function App() {
-  const { setUser, setIsAuth} = useContext(Context);
+  const { user, setUser, setIsAuth } = useContext(Context);
   const [tasks, setTasks] = useState([]);
+  const [renderTasks, setRenderTasks] = useState(tasks);
+
+  const fetchData = async () => {
+    try {
+      const data = await getAll();
+      setTasks(data.tasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+  
+  const [filterObject, SetFilterObject] = useState({
+    filterBy: "Today",
+    sortBy: "null",
+    selectedStatus: "All",
+  });
   const [isTodaySelected, setTodaySelected] = useState(true); //today
   const [isDateSelected, setDateSelected] = useState(true); //date
   const [selectedStatus, setSelectedStatus] = useState("All"); //status
-  const statusList = ["All", "Done", "Undone"]; //menu-filter
   const { height, width } = useWindowSize();
   const sideBarFilter = [
     //sidebar
@@ -87,7 +106,7 @@ function App() {
       ),
     },
   ]; //
-  
+
   const {
     //добавление задачи
     onOpen: onAddModalOpen,
@@ -111,12 +130,28 @@ function App() {
   const navigate = useNavigate();
 
   // настройка выхода
-  const logOut =() => {
-    setUser({})
-    setIsAuth(false)
-    localStorage.removeItem('token');
+  const logOut = () => {
+    setUser({});
+    setIsAuth(false);
+    localStorage.removeItem("token");
     navigate(LOGIN_ROUTE);
-  }
+  };
+
+  useEffect(() => {
+    const filterData = async () => {
+      try {
+        const data = await getAll(
+          isTodaySelected ? "Today" : "All",
+          isDateSelected ? "Date" : "-Date",
+          selectedStatus
+        );
+        setTasks(data.tasks);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    filterData();
+  }, [isTodaySelected, isDateSelected, selectedStatus]);
 
   return (
     <ChakraProvider theme={themeNew}>
@@ -135,7 +170,9 @@ function App() {
         <Container variant="todoContainer">
           <Flex className="todo-header">
             <Text variant="titleTodoHeaderContainerText">To-Do</Text>
-            <Text variant="userNameTodoHeaderContainerText">UserName</Text>
+            <Text variant="userNameTodoHeaderContainerText">
+              {user.username}
+            </Text>
             <Popover
               variant="custom"
               placement="bottom-end"
@@ -158,12 +195,12 @@ function App() {
                   <PopoverHeader>Welcome!</PopoverHeader>
                   <PopoverBody>
                     <Container variant="popoverBodyContainer">
-                        <Button
-                          variant="userRegistrationButton"
-                          onClick={() => logOut()}
-                        >
-                          Exit
-                        </Button>
+                      <Button
+                        variant="userRegistrationButton"
+                        onClick={() => logOut()}
+                      >
+                        Exit
+                      </Button>
                     </Container>
                   </PopoverBody>
                 </PopoverContent>
@@ -176,6 +213,10 @@ function App() {
               <Sidebar
                 tasks={tasks}
                 setTasks={setTasks}
+                fetchData={fetchData}
+                filterObject={filterObject}
+                renderTasks={renderTasks}
+                setRenderTasks={setRenderTasks}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
                 isDateSelected={isDateSelected}
@@ -184,7 +225,6 @@ function App() {
                 onAddModalOpen={onAddModalOpen}
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
-                statusList={statusList}
                 sideBarFilter={sideBarFilter}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
@@ -200,7 +240,6 @@ function App() {
                 onAddModalOpen={onAddModalOpen}
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
-                statusList={statusList}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
               />
@@ -208,6 +247,9 @@ function App() {
             <TasksList
               tasks={tasks}
               setTasks={setTasks}
+              fetchData={fetchData}
+              renderTasks={renderTasks}
+              setRenderTasks={setRenderTasks}
               selectedStatus={selectedStatus}
               isTodaySelected={isTodaySelected}
               width={width}

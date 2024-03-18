@@ -1,6 +1,7 @@
 import React from "react";
 import AddTaskModal from "./AddTaskModal";
 import { Button, Flex } from "@chakra-ui/react";
+import { statusList } from "../utils/consts";
 
 function Sidebar({
   task,
@@ -14,9 +15,9 @@ function Sidebar({
   onAddModalOpen,
   onAddModalClose,
   isAddModalOpen,
-  statusList,
   setSelectedStatus,
   selectedStatus,
+  filterObject
 }) {
   const handleOpenedFilter = () => {
     setTodaySelected(!isTodaySelected);

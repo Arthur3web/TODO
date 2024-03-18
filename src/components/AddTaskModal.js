@@ -14,23 +14,26 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
-import { create_task } from "../http/taskAPI";
+import { createTask } from "../http/taskAPI";
 
 function AddTaskModal({
   isAddModalOpen,
   onAddModalClose,
   setTasks,
+  setRenderTasks,
+  fetchData
 }) {
   const [title, setTitle] = useState(""); // Состояние для заголовка задачи
   const [timeend, setTimeend] = useState(""); // Состояние для времени окончания задачи
   const isError = title === "";
 
-  const createTask = async () => {
+  const handleAddTask = async () => {
     try {
-      const data = await create_task(title, timeend); // Создаем задачу
-      setTasks(data); // Добавляем новую задачу в список задач
+      const data = await createTask(title, timeend); // Создаем задачу
+      setTasks(data.tasks); // Добавляем новую задачу в список задач
       onAddModalClose(); // Закрываем модальное окно
       console.log(data);
+      fetchData()
     } catch (error) {
       console.error(error);
     }
@@ -69,7 +72,7 @@ function AddTaskModal({
           <Container variant="modalFooterContainer">
             <Button
               leftIcon={<CheckCircleIcon boxSize="20px" />}
-              onClick={createTask}
+              onClick={handleAddTask}
               variant="saveTaskButton"
             >
               Save Task

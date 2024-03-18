@@ -13,20 +13,23 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { delete_task } from "../http/taskAPI";
+import { deleteTask } from "../http/taskAPI";
 
 function DeleteTaskModal({
   isClickDeleteTaskButton,
   closeModal,
   task,
+  setTasks,
+  fetchData
 }) {
-  const deleteTask = async () => {
+  const handleDeleteTask = async () => {
     try {
-      await delete_task(task.id); // Вызываем функцию удаления задачи из API
-      closeModal(false); // Закрываем модальное окно после успешного удаления задачи
+      const data = await deleteTask(task.id);
+      setTasks(data);
+      closeModal(false);
+      fetchData()
     } catch (error) {
       console.error("Error deleting task:", error);
-      // Обработка ошибки удаления задачи
     }
   };
 
@@ -53,7 +56,7 @@ function DeleteTaskModal({
           <Container variant="modalFooterContainer">
             <Button
               leftIcon={<DeleteIcon fontSize="larger" />}
-              onClick={deleteTask}
+              onClick={handleDeleteTask}
               variant="deleteTaskButton"
             >
               Delete

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Text,
@@ -11,19 +11,19 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { change_task } from "../http/taskAPI";
+import { changeTask } from "../http/taskAPI";
 import DeleteTaskModal from "../components/DeleteTaskModal.js";
 import EditTaskModal from "./EditTaskModal.js";
 
-const Task = ({ task, width }) => {
+const Task = ({ task, width, setTasks, fetchData }) => {
   const [isChecked, setIsChecked] = useState(task.iscompleted);
+
   const toggleTaskStatus = async () => {
     try {
-      const updatedIsChecked = !isChecked; // Получаем противоположное значение isChecked
-      setIsChecked(updatedIsChecked); // Обновляем состояние isChecked
-      console.log("'''''''''")
-      // Отправляем запрос на сервер для обновления статуса задачи с использованием предыдущего значения isChecked
-      await change_task(task.id, {iscompleted: updatedIsChecked});
+      const data = await changeTask(task.id, { iscompleted: !isChecked });
+      setTasks(data);
+      setIsChecked(!isChecked);
+      fetchData()
     } catch (error) {
       console.error("Error updating task status:", error);
     }
@@ -124,11 +124,15 @@ const Task = ({ task, width }) => {
         isClickEditTaskButton={isClickEditTaskButton}
         closeModal={setClickEditTaskButton}
         task={task}
+        setTasks={setTasks}
+        fetchData={fetchData}
       />
       <DeleteTaskModal
         isClickDeleteTaskButton={isClickDeleteTaskButton}
-        closeModal={setClickDeleteTaskButton} // Передаем функцию для закрытия модального окна
+        closeModal={setClickDeleteTaskButton}
         task={task}
+        setTasks={setTasks}
+        fetchData={fetchData}
       />
     </Flex>
   );

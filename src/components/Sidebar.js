@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Button,
@@ -14,47 +14,35 @@ import {
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import AddTaskModal from "./AddTaskModal";
 import { getAll } from "../http/taskAPI";
+import { statusList } from "../utils/consts";
 
 function Sidebar({
-  task,
-  addTask,
-  taskList,
   setTodaySelected,
   isTodaySelected,
   isDateSelected,
   setDateSelected,
-  setTaskNew,
-  handleInputChange,
   handleFilterChange,
-  handleTimeChange,
   onAddModalOpen,
   onAddModalClose,
   isAddModalOpen,
-  statusList,
   sideBarFilter,
   selectedStatus,
   setSelectedStatus,
   onToggle,
-  tasks,
   setTasks,
+  fetchData
 }) {
   const handleOpenedFilter = async (name) => {
-    //функция вызова действий при нажатии на элементы sidebar
     if (name === "Today") {
-      setTodaySelected(!isTodaySelected);
-      console.log(isTodaySelected);
       setSelectedStatus("All");
-      const data = await getAll("All", "", "All");
-      setTasks(data.tasks)
+      setTodaySelected(!isTodaySelected);
     } else if (name === "Date") {
       setDateSelected(!isDateSelected);
-      // При нажатии на кнопку "Date" вызываем getAll с параметрами "Date" для сортировки
-      const data = await getAll("", "Date");
-      // Обновляем состояние с полученными данными
-      setTasks(data.tasks);
+    } else {
+      setSelectedStatus(name);
     }
   };
-
+ 
   return (
     <Container variant="sideBarContainer">
       <Container variant="sideBarContentContainer">
@@ -73,7 +61,7 @@ function Sidebar({
               onClick={() => handleOpenedFilter(item.name)}
             >
               <Container variant="sideBarFilterButtonContentContainer">
-                <Flex //sideBarFilterButtonIconContainer
+                <Flex
                   w="27px"
                   h="27px"
                   alignItems="center"
@@ -130,11 +118,7 @@ function Sidebar({
         setTasks={setTasks}
         isAddModalOpen={isAddModalOpen}
         onAddModalClose={onAddModalClose}
-        handleInputChange={handleInputChange}
-        handleTimeChange={handleTimeChange}
-        task={task}
-        addTask={addTask}
-        setTaskNew={setTaskNew}
+        fetchData={fetchData}
       />
     </Container>
   );

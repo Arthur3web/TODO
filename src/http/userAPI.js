@@ -1,17 +1,16 @@
 import { $authHost, $host } from ".";
 
-export const registration = async (email, password, timezone) => {
+export const registration = async (email, password, username) => {
   const { data } = await $host.post("api/user/registration", {
     email,
     password,
-    timezone,
+    username,
   });
   localStorage.setItem("token", data.token);
   return data;
 };
 export const login = async (email, password) => {
   const { data } = await $host.post("api/user/login", { email, password });
-  // console.log('data.token', data.token)
   localStorage.setItem("token", data.token);
   return data;
 };
@@ -26,11 +25,8 @@ export const check = async () => {
         Authorization: `Bearer ${token}`,
       },
     });
-    // console.log(token);
-    // console.log(data);
     return data;
   } catch (error) {
-    // Обработка ошибок при проверке авторизации
     throw new Error("Unauthorized");
   }
 };
