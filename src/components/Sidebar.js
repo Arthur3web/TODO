@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import {
   Button,
@@ -10,10 +10,15 @@ import {
   MenuItem,
   Image,
   Container,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { CheckCircleIcon } from "@chakra-ui/icons";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  CalendarIcon,
+  CheckCircleIcon,
+} from "@chakra-ui/icons";
 import AddTaskModal from "./AddTaskModal";
-import { getAll } from "../http/taskAPI";
 import { statusList } from "../utils/consts";
 
 function Sidebar({
@@ -25,13 +30,56 @@ function Sidebar({
   onAddModalOpen,
   onAddModalClose,
   isAddModalOpen,
-  sideBarFilter,
   selectedStatus,
   setSelectedStatus,
-  onToggle,
   setTasks,
-  fetchData
+  filterTasks,
 }) {
+  const sideBarFilter = [
+    {
+      id: "Today",
+      name: "Today",
+      path: (
+        <CalendarIcon
+          fontSize="17px"
+          color={isTodaySelected && "Today" ? "#9333EA" : "#404040"}
+        />
+      ),
+    },
+    {
+      id: "All",
+      name: selectedStatus,
+      path: (
+        <CheckCircleIcon
+          fontSize="20px"
+          color={
+            !isTodaySelected &&
+            "All" &&
+            (selectedStatus === "All", "Done", "Undone")
+              ? "#9333EA"
+              : "#6B7280"
+          }
+        />
+      ),
+    },
+    {
+      id: "Date",
+      name: "Date",
+      path: (
+        <Flex>
+          <ArrowDownIcon
+            fontSize="small"
+            color={isDateSelected ? "#9333EA" : "#404040"}
+          />
+          <ArrowUpIcon
+            fontSize="small"
+            color={!isDateSelected ? "#9333EA" : "#404040"}
+          />
+        </Flex>
+      ),
+    },
+  ];
+
   const handleOpenedFilter = async (name) => {
     if (name === "Today") {
       setSelectedStatus("All");
@@ -42,7 +90,9 @@ function Sidebar({
       setSelectedStatus(name);
     }
   };
- 
+
+  const { onToggle } = useDisclosure();
+
   return (
     <Container variant="sideBarContainer">
       <Container variant="sideBarContentContainer">
@@ -118,7 +168,7 @@ function Sidebar({
         setTasks={setTasks}
         isAddModalOpen={isAddModalOpen}
         onAddModalClose={onAddModalClose}
-        fetchData={fetchData}
+        filterTasks={filterTasks}
       />
     </Container>
   );

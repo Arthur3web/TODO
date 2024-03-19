@@ -7,27 +7,27 @@ import { MAIN_ROUTE } from "../utils/consts";
 
 const AppRouter = () => {
   const { user, isAuth } = useContext(Context);
-  console.log("!!!!!!!!!!", user, isAuth);
-
+  // console.log("!!!!!!!!!!", user, isAuth);
+  // localStorage.setItem("authorithation", isAuth)
+  // console.log(user.username)
   return (
-    <Routes>
-      {isAuth ? (
-        <>
-        <Route path="*" element={<Navigate to={MAIN_ROUTE} />} />
-        {/* подумать как исправить, чтобы переходе на главную страницу, если пользователь не аторизован, переходить на LoginPage */}
-        {authRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} exact />
-        ))}
-        </>
-      ) : (
-        <>
-        <Route path="*" element={<Navigate to="/login" />} />
-        {publicRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} exact />
-          ))}
-        </>
-        )}
-    </Routes>
+        <Routes>
+          {isAuth ? (
+            <>
+              <Route path="*" element={<Navigate to={MAIN_ROUTE} />} />
+              {authRoutes.map(({ path, Component }) => (
+                <Route key={path} path={path} element={<Component />} exact />
+              ))}
+            </>
+          ) : (
+            <>
+              <Route path="*" element={<Navigate to="/login" />} />
+              {publicRoutes.map(({ path, Component }) => (
+                <Route key={path} path={path} element={<Component />} exact />
+                ))}
+            </>
+          )}
+        </Routes>
   );
 };
 

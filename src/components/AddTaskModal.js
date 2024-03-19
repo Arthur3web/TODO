@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Heading,
@@ -20,20 +20,23 @@ function AddTaskModal({
   isAddModalOpen,
   onAddModalClose,
   setTasks,
-  setRenderTasks,
-  fetchData
+  filterTasks,
 }) {
-  const [title, setTitle] = useState(""); // Состояние для заголовка задачи
-  const [timeend, setTimeend] = useState(""); // Состояние для времени окончания задачи
-  const isError = title === "";
+  const [title, setTitle] = useState("");
+  const [timeend, setTimeend] = useState("");
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    setIsError(title === "");
+  }, [title]);
 
   const handleAddTask = async () => {
     try {
-      const data = await createTask(title, timeend); // Создаем задачу
-      setTasks(data.tasks); // Добавляем новую задачу в список задач
-      onAddModalClose(); // Закрываем модальное окно
+      const data = await createTask(title, timeend); 
+      setTasks(data.tasks); 
+      onAddModalClose(); 
       console.log(data);
-      fetchData()
+      filterTasks()
     } catch (error) {
       console.error(error);
     }
@@ -60,9 +63,8 @@ function AddTaskModal({
               onChange={(e) => setTitle(e.target.value)}
             />
             <Input
-            // width={'auto'}
               className="time-end"
-              // variant='timeEndTaskInput'
+              variant='timeEndTaskInput'
               type="datetime-local"
               onChange={(e) => setTimeend(e.target.value)}
             />

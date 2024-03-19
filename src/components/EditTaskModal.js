@@ -20,7 +20,7 @@ function EditTaskModal({
   closeModal,
   task,
   setTasks,
-  fetchData
+  filterTasks
 }) {
   const [note, setNote] = useState(task.title);
   const [noteTime, setNoteTime] = useState(task.timeend); 
@@ -33,10 +33,14 @@ function EditTaskModal({
   const editTask = async () => {
     try {
       const data = await changeTask(task.id, { title: note, timeend: noteTime }); // Изменяем задачу на сервере
-      setTasks(data)
+      setTasks(prevTasks =>
+        prevTasks.map(prevTask =>
+          prevTask.id === task.id ? { ...prevTask, data } : prevTask
+        )
+      );
       closeModal(); 
       console.log(data);
-      fetchData()
+      filterTasks()
     } catch (error) {
       console.error(error);
     }
@@ -66,6 +70,7 @@ function EditTaskModal({
             <Input
               type="datetime-local"
               className="time-end"
+              variant='timeEndTaskInput'
               value={noteTime}
               onChange={(e) => setNoteTime(e.target.value)}
             />

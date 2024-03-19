@@ -6,7 +6,6 @@ export const registration = async (email, password, username) => {
     password,
     username,
   });
-  localStorage.setItem("token", data.token);
   return data;
 };
 export const login = async (email, password) => {
@@ -15,8 +14,8 @@ export const login = async (email, password) => {
   return data;
 };
 export const check = async () => {
+  const token = localStorage.getItem("token");
   try {
-    const token = localStorage.getItem("token");
     if (!token) {
       throw new Error("Token not found");
     }

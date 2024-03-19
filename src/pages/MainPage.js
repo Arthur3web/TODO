@@ -23,12 +23,7 @@ import {
   IconButton,
   Button,
 } from "@chakra-ui/react";
-import {
-  ArrowDownIcon,
-  ArrowUpIcon,
-  CalendarIcon,
-  CheckCircleIcon,
-} from "@chakra-ui/icons";
+
 import themeNew from "../styles/themes/themeNew.js";
 import { Context } from "../index.js";
 import { useNavigate } from "react-router-dom";
@@ -38,9 +33,10 @@ import { getAll } from "../http/taskAPI.js";
 function App() {
   const { user, setUser, setIsAuth } = useContext(Context);
   const [tasks, setTasks] = useState([]);
-  const [renderTasks, setRenderTasks] = useState(tasks);
-
-  const fetchData = async () => {
+  const { height, width } = useWindowSize();
+  const navigate = useNavigate();
+  
+  const todayTasks = async () => {
     try {
       const data = await getAll();
       setTasks(data.tasks);
@@ -49,87 +45,29 @@ function App() {
     }
   };
   useEffect(() => {
-    fetchData();
+    todayTasks();
   }, []);
-  
-  const [filterObject, SetFilterObject] = useState({
-    filterBy: "Today",
-    sortBy: "null",
-    selectedStatus: "All",
-  });
-  const [isTodaySelected, setTodaySelected] = useState(true); //today
-  const [isDateSelected, setDateSelected] = useState(true); //date
-  const [selectedStatus, setSelectedStatus] = useState("All"); //status
-  const { height, width } = useWindowSize();
-  const sideBarFilter = [
-    //sidebar
-    {
-      id: "Today",
-      name: "Today",
-      path: (
-        <CalendarIcon
-          fontSize="17px"
-          color={isTodaySelected && "Today" ? "#9333EA" : "#404040"}
-        />
-      ),
-    },
-    {
-      id: "All",
-      name: /*"All"*/ selectedStatus,
-      path: (
-        <CheckCircleIcon
-          fontSize="20px"
-          color={
-            !isTodaySelected &&
-            "All" &&
-            (selectedStatus === "All", "Done", "Undone")
-              ? "#9333EA"
-              : "#6B7280"
-          }
-        />
-      ),
-    },
-    {
-      id: "Date",
-      name: "Date",
-      path: (
-        <Flex>
-          <ArrowDownIcon
-            fontSize="small"
-            color={isDateSelected ? "#9333EA" : "#404040"}
-          />
-          <ArrowUpIcon
-            fontSize="small"
-            color={!isDateSelected ? "#9333EA" : "#404040"}
-          />
-        </Flex>
-      ),
-    },
-  ]; //
+
+  const [isTodaySelected, setTodaySelected] = useState(true);
+  const [isDateSelected, setDateSelected] = useState(true);
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   const {
-    //добавление задачи
     onOpen: onAddModalOpen,
     onClose: onAddModalClose,
     isOpen: isAddModalOpen,
   } = useDisclosure();
-  const { onToggle } = useDisclosure(); //фильтр задач
 
   function handleFilterChange(el) {
-    //фильтр
     setSelectedStatus(el);
   }
 
-  //popover
   const {
     onOpen: onUserLoginWindowOpen,
     onClose: onUserLoginWindowClose,
     isOpen: isUserLoginWindowOpen,
   } = useDisclosure();
 
-  const navigate = useNavigate();
-
-  // настройка выхода
   const logOut = () => {
     setUser({});
     setIsAuth(false);
@@ -137,22 +75,23 @@ function App() {
     navigate(LOGIN_ROUTE);
   };
 
+  const filterTasks = async () => {
+    try {
+      const data = await getAll(
+        isTodaySelected ? "Today" : "All",
+        isDateSelected ? "Date" : "-Date",
+        selectedStatus
+      );
+      setTasks(data.tasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
+  };
   useEffect(() => {
-    const filterData = async () => {
-      try {
-        const data = await getAll(
-          isTodaySelected ? "Today" : "All",
-          isDateSelected ? "Date" : "-Date",
-          selectedStatus
-        );
-        setTasks(data.tasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      }
-    };
-    filterData();
+    filterTasks();
   }, [isTodaySelected, isDateSelected, selectedStatus]);
 
+  // console.log(user.username)
   return (
     <ChakraProvider theme={themeNew}>
       <Flex className="wrapper">
@@ -192,7 +131,7 @@ function App() {
               <Portal>
                 <PopoverContent>
                   <PopoverArrow />
-                  <PopoverHeader>Welcome!</PopoverHeader>
+                  <PopoverHeader>Welcome, {user.username}!</PopoverHeader>
                   <PopoverBody>
                     <Container variant="popoverBodyContainer">
                       <Button
@@ -213,10 +152,7 @@ function App() {
               <Sidebar
                 tasks={tasks}
                 setTasks={setTasks}
-                fetchData={fetchData}
-                filterObject={filterObject}
-                renderTasks={renderTasks}
-                setRenderTasks={setRenderTasks}
+                filterTasks={filterTasks}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
                 isDateSelected={isDateSelected}
@@ -225,15 +161,13 @@ function App() {
                 onAddModalOpen={onAddModalOpen}
                 onAddModalClose={onAddModalClose}
                 isAddModalOpen={isAddModalOpen}
-                sideBarFilter={sideBarFilter}
                 selectedStatus={selectedStatus}
                 setSelectedStatus={setSelectedStatus}
-                onToggle={onToggle}
               />
             ) : (
               <SidebarMobile
-                tasks={tasks}
                 setTasks={setTasks}
+                filterTasks={filterTasks}
                 setTodaySelected={setTodaySelected}
                 isTodaySelected={isTodaySelected}
                 handleFilterChange={handleFilterChange}
@@ -247,11 +181,7 @@ function App() {
             <TasksList
               tasks={tasks}
               setTasks={setTasks}
-              fetchData={fetchData}
-              renderTasks={renderTasks}
-              setRenderTasks={setRenderTasks}
-              selectedStatus={selectedStatus}
-              isTodaySelected={isTodaySelected}
+              filterTasks={filterTasks}
               width={width}
             />
           </Flex>

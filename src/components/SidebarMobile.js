@@ -3,21 +3,17 @@ import AddTaskModal from "./AddTaskModal";
 import { Button, Flex } from "@chakra-ui/react";
 import { statusList } from "../utils/consts";
 
-function Sidebar({
-  task,
-  addTask,
+function SidebarMobile({
   setTodaySelected,
   isTodaySelected,
-  setTaskNew,
-  handleInputChange,
   handleFilterChange,
-  handleTimeChange,
-  onAddModalOpen,
-  onAddModalClose,
-  isAddModalOpen,
   setSelectedStatus,
   selectedStatus,
-  filterObject
+  isAddModalOpen,
+  onAddModalClose,
+  onAddModalOpen,
+  setTasks,
+  filterTasks,
 }) {
   const handleOpenedFilter = () => {
     setTodaySelected(!isTodaySelected);
@@ -42,7 +38,7 @@ function Sidebar({
             className="button-filter"
             onClick={() => handleFilterChange(el)}
             color={
-              !isTodaySelected && el === selectedStatus ? "#9333EA" : "#404040"
+              (!isTodaySelected || isTodaySelected) && el === selectedStatus ? "#9333EA" : "#404040"
             }
             bg={
               !isTodaySelected && el === selectedStatus ? "#d1d3fd" : "#d3c8fc"
@@ -58,14 +54,11 @@ function Sidebar({
       <AddTaskModal
         isAddModalOpen={isAddModalOpen}
         onAddModalClose={onAddModalClose}
-        handleInputChange={handleInputChange}
-        handleTimeChange={handleTimeChange}
-        task={task}
-        addTask={addTask}
-        setTaskNew={setTaskNew}
+        setTasks={setTasks}
+        filterTasks={filterTasks}
       />
     </Flex>
   );
 }
 
-export default Sidebar;
+export default SidebarMobile;

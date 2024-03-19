@@ -11,36 +11,39 @@ import {
   CardBody,
   CardFooter,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
-import { login } from "../http/userAPI";
+import { check, login } from "../http/userAPI";
 import { Context } from "..";
 import { useNavigate } from "react-router-dom";
 
 const LoginModal = () => {
-  const { user, setUser, setIsAuth} = useContext(Context);
+  const { setUser, isAuth, setIsAuth } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const toast = useToast();
 
   const handleLogin = async () => {
+    let data;
     try {
-      let data;
-      try {
-        data = await login(email, password);
-        // console.log(data);
-        // Устанавливаем пользователя и флаг авторизации
-        setUser(data);
-        setIsAuth(true);
-        // Переходим на главную страницу
-        navigate(MAIN_ROUTE);
-      } catch (error) {
-        setError("Invalid email or password");
-      }
-    } catch (e) {
-      alert(e.response.message);
+      data = await login(email, password);
+      setUser(data);
+      setIsAuth(true);
+      console.log(data);
+    } catch (error) {
+      toast({
+        title: "Login error",
+        description: error.response.data.message,
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+      });
     }
+    // localStorage.setItem("authorithation", isAuth)
+    // console.log(isAuth)
   };
 
   return (
@@ -57,22 +60,27 @@ const LoginModal = () => {
           </Text>
         </CardHeader>
         <CardBody display="flex" flexDirection="column">
-          <FormControl mt={3}>
-            {error && <Text color="red.500">{error}</Text>}
-            <Input
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              mb={3}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              mb={3}
-            />
-          </FormControl>
+          <form>
+            <FormControl mt={3}>
+              <Input
+                id="emailInput"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                autoComplete="current-email"
+                mb={3}
+              />
+              <Input
+                id="passwordInput"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                autoComplete="current-password"
+                mb={3}
+              />
+            </FormControl>
+          </form>
         </CardBody>
         <CardFooter
           display="flex"

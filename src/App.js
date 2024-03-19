@@ -18,7 +18,7 @@ function App() {
   const { isAuth, setUser, setIsAuth} = useContext(Context);
 
   useEffect(() => {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAA')
+    // console.log('AAAAAAAAAAAAAAAAAAAAAAA')
     const checkTokenValidity = async () => {
       try {
         const userData = await check();
@@ -32,7 +32,7 @@ function App() {
       }
     };
     checkTokenValidity();
-  }, []);
+  }, [isAuth]);
 
 
   return (

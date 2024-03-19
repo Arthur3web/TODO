@@ -20,14 +20,14 @@ function DeleteTaskModal({
   closeModal,
   task,
   setTasks,
-  fetchData
+  filterTasks
 }) {
   const handleDeleteTask = async () => {
     try {
       const data = await deleteTask(task.id);
-      setTasks(data);
+      setTasks(data.tasks);
       closeModal(false);
-      fetchData()
+      filterTasks()
     } catch (error) {
       console.error("Error deleting task:", error);
     }

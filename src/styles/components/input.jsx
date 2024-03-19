@@ -19,7 +19,7 @@ const titleTaskInput = definePartsStyle({
 });
 const timeEndTaskInput = definePartsStyle({
   field: {
-    w: "220px",
+    w: "180px",
     bg: "#F3F3F3",
     borderRadius: "10px",
     _focus: { border: "1px solid gray" },

@@ -14,32 +14,45 @@ import {
   Text,
   Link,
   ChakraProvider,
+  useToast,
 } from "@chakra-ui/react";
 import { LOGIN_ROUTE } from "../utils/consts";
 import { registration } from "../http/userAPI";
 import { Context } from "..";
 
 function RegistrationPage() {
-  const { user, setUser, setIsAuth } = useContext(Context);
+  const { user, setUser } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
-  const isError = email === "";
+  const isEmailEmpty = email === "";
+  const isPasswordEmpty = password === "";
+  const isUsernameEmpty = username === "";
+  const toast = useToast();
 
   const handleRegistration = async () => {
-      let data;
-      try {
-        // Отправляем запрос на сервер для регистрации
-        data = await registration(email, password, username);
-        setUser(user);
-        setIsAuth(true);
-
-        // Обработка успешной регистрации
-        console.log(data);
-      } catch (error) {
-        // Обработка ошибки регистрации
-        console.log("Registration error");
-      }
+    let data;
+    try {
+      data = await registration(email, password, username);
+      setUser(user);
+      toast({
+        title: "Registration success",
+        description: "Your account has been successfully created.",
+        status: "success",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      toast({
+        title: "Registration error",
+        description: error.response.data.message,
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -57,39 +70,41 @@ function RegistrationPage() {
           </CardHeader>
 
           <CardBody>
-            <FormControl isInvalid={isError} isRequired>
-              <FormLabel>Email adress</FormLabel>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                width="100%"
-              />
-              {!isError ? (
-                <FormHelperText>
-                  Enter the email address you would like to register an account
-                  with.
-                </FormHelperText>
-              ) : (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-              )}
-            </FormControl>
+            <form>
+              <FormControl isInvalid={isEmailEmpty} isRequired>
+                <FormLabel>Email adress</FormLabel>
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  width="100%"
+                />
+                {!isEmailEmpty ? (
+                  <FormHelperText>
+                    Enter the email address you would like to register an
+                    account with.
+                  </FormHelperText>
+                ) : (
+                  <FormErrorMessage>Email is required.</FormErrorMessage>
+                )}
+              </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel>Password</FormLabel>
-              <Input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </FormControl>
-            <FormControl isRequired>
-              <FormLabel>Username</FormLabel>
-              <Input
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </FormControl>
+              <FormControl isInvalid={isPasswordEmpty} isRequired>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </FormControl>
+              <FormControl isInvalid={isUsernameEmpty} isRequired>
+                <FormLabel>Username</FormLabel>
+                <Input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </FormControl>
+            </form>
           </CardBody>
           <CardFooter
             display="flex"

@@ -7,7 +7,7 @@ const { definePartsStyle, defineMultiStyleConfig } =
 const custom = definePartsStyle({
   content: defineStyle({
     mt: "10px",
-    w: "350px",
+    w: "200px",
   }),
   header: defineStyle({
     fontFamily: "Roboto",
