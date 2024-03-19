@@ -58,6 +58,7 @@ function App() {
     isOpen: isAddModalOpen,
   } = useDisclosure();
 
+
   function handleFilterChange(el) {
     setSelectedStatus(el);
   }
@@ -148,7 +149,7 @@ function App() {
           </Flex>
 
           <Flex className="todo-content">
-            {width >= 771 ? (
+            {width >= 992 ? (
               <Sidebar
                 tasks={tasks}
                 setTasks={setTasks}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Container,
   Text,
@@ -9,6 +9,7 @@ import {
   MenuItem,
   Checkbox,
   Flex,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { changeTask } from "../http/taskAPI";
@@ -16,11 +17,21 @@ import DeleteTaskModal from "../components/DeleteTaskModal.js";
 import EditTaskModal from "./EditTaskModal.js";
 
 const Task = ({ task, width, setTasks, filterTasks }) => {
-  const [isClickEditTaskButton, setClickEditTaskButton] = useState(false);
-  const [isClickDeleteTaskButton, setClickDeleteTaskButton] = useState(false);
-  
+  const {
+    onOpen: onEditTaskModalOpen,
+    onClose: onEditTaskModalClose,
+    isOpen: isEditTaskModalOpen,
+  } = useDisclosure();
+  const {
+    onOpen: onDeleteTaskModalOpen,
+    onClose: onDeleteTaskModalClose,
+    isOpen: isDeleteTaskModalOpen,
+  } = useDisclosure();
+
   const toggleTaskStatus = async () => {
     try {
+      console.log("Current state:", task.iscompleted);
+
       const data = await changeTask(task.id, { iscompleted: !task.iscompleted });
       setTasks(prevTasks =>
         prevTasks.map(prevTask =>
@@ -28,6 +39,7 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
         )
       );
       console.log(task.iscompleted)
+      console.log("New state:", !task.iscompleted);
       filterTasks()
     } catch (error) {
       console.error("Error updating task status:", error);
@@ -46,13 +58,6 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
     return dateTime.toLocaleString("en-US", options);
   };
 
-  const handleOpenedModalEditTask = () => {
-    setClickEditTaskButton(true);
-  };
-
-  const handleOpenedModalDeleteTask = () => {
-    setClickDeleteTaskButton(true);
-  };
   // console.log(task)
  
   return (
@@ -64,7 +69,7 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
             border="gray"
             colorScheme="purple"
             key={task.id}
-            checked={task.iscompleted}
+            defaultChecked={task.iscompleted}
             onChange={toggleTaskStatus}
           />
           <Text
@@ -94,11 +99,11 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
               </MenuButton>
               <MenuList>
                 <Container variant="menuOperationTaskContainer">
-                  <MenuItem onClick={() => handleOpenedModalEditTask(task.id)}>
+                  <MenuItem onClick={() => onEditTaskModalOpen(task.id)}>
                     <EditIcon color="#8687E7" />
                   </MenuItem>
                   <MenuItem
-                    onClick={() => handleOpenedModalDeleteTask(task.id)}
+                    onClick={() => onDeleteTaskModalOpen(task.id)}
                   >
                     <DeleteIcon color="#F56497" />
                   </MenuItem>
@@ -113,10 +118,10 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
             </MenuButton>
             <MenuList>
               <Container variant="menuOperationTaskContainer">
-                <MenuItem onClick={() => handleOpenedModalEditTask(task.id)}>
+                <MenuItem onClick={() => onEditTaskModalOpen(task.id)}>
                   <EditIcon color="#8687E7" />
                 </MenuItem>
-                <MenuItem onClick={() => handleOpenedModalDeleteTask(task.id)}>
+                <MenuItem onClick={() => onDeleteTaskModalOpen(task.id)}>
                   <DeleteIcon color="#F56497" />
                 </MenuItem>
               </Container>
@@ -125,15 +130,15 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
         )}
       </Flex>
       <EditTaskModal
-        isClickEditTaskButton={isClickEditTaskButton}
-        closeModal={setClickEditTaskButton}
+      onEditTaskModalClose={onEditTaskModalClose}
+      isEditTaskModalOpen={isEditTaskModalOpen}
         task={task}
         setTasks={setTasks}
         filterTasks={filterTasks}
       />
       <DeleteTaskModal
-        isClickDeleteTaskButton={isClickDeleteTaskButton}
-        closeModal={setClickDeleteTaskButton}
+        onDeleteTaskModalClose={onDeleteTaskModalClose}
+        isDeleteTaskModalOpen={isDeleteTaskModalOpen}
         task={task}
         setTasks={setTasks}
         filterTasks={filterTasks}

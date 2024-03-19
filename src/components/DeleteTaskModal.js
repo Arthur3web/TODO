@@ -16,8 +16,8 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { deleteTask } from "../http/taskAPI";
 
 function DeleteTaskModal({
-  isClickDeleteTaskButton,
-  closeModal,
+  onDeleteTaskModalClose,
+  isDeleteTaskModalOpen,
   task,
   setTasks,
   filterTasks
@@ -26,7 +26,7 @@ function DeleteTaskModal({
     try {
       const data = await deleteTask(task.id);
       setTasks(data.tasks);
-      closeModal(false);
+      onDeleteTaskModalClose();
       filterTasks()
     } catch (error) {
       console.error("Error deleting task:", error);
@@ -36,8 +36,8 @@ function DeleteTaskModal({
   return (
     <Modal
       variant='deleteTaskModal'
-      isOpen={isClickDeleteTaskButton}
-      onClose={() => closeModal(false)}
+      isOpen={isDeleteTaskModalOpen}
+      onClose={onDeleteTaskModalClose}
       isCentered
     >
       <ModalOverlay />
@@ -63,7 +63,7 @@ function DeleteTaskModal({
             </Button>
             <Button
               variant="closeModalButton"
-              onClick={() => closeModal(false)}
+              onClick={onDeleteTaskModalClose}
             >
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />
               Close

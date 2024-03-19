@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Card,
@@ -13,16 +13,14 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import { MAIN_ROUTE, REGISTRATION_ROUTE } from "../utils/consts";
-import { check, login } from "../http/userAPI";
+import { REGISTRATION_ROUTE } from "../utils/consts";
+import { login } from "../http/userAPI";
 import { Context } from "..";
-import { useNavigate } from "react-router-dom";
 
 const LoginModal = () => {
   const { setUser, isAuth, setIsAuth } = useContext(Context);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const toast = useToast();
 
   const handleLogin = async () => {

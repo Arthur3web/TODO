@@ -31,9 +31,8 @@ function RegistrationPage() {
   const toast = useToast();
 
   const handleRegistration = async () => {
-    let data;
     try {
-      data = await registration(email, password, username);
+      const data = await registration(email, password, username);
       setUser(user);
       toast({
         title: "Registration success",

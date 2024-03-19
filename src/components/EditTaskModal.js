@@ -11,13 +11,14 @@ import {
   ModalHeader,
   Modal,
   Container,
+  useToast,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { changeTask } from "../http/taskAPI";
 
 function EditTaskModal({
-  isClickEditTaskButton,
-  closeModal,
+  onEditTaskModalClose,
+  isEditTaskModalOpen,
   task,
   setTasks,
   filterTasks
@@ -25,11 +26,20 @@ function EditTaskModal({
   const [note, setNote] = useState(task.title);
   const [noteTime, setNoteTime] = useState(task.timeend); 
   const [isError, setIsError] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     setIsError(note === "");
   }, [note]);
 
+  useEffect(() => {
+    if (!isEditTaskModalOpen) {
+      setNote(task.title);
+      setNoteTime(task.timeend);
+      setIsError(false);
+    }
+  }, [isEditTaskModalOpen, task]);
+  
   const editTask = async () => {
     try {
       const data = await changeTask(task.id, { title: note, timeend: noteTime }); // Изменяем задачу на сервере
@@ -38,19 +48,26 @@ function EditTaskModal({
           prevTask.id === task.id ? { ...prevTask, data } : prevTask
         )
       );
-      closeModal(); 
+      onEditTaskModalClose(); 
       console.log(data);
       filterTasks()
     } catch (error) {
-      console.error(error);
+      toast({
+        title: "Edit task error",
+        description: error.response.data.message,
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
 
   return (
     <Modal
-      isOpen={isClickEditTaskButton}
-      onClose={() => closeModal(false)}
+      isOpen={isEditTaskModalOpen}
+      onClose={onEditTaskModalClose}
       variant="taskModal"
       isCentered
     >
@@ -86,7 +103,7 @@ function EditTaskModal({
               Save
             </Button>
             <Button
-              onClick={() => closeModal(false)}
+              onClick={onEditTaskModalClose}
               variant="closeModalButton"
             >
               <Image src="/assets/Vector_s.svg" alt="close-button" mr="10px" />

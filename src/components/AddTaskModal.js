@@ -12,6 +12,7 @@ import {
   Image,
   Container,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { CheckCircleIcon } from "@chakra-ui/icons";
 import { createTask } from "../http/taskAPI";
@@ -25,6 +26,7 @@ function AddTaskModal({
   const [title, setTitle] = useState("");
   const [timeend, setTimeend] = useState("");
   const [isError, setIsError] = useState(false);
+  const toast = useToast();
 
   useEffect(() => {
     setIsError(title === "");
@@ -38,7 +40,14 @@ function AddTaskModal({
       console.log(data);
       filterTasks()
     } catch (error) {
-      console.error(error);
+      toast({
+        title: "Creat task error",
+        description: error.response.data.message,
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
