@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Container,
   Text,
@@ -15,8 +15,11 @@ import { EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { changeTask } from "../http/taskAPI";
 import DeleteTaskModal from "../components/DeleteTaskModal.js";
 import EditTaskModal from "./EditTaskModal.js";
+import { Context } from "../index.js";
+import moment from "moment-timezone";
 
 const Task = ({ task, width, setTasks, filterTasks }) => {
+  const { user } = useContext(Context);
   const {
     onOpen: onEditTaskModalOpen,
     onClose: onEditTaskModalClose,
@@ -32,34 +35,40 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
     try {
       console.log("Current state:", task.iscompleted);
 
-      const data = await changeTask(task.id, { iscompleted: !task.iscompleted });
-      setTasks(prevTasks =>
-        prevTasks.map(prevTask =>
-          prevTask.id === task.id ? { ...prevTask, iscompleted: !prevTask.iscompleted } : prevTask
+      const data = await changeTask(task.id, {
+        iscompleted: !task.iscompleted,
+      });
+      setTasks((prevTasks) =>
+        prevTasks.map((prevTask) =>
+          prevTask.id === task.id
+            ? { ...prevTask, iscompleted: !prevTask.iscompleted }
+            : prevTask
         )
       );
-      console.log(task.iscompleted)
+      console.log(task.iscompleted);
       console.log("New state:", !task.iscompleted);
-      filterTasks()
+      filterTasks();
     } catch (error) {
       console.error("Error updating task status:", error);
     }
   };
 
-  const formatDateTime = (dateTimeString) => {
-    const options = {
-      year: "numeric",
-      month: "numeric",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    };
-    const dateTime = new Date(dateTimeString);
-    return dateTime.toLocaleString("en-US", options);
-  };
+  const formatDateTime = (task, user) => {
+    // Получаем текущее время с учетом временной зоны пользователя
+    const userTimezone = moment.tz(user.timezone);
+    // Преобразуем время окончания задачи в момент времени с учетом временной зоны пользователя
+    const taskTimezone = moment.tz(task.timeend, user.timezone);
+    // Получаем разницу между временной зоной пользователя и UTC
+    const userOffset = userTimezone.utcOffset();
+    // Добавляем разницу к времени окончания задачи
+    const adjustedDateTime = taskTimezone.clone().add(userOffset, 'minutes');
+    // Форматируем и возвращаем время
+    return adjustedDateTime.format("YYYY-MM-DD HH:mm:ss");
+};
+  console.log(task)
 
   // console.log(task)
- 
+
   return (
     <Flex className="task">
       <Flex className="task-content">
@@ -87,7 +96,7 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
               variant="taskContentDateContainerText"
               className={task.iscompleted ? "crossText" : "listItem"}
             >
-              {formatDateTime(task.timeend)}
+              {formatDateTime(task, user)}
             </Text>
             <Menu variant="parametersTask" placement="bottom-end">
               <MenuButton>
@@ -102,9 +111,7 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
                   <MenuItem onClick={() => onEditTaskModalOpen(task.id)}>
                     <EditIcon color="#8687E7" />
                   </MenuItem>
-                  <MenuItem
-                    onClick={() => onDeleteTaskModalOpen(task.id)}
-                  >
+                  <MenuItem onClick={() => onDeleteTaskModalOpen(task.id)}>
                     <DeleteIcon color="#F56497" />
                   </MenuItem>
                 </Container>
@@ -130,8 +137,8 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
         )}
       </Flex>
       <EditTaskModal
-      onEditTaskModalClose={onEditTaskModalClose}
-      isEditTaskModalOpen={isEditTaskModalOpen}
+        onEditTaskModalClose={onEditTaskModalClose}
+        isEditTaskModalOpen={isEditTaskModalOpen}
         task={task}
         setTasks={setTasks}
         filterTasks={filterTasks}
