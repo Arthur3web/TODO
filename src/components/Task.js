@@ -53,21 +53,15 @@ const Task = ({ task, width, setTasks, filterTasks }) => {
     }
   };
 
-  const formatDateTime = (task, user) => {
-    // Получаем текущее время с учетом временной зоны пользователя
-    const userTimezone = moment.tz(user.timezone);
-    // Преобразуем время окончания задачи в момент времени с учетом временной зоны пользователя
-    const taskTimezone = moment.tz(task.timeend, user.timezone);
-    // Получаем разницу между временной зоной пользователя и UTC
-    const userOffset = userTimezone.utcOffset();
-    // Добавляем разницу к времени окончания задачи
-    const adjustedDateTime = taskTimezone.clone().add(userOffset, 'minutes');
-    // Форматируем и возвращаем время
+  const formatDateTime = (task) => {
+    const localTimezone = moment();
+    const taskTimezone = moment.tz(task.timeend, moment.tz.guess());
+    const localOffset = localTimezone.utcOffset();
+    const adjustedDateTime = taskTimezone.clone().add(localOffset, 'minutes');
     return adjustedDateTime.format("YYYY-MM-DD HH:mm:ss");
 };
-  console.log(task)
-
   // console.log(task)
+  // console.log(moment(task.timeend).tz(user.timezone).format('YYYY-MM-DD HH:mm:ss'));
 
   return (
     <Flex className="task">
